@@ -1,0 +1,218 @@
+{
+  "title": "Vidtory - AI Video Generator for Every Niche",
+  "description": "Create professional AI-generated videos for stories, education, entertainment, and more. Transform your ideas into engaging video content with our powerful AI video generation platform.",
+  "hero": {
+    "title": "Create Pro level videos in the Blink of AI",
+    "subtitle": "Make better videos faster. Smart video creation tools for teams",
+    "cta": "Start for free",
+    "cta_note": "* No credit card required",
+    "rating": "Rated 4.6 out of 5 on G2",
+    "features": {
+      "autoSubtitles": {
+        "title": "Auto Subtitles",
+        "description": "Add subtitles in just a click with our Auto Subtitle Generator"
+      },
+      "brandKit": {
+        "title": "Brand Kit",
+        "description": "Always stay on brand through shared fonts, logos and assets"
+      },
+      "dubbing": {
+        "title": "Dubbing",
+        "description": "Translate and dub your videos into multiple languages automatically"
+      },
+      "textToVideo": {
+        "title": "Text to Video AI",
+        "description": "Create videos from text prompts with advanced AI technology"
+      },
+      "aiClips": {
+        "title": "AI Clips",
+        "description": "Automatically generate engaging video clips from your content"
+      },
+      "aiAvatars": {
+        "title": "AI Avatars",
+        "description": "Create talking head videos with high-quality AI avatars"
+      },
+      "recorder": {
+        "title": "Recorder",
+        "description": "Easily record yourself or your screen. Edit and share with anyone"
+      }
+    }
+  },
+  "howTo": {
+    "title": "How It Works",
+    "subtitle": "Create professional AI videos in just 4 simple steps",
+    "steps": {
+      "1": {
+        "title": "Choose Your Niche",
+        "description": "Select from our wide range of templates designed for different niches - stories, education, entertainment, marketing, and more. Each template is optimized for its specific use case.",
+        "alt": "Niche selection interface showing different video categories like stories, education, and entertainment"
+      },
+      "2": {
+        "title": "Customize Your Content",
+        "description": "Add your script, choose AI avatars, select backgrounds, and customize every aspect of your video. Our AI helps you create content that matches your brand and message perfectly.",
+        "alt": "Video customization interface with script editor, avatar selection, and styling options"
+      },
+      "3": {
+        "title": "Generate with AI",
+        "description": "Let our advanced AI technology generate your video. Our system creates realistic avatars, natural voiceovers, and professional animations - all automatically.",
+        "alt": "AI video generation process showing automated creation of video content"
+      },
+      "4": {
+        "title": "Publish & Share",
+        "description": "Download your video in high quality or publish directly to your preferred platform. Share your AI-generated content across social media, websites, or use in presentations.",
+        "alt": "Video publishing options showing download and sharing capabilities"
+      }
+    }
+  },
+  "features": {
+    "title": "Powerful Features for Every Creator",
+    "subtitle": "Everything you need to create professional AI videos",
+    "listening": {
+      "title": "Multi-Niche Templates",
+      "description": "Pre-built templates for stories, education, entertainment, marketing, and more. Start with professional designs tailored to your niche."
+    },
+    "speaking": {
+      "title": "AI Voice & Avatars",
+      "description": "Choose from hundreds of AI avatars and voices. Create realistic talking-head videos with natural speech patterns and expressions."
+    },
+    "memory": {
+      "title": "Smart Script Generator",
+      "description": "AI-powered script generation that creates engaging content for your chosen niche. Get suggestions and optimize your message automatically."
+    },
+    "progress": {
+      "title": "Easy Editing & Export",
+      "description": "Intuitive video editor with drag-and-drop functionality. Export in multiple formats and resolutions for any platform or use case."
+    }
+  },
+  "useCases": {
+    "title": "Perfect for Every Use Case",
+    "subtitle": "See how creators use Vidtory across different niches",
+    "stories": {
+      "title": "Story Videos",
+      "description": "Create engaging story videos for social media, YouTube, or educational purposes. Perfect for narrative content and storytelling."
+    },
+    "education": {
+      "title": "Educational Content",
+      "description": "Generate educational videos for courses, tutorials, and learning materials. Make complex topics easy to understand with AI-powered explanations."
+    },
+    "entertainment": {
+      "title": "Entertainment",
+      "description": "Create entertaining content for social media, streaming platforms, or promotional videos. Keep your audience engaged with dynamic AI-generated content."
+    },
+    "marketing": {
+      "title": "Marketing & Ads",
+      "description": "Produce professional marketing videos and advertisements. Create compelling campaigns that convert with AI-generated content tailored to your brand."
+    }
+  },
+  "faqs": {
+    "title": "Frequently Asked Questions",
+    "subtitle": "Everything you need to know about creating AI videos",
+    "questions": {
+      "1": {
+        "question": "What niches does Vidtory support?",
+        "answer": "Vidtory supports a wide range of niches including stories, education, entertainment, marketing, sales, training, and more. We offer specialized templates and features for each niche to help you create the perfect video."
+      },
+      "2": {
+        "question": "How does AI video generation work?",
+        "answer": "Our AI technology uses advanced algorithms to generate realistic avatars, natural voiceovers, and professional animations. Simply provide your script and choose your preferences, and our AI will create a complete video for you."
+      },
+      "3": {
+        "question": "Can I customize the AI avatars?",
+        "answer": "Yes! You can choose from hundreds of pre-made AI avatars or create custom avatars that match your brand. Customize appearance, voice, and behavior to create the perfect presenter for your content."
+      },
+      "4": {
+        "question": "What video formats can I export?",
+        "answer": "You can export your videos in multiple formats including MP4, MOV, and WebM. We support various resolutions from 720p to 4K, optimized for different platforms like YouTube, Instagram, TikTok, and more."
+      },
+      "5": {
+        "question": "Is there a limit to video length?",
+        "answer": "Free plans include videos up to 5 minutes. Premium plans support longer videos up to 30 minutes or more, depending on your subscription tier."
+      },
+      "6": {
+        "question": "Can I use Vidtory for commercial purposes?",
+        "answer": "Yes, all videos created with Vidtory can be used for commercial purposes. You own the rights to all content you generate through our platform."
+      },
+      "7": {
+        "question": "Do I need video editing experience?",
+        "answer": "No prior experience needed! Vidtory is designed to be user-friendly. Our intuitive interface and AI assistance make it easy for anyone to create professional videos, regardless of their technical background."
+      },
+      "8": {
+        "question": "How long does it take to generate a video?",
+        "answer": "Video generation typically takes 2-5 minutes depending on length and complexity. Shorter videos (under 1 minute) usually generate in under 2 minutes, while longer videos may take up to 5 minutes."
+      },
+      "9": {
+        "question": "Can I edit videos after generation?",
+        "answer": "Absolutely! Our built-in video editor allows you to make changes anytime. Edit text, swap avatars, adjust timing, add effects, and more - all without regenerating the entire video."
+      },
+      "10": {
+        "question": "What languages are supported?",
+        "answer": "Vidtory supports multiple languages for both voiceovers and subtitles. You can create videos in English, Spanish, French, German, and many other languages to reach a global audience."
+      }
+    }
+  },
+  "cta": {
+    "title": "Ready to Create Your First AI Video?",
+    "subtitle": "Join thousands of creators using Vidtory to generate professional videos",
+    "button": "Get Started Free"
+  },
+  "aiAvatar": {
+    "title": "AI Avatar",
+    "subtitle": "Realistic, Consistent, Customizable"
+  },
+  "aiPoweredVideo": {
+    "title": "AI-Powered Video",
+    "subtitle": "Edit, Generate, Amaze"
+  },
+  "brandInspiration": {
+    "title": "Get Inspired by Real Brands",
+    "cta": "Create now",
+    "loadMore": "Load more"
+  },
+  "viralVideos": {
+    "title": "100% AI-Generated Viral Marketing Videos"
+  },
+  "realAIFeatures": {
+    "title": "Real AI for video editing"
+  },
+  "statsSection": {
+    "title": "The easiest way to create product marketing videos",
+    "subtitle": "Boost your video efficienct by 5x with our web-based AI tool. No skills needed, at just 5% of the cost of a professional editor",
+    "cta": "Start for free"
+  },
+  "userReviews": {
+    "title": "Authentic User Reviews of the Product",
+    "1": {
+      "title": "Amazing AI Video Generation",
+      "content": "Vidtory has completely transformed how I create marketing videos. The AI avatars are incredibly realistic and the whole process is so easy!"
+    },
+    "2": {
+      "title": "Perfect for E-commerce",
+      "content": "As an online store owner, Vidtory helps me create product videos in minutes. The quality is professional and it saves me so much time and money."
+    },
+    "3": {
+      "title": "Game Changer for Content Creators",
+      "content": "I've tried many video creation tools, but Vidtory stands out. The AI features are top-notch and the results are always impressive. Highly recommend!"
+    },
+    "4": {
+      "title": "Best Investment for My Business",
+      "content": "The ROI from using Vidtory is incredible. I can create multiple professional videos in the time it used to take for one. The AI technology is mind-blowing!"
+    },
+    "5": {
+      "title": "Incredible Quality and Speed",
+      "content": "Vidtory produces studio-quality videos in minutes. The AI avatars look so natural and the voiceovers are perfect. This tool is a game-changer!"
+    },
+    "6": {
+      "title": "Easy to Use, Powerful Results",
+      "content": "Even without video editing experience, I can create amazing videos with Vidtory. The interface is intuitive and the AI does all the heavy lifting."
+    },
+    "7": {
+      "title": "Perfect for Social Media",
+      "content": "Creating engaging content for Instagram and TikTok has never been easier. Vidtory's templates and AI features make viral videos a reality!"
+    },
+    "8": {
+      "title": "Outstanding Customer Support",
+      "content": "Not only is the product amazing, but the support team is incredibly helpful. They helped me optimize my videos and answered all my questions quickly."
+    }
+  }
+}
+

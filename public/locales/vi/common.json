@@ -1,0 +1,22 @@
+{
+  "header": {
+    "dark_mode": "Dark Mode",
+    "light_mode": "Light Mode"
+  },
+  "footer": {
+    "information": "Information",
+    "features": "Features",
+    "privacy": "Privacy Policy",
+    "about_us": "About Us",
+    "terms": "Terms of Service",
+    "contact_us": "Contact Us",
+    "feedbacks": "Feedbacks",
+    "shadowing": "Shadowing",
+    "dictation": "Dictation",
+    "vocabulary": "Vocabulary"
+  },
+  "share": {
+    "title": "Share this page"
+  }
+}
+

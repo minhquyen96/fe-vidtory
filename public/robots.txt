@@ -1,0 +1,8 @@
+Sitemap: https://vidtory.ai/sitemap.xml
+User-Agent: *
+Allow: /
+
+User-agent: AhrefsBot
+Disallow: /
+User-agent: SemrushBot
+Disallow: /
