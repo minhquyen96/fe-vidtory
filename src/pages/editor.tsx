@@ -5,7 +5,14 @@ import { NodePalette, NodePaletteType } from '@/components/editor/NodePalette'
 import { WorkflowCanvas } from '@/components/editor/WorkflowCanvas'
 import { Inspector } from '@/components/editor/Inspector'
 import { WelcomeCard } from '@/components/editor/WelcomeCard'
-import { Node, Edge, Connection, applyNodeChanges, applyEdgeChanges, MarkerType } from 'reactflow'
+import {
+  Node,
+  Edge,
+  Connection,
+  applyNodeChanges,
+  applyEdgeChanges,
+  MarkerType,
+} from 'reactflow'
 import {
   TextInputNodeData,
   ImageInputNodeData,
@@ -116,7 +123,7 @@ export default function EditorPage() {
     setNodes((nds) => {
       // Apply changes using ReactFlow helper (more efficient)
       const updatedNodes = applyNodeChanges(changes, nds)
-      
+
       // Handle selection and removal side effects
       changes.forEach((change: any) => {
         if (change.type === 'select') {
@@ -136,15 +143,13 @@ export default function EditorPage() {
         } else if (change.type === 'remove') {
           // Remove connected edges
           setEdges((eds) =>
-            eds.filter(
-              (e) => e.source !== change.id && e.target !== change.id
-            )
+            eds.filter((e) => e.source !== change.id && e.target !== change.id)
           )
           // Clear selection if removed node was selected
           setSelectedNode((prev) => (prev?.id === change.id ? null : prev))
         }
       })
-      
+
       return updatedNodes
     })
   }, [])
@@ -237,7 +242,12 @@ export default function EditorPage() {
   }, [])
 
   return (
-    <Layout showHeader={false} showFooter={false} className="h-screen overflow-hidden">
+    <Layout
+      showHeader={false}
+      showFooter={false}
+      className="h-screen overflow-hidden"
+      noIndex
+    >
       <div className="flex flex-col h-full bg-gray-50">
         {/* Header */}
         <WorkflowHeader
@@ -308,4 +318,3 @@ export default function EditorPage() {
     </Layout>
   )
 }
-
