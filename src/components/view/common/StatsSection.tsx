@@ -28,12 +28,11 @@ export function StatsSection({ className }: StatsSectionProps) {
   return (
     <section className={cn('relative overflow-hidden bg-muted/20 py-8 sm+:py-16', className)}>
       {/* Background decorations */}
-      <div className="absolute inset-0 bg-grid-slate-100-30 [mask-image:radial-gradient(ellipse_at_center,white_60%,transparent)] dark:bg-grid-slate-700-20" />
+      <div className="absolute inset-0 bg-grid-slate-100-30   dark:bg-grid-slate-700-20" />
       
       {/* Gradient orbs */}
-      <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/8 rounded-full mix-blend-multiply filter blur-3xl opacity-50 z-0" />
-      <div className="absolute -left-40 top-1/4 w-96 h-96 bg-secondary/15 rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-blob z-0" />
-      <div className="absolute -right-40 bottom-1/4 w-96 h-96 bg-primary/15 rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-blob animation-delay-2000 z-0" />
+      <div className="absolute -left-40 top-1/4 w-96 h-96 bg-secondary/15 rounded-full  light:mix-blend-multiply filter blur-3xl opacity-50 animate-blob z-0" />
+      <div className="absolute -right-40 bottom-1/4 w-96 h-96 bg-primary/15 rounded-full  light:mix-blend-multiply filter blur-3xl opacity-50 animate-blob animation-delay-2000 z-0" />
 
       <div className="container mx-auto px-4 sm+:px-6 relative z-10">
         <div className="max-w-4xl mx-auto">

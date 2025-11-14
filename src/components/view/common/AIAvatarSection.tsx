@@ -34,12 +34,11 @@ export function AIAvatarSection({ className }: AIAvatarSectionProps) {
   return (
     <section className={cn('relative overflow-hidden bg-background py-8 sm+:py-16', className)}>
       {/* Background decorations */}
-      <div className="absolute inset-0 bg-grid-slate-100-50 [mask-image:radial-gradient(ellipse_at_center,white_70%,transparent)] dark:bg-grid-slate-700-25" />
+      <div className="absolute inset-0 bg-grid-slate-100-50 dark:bg-grid-slate-700-25" />
       
       {/* Gradient orbs */}
-      <div className="absolute -right-20 top-40 w-96 h-96 bg-secondary/15 rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-blob z-0" />
-      <div className="absolute -left-20 bottom-40 w-96 h-96 bg-primary/15 rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-blob animation-delay-2000 z-0" />
-      <div className="absolute left-1/3 top-1/4 w-64 h-64 bg-primary/12 rounded-full mix-blend-multiply filter blur-2xl opacity-40 animate-blob animation-delay-1000 z-0" />
+      <div className="absolute -right-20 top-40 w-96 h-96 bg-secondary/15 rounded-full  light:mix-blend-multiply filter blur-3xl opacity-50 animate-blob z-0" />
+      <div className="absolute -left-20 bottom-40 w-96 h-96 bg-primary/15 rounded-full  light:mix-blend-multiply filter blur-3xl opacity-50 animate-blob animation-delay-2000 z-0" />
 
       <div className="container mx-auto px-4 sm+:px-6 relative z-10">
         <div className="max-w-6xl mx-auto">

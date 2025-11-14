@@ -49,6 +49,7 @@
     "react-lazy-load-image-component": "^1.6.0",
     "react-quill": "^2.0.0",
     "react-resizable-panels": "^3.0.2",
+    "reactflow": "^11.11.4",
     "shadcn-ui": "^0.9.5",
     "swr": "^2.3.3",
     "tailwind-merge": "^3.0.2",

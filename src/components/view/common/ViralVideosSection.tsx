@@ -37,12 +37,11 @@ export function ViralVideosSection({ className }: ViralVideosSectionProps) {
   return (
     <section className={cn('relative overflow-hidden bg-muted/20 py-8 sm+:py-16', className)}>
       {/* Background decorations */}
-      <div className="absolute inset-0 bg-grid-slate-100-30 [mask-image:radial-gradient(ellipse_at_center,white_60%,transparent)] dark:bg-grid-slate-700-20" />
+      <div className="absolute inset-0 bg-grid-slate-100-30   dark:bg-grid-slate-700-20" />
       
       {/* Gradient orbs */}
-      <div className="absolute left-1/3 top-20 w-80 h-80 bg-secondary/15 rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-blob z-0" />
-      <div className="absolute right-1/3 bottom-20 w-80 h-80 bg-primary/15 rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-blob animation-delay-2000 z-0" />
-      <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-secondary/12 rounded-full mix-blend-multiply filter blur-2xl opacity-40 animate-blob animation-delay-1000 z-0" />
+      <div className="absolute left-1/3 top-20 w-80 h-80 bg-secondary/15 rounded-full  light:mix-blend-multiply filter blur-3xl opacity-50 animate-blob z-0" />
+      <div className="absolute right-1/3 bottom-20 w-80 h-80 bg-primary/15 rounded-full  light:mix-blend-multiply filter blur-3xl opacity-50 animate-blob animation-delay-2000 z-0" />
 
       <div className="container mx-auto px-4 sm+:px-6 relative z-10">
         <div className="max-w-6xl mx-auto">

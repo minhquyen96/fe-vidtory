@@ -373,3 +373,7 @@ body {
 .animation-delay-5000 {
   animation-delay: 5s;
 }
+
+.react-flow__attribution {
+  display: none;
+}

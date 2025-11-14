@@ -22,8 +22,8 @@ export function LogoWall({ className }: LogoWallProps) {
       <div className="absolute inset-0 bg-grid-slate-100-30 [mask-image:radial-gradient(ellipse_at_center,white_50%,transparent)] dark:bg-grid-slate-700-20" />
       
       {/* Gradient orbs */}
-      <div className="absolute left-1/4 top-1/2 -translate-y-1/2 w-80 h-80 bg-primary/12 rounded-full mix-blend-multiply filter blur-3xl opacity-40 animate-blob z-0" />
-      <div className="absolute right-1/4 top-1/2 -translate-y-1/2 w-80 h-80 bg-secondary/12 rounded-full mix-blend-multiply filter blur-3xl opacity-40 animate-blob animation-delay-2000 z-0" />
+      <div className="absolute left-1/4 top-1/2 -translate-y-1/2 w-80 h-80 bg-primary/12 rounded-full  light:mix-blend-multiply filter blur-3xl opacity-40 animate-blob z-0" />
+      <div className="absolute right-1/4 top-1/2 -translate-y-1/2 w-80 h-80 bg-secondary/12 rounded-full  light:mix-blend-multiply filter blur-3xl opacity-40 animate-blob animation-delay-2000 z-0" />
 
       <div className="container mx-auto px-4 sm+:px-6 relative z-10">
         <div className="relative">
