@@ -76,15 +76,14 @@ export function NodePalette({ onAddNode }: NodePaletteProps) {
               onClick={() => onAddNode(nodeType.type)}
               className={cn(
                 'w-full text-left p-3 rounded-lg border border-gray-200',
-                'hover:border-blue-300 hover:bg-blue-50',
                 'transition-colors cursor-pointer',
-                'group'
+                'group hover:border-[rgb(171,223,0)] hover:bg-[rgba(171,223,0,0.05)]'
               )}
             >
               <div className="flex items-start gap-3">
                 <div className="mt-0.5">
-                  <div className="w-8 h-8 rounded-lg bg-gray-100 group-hover:bg-blue-100 flex items-center justify-center transition-colors">
-                    <Icon className="w-4 h-4 text-gray-600 group-hover:text-blue-600" />
+                  <div className="w-8 h-8 rounded-lg bg-gray-100 group-hover:bg-[rgba(171,223,0,0.1)] flex items-center justify-center transition-colors">
+                    <Icon className="w-4 h-4 text-gray-600 group-hover:text-[rgb(171,223,0)] transition-colors" />
                   </div>
                 </div>
                 <div className="flex-1 min-w-0">
