@@ -1,4 +1,5 @@
 import React, { useState, useCallback, useMemo } from 'react'
+import { nanoid } from 'nanoid'
 import { Layout } from '@/components/layout/Layout'
 import { WorkflowHeader } from '@/components/editor/WorkflowHeader'
 import { NodePalette, NodePaletteType } from '@/components/editor/NodePalette'
@@ -22,6 +23,16 @@ import {
   VideoGenNodeData,
   PreviewNodeData,
 } from '@/components/editor/nodes'
+
+// Helper function to generate unique IDs using nanoid
+const generateNodeId = (): string => {
+  return `node-${nanoid()}`
+}
+
+const generateEdgeId = (source: string, target: string, sourceHandle?: string | null, targetHandle?: string | null): string => {
+  const handlePart = sourceHandle && targetHandle ? `-${sourceHandle}-${targetHandle}` : ''
+  return `edge-${source}-${target}${handlePart}-${nanoid()}`
+}
 
 export default function EditorPage() {
   const [nodes, setNodes] = useState<Node[]>([])
@@ -94,7 +105,8 @@ export default function EditorPage() {
 
   const handleAddNode = useCallback(
     (type: NodePaletteType) => {
-      const newNodeId = `node-${++nodeIdCounter.current}`
+      nodeIdCounter.current += 1
+      const newNodeId = generateNodeId()
       const nodeType = getNodeType(type)
       const defaultData = getDefaultData(type)
       const label = getNodeLabel(type)
@@ -160,21 +172,27 @@ export default function EditorPage() {
   }, [])
 
   const handleConnect = useCallback((connection: Connection) => {
+    const primaryColor = 'rgb(171, 223, 0)' // Primary color from globals.css
     const newEdge: Edge = {
-      id: `edge-${connection.source}-${connection.target}`,
+      id: generateEdgeId(
+        connection.source!,
+        connection.target!,
+        connection.sourceHandle,
+        connection.targetHandle
+      ),
       source: connection.source!,
       target: connection.target!,
       sourceHandle: connection.sourceHandle,
       targetHandle: connection.targetHandle,
       type: 'smoothstep',
       style: {
-        stroke: '#6366f1', // Purple default
+        stroke: primaryColor,
         strokeWidth: 2,
         strokeDasharray: '5 5', // Dashed line
       },
       markerEnd: {
         type: MarkerType.ArrowClosed,
-        color: '#6366f1',
+        color: primaryColor,
       },
     }
     setEdges((eds) => [...eds, newEdge])
@@ -204,6 +222,124 @@ export default function EditorPage() {
     setSelectedNode(null)
   }, [])
 
+  const handleSave = useCallback(() => {
+    try {
+      const workflowData = {
+        version: '1.0.0',
+        nodes: nodes.map((node) => ({
+          id: node.id,
+          type: node.type,
+          position: node.position,
+          data: node.data,
+        })),
+        edges: edges.map((edge) => ({
+          id: edge.id,
+          source: edge.source,
+          target: edge.target,
+          sourceHandle: edge.sourceHandle,
+          targetHandle: edge.targetHandle,
+          type: edge.type,
+          style: edge.style,
+          markerEnd: edge.markerEnd,
+        })),
+      }
+
+      const jsonString = JSON.stringify(workflowData, null, 2)
+      const blob = new Blob([jsonString], { type: 'application/json' })
+      const url = URL.createObjectURL(blob)
+      const link = document.createElement('a')
+      link.href = url
+      link.download = `workflow-${new Date().toISOString().split('T')[0]}.json`
+      document.body.appendChild(link)
+      link.click()
+      document.body.removeChild(link)
+      URL.revokeObjectURL(url)
+    } catch (error) {
+      console.error('Error saving workflow:', error)
+      alert('Failed to save workflow. Please try again.')
+    }
+  }, [nodes, edges])
+
+  const handleLoad = useCallback(() => {
+    try {
+      const input = document.createElement('input')
+      input.type = 'file'
+      input.accept = 'application/json'
+      input.onchange = (e) => {
+        const file = (e.target as HTMLInputElement).files?.[0]
+        if (!file) return
+
+        const reader = new FileReader()
+        reader.onload = (event) => {
+          try {
+            const jsonString = event.target?.result as string
+            const workflowData = JSON.parse(jsonString)
+
+            // Validate workflow data structure
+            if (!workflowData.nodes || !Array.isArray(workflowData.nodes)) {
+              throw new Error('Invalid workflow format: missing nodes array')
+            }
+            if (!workflowData.edges || !Array.isArray(workflowData.edges)) {
+              throw new Error('Invalid workflow format: missing edges array')
+            }
+
+            // Restore nodes
+            const restoredNodes: Node[] = workflowData.nodes.map((node: any) => ({
+              id: node.id,
+              type: node.type || 'textInput',
+              position: node.position || { x: 0, y: 0 },
+              data: node.data || {},
+            }))
+
+            // Restore edges - keep original IDs if they exist, otherwise generate new ones
+            const restoredEdges: Edge[] = workflowData.edges.map((edge: any) => {
+              const primaryColor = 'rgb(171, 223, 0)'
+              return {
+                id: edge.id || generateEdgeId(
+                  edge.source,
+                  edge.target,
+                  edge.sourceHandle,
+                  edge.targetHandle
+                ),
+                source: edge.source,
+                target: edge.target,
+                sourceHandle: edge.sourceHandle,
+                targetHandle: edge.targetHandle,
+                type: edge.type || 'smoothstep',
+                style: edge.style || {
+                  stroke: primaryColor,
+                  strokeWidth: 2,
+                  strokeDasharray: '5 5',
+                },
+                markerEnd: edge.markerEnd || {
+                  type: MarkerType.ArrowClosed,
+                  color: primaryColor,
+                },
+              }
+            })
+
+            // Update state
+            setNodes(restoredNodes)
+            setEdges(restoredEdges)
+            setSelectedNode(null)
+
+            // Update nodeIdCounter based on number of restored nodes
+            // Since we're using nanoid now, we just need to ensure counter is higher than node count
+            nodeIdCounter.current = Math.max(nodeIdCounter.current, restoredNodes.length)
+          } catch (error) {
+            console.error('Error loading workflow:', error)
+            alert('Failed to load workflow. Please check the file format.')
+          }
+        }
+        reader.readAsText(file)
+      }
+      input.click()
+    } catch (error) {
+      console.error('Error opening file dialog:', error)
+      alert('Failed to open file dialog. Please try again.')
+    }
+  }, [])
+
   const handleNodeClick = useCallback((event: React.MouseEvent, node: Node) => {
     setSelectedNode(node)
   }, [])
@@ -217,7 +353,8 @@ export default function EditorPage() {
     setNodes((nds) => {
       const nodeToDuplicate = nds.find((n) => n.id === nodeId)
       if (nodeToDuplicate) {
-        const newNodeId = `node-${++nodeIdCounter.current}`
+        nodeIdCounter.current += 1
+        const newNodeId = generateNodeId()
         const newNode: Node = {
           ...nodeToDuplicate,
           id: newNodeId,
@@ -256,14 +393,8 @@ export default function EditorPage() {
             console.log('Load example')
           }}
           onClear={handleClear}
-          onLoad={() => {
-            // TODO: Implement load
-            console.log('Load')
-          }}
-          onSave={() => {
-            // TODO: Implement save
-            console.log('Save')
-          }}
+          onLoad={handleLoad}
+          onSave={handleSave}
           onRunWorkflow={() => {
             // TODO: Implement run workflow
             console.log('Run workflow')

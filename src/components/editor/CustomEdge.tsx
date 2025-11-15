@@ -35,13 +35,44 @@ export function CustomEdge({
     [id, deleteElements]
   )
 
-  // Determine edge color and style based on state
-  const edgeColor = selected ? '#2563eb' : isHovered ? '#3b82f6' : '#6366f1'
-  const strokeWidth = selected ? 4 : isHovered ? 3 : 2
+  // Determine edge color and style based on state - using primary color
+  const primaryColor = 'rgb(171, 223, 0)' // Primary color from globals.css
+  const edgeColor = selected 
+    ? primaryColor 
+    : isHovered 
+      ? `rgba(171, 223, 0, 0.7)` 
+      : `rgba(171, 223, 0, 1)`
+  const strokeWidth = selected ? 4 : isHovered ? 4.5 : 3.5
   const strokeDasharray = selected ? 'none' : isHovered ? '8 4' : '5 5'
+
+  // Always show arrow at the end - use default ReactFlow arrow marker
+  // ReactFlow automatically creates arrow markers, we just need to reference them
+  const arrowMarkerId = 'react-flow__arrowclosed'
 
   return (
     <>
+      {/* Define custom arrow marker with dynamic color */}
+      <defs>
+        <marker
+          id={`arrow-${id}`}
+          markerWidth="12.5"
+          markerHeight="12.5"
+          viewBox="-10 -10 20 20"
+          markerUnits="strokeWidth"
+          orient="auto"
+          refX="0"
+          refY="0"
+        >
+          <polyline
+            points="-5,-5 0,0 -5,5"
+            fill="none"
+            stroke={edgeColor}
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </marker>
+      </defs>
       <path
         id={id}
         style={{
@@ -53,13 +84,7 @@ export function CustomEdge({
         }}
         className="react-flow__edge-path"
         d={edgePath}
-        markerEnd={
-          markerEnd
-            ? typeof markerEnd === 'string'
-              ? `url(#${markerEnd})`
-              : `url(#react-flow__arrowclosed)`
-            : undefined
-        }
+        markerEnd={`url(#arrow-${id})`}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       />

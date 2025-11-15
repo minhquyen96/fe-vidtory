@@ -36,6 +36,7 @@ export const BaseNode = React.memo(
     handles = [],
   }: BaseNodeProps) {
     const [isHovered, setIsHovered] = useState(false)
+    const [hoveredHandleId, setHoveredHandleId] = useState<string | null>(null)
     const hoverTimeoutRef = useRef<NodeJS.Timeout | null>(null)
 
     const handleMouseEnter = useCallback(() => {
@@ -72,19 +73,24 @@ export const BaseNode = React.memo(
       }
     }, [])
 
-  return (
-    <div
-      className={cn(
-        'bg-white rounded-lg border-2 shadow-sm w-[320px] transition-colors',
-        selected
-          ? 'border-blue-600 shadow-md'
-          : isHovered
-            ? 'border-blue-300 bg-gray-50'
-            : 'border-gray-200'
-      )}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-    >
+    return (
+      <div
+        className={cn(
+          'bg-white rounded-lg border-2 shadow-sm w-[320px] transition-colors',
+          selected ? 'shadow-md' : isHovered ? 'bg-gray-50' : ''
+        )}
+        style={{
+          borderColor: selected
+            ? 'rgb(171, 223, 0)' // Primary color for selected
+            : isHovered
+              ? 'rgba(171, 223, 0, 0.5)' // Primary color with opacity for hover
+              : 'rgb(229, 231, 235)', // gray-200
+          transition:
+            'border-color 0.2s ease-in-out, background-color 0.2s ease-in-out',
+        }}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+      >
         {/* Header - Only this part is draggable */}
         <NodeHeader
           title={title}
@@ -99,36 +105,51 @@ export const BaseNode = React.memo(
           onActionBarLeave={handleActionBarLeave}
         />
 
-      {/* Content - Not draggable, cursor default */}
-      <div
-        className="nodrag [&_*:not(input):not(textarea):not(button)]:cursor-default"
-        style={{ cursor: 'default' }}
-      >
-        {children}
-      </div>
+        {/* Content - Not draggable, cursor default */}
+        <div
+          className="nodrag [&_*:not(input):not(textarea):not(button)]:cursor-default"
+          style={{ cursor: 'default' }}
+        >
+          {children}
+        </div>
 
-      {/* Handles */}
-      {handles.map((handle, index) => {
-        // Determine color based on type
-        const handleColor = handle.type === 'target' 
-          ? '#3b82f6' // Blue for input (left)
-          : '#22c55e' // Green for output (right)
-        
-        return (
-          <Handle
-            key={handle.id || index}
-            type={handle.type}
-            position={handle.position}
-            id={handle.id}
-            className={handle.className || 'w-3 h-3'}
-            style={{
-              ...handle.style,
-              backgroundColor: handleColor,
-              border: `2px solid ${handleColor}`,
-            }}
-          />
-        )
-      })}
+        {/* Handles */}
+        {handles.map((handle, index) => {
+          // Determine color based on type
+          const handleColor =
+            handle.type === 'target'
+              ? '#3b82f6' // Blue for input (left)
+              : '#22c55e' // Green for output (right)
+
+          const handleId = handle.id || `${handle.type}-${index}`
+          const isHandleHovered = hoveredHandleId === handleId
+
+          return (
+            <Handle
+              key={handleId}
+              type={handle.type}
+              position={handle.position}
+              id={handle.id}
+              className={cn(
+                handle.className || 'w-3 h-3',
+                'cursor-crosshair'
+              )}
+              style={{
+                ...handle.style,
+                backgroundColor: handleColor,
+                border: `2px solid ${handleColor}`,
+                transform: isHandleHovered ? 'scale(1.5)' : 'scale(1)',
+                transition: 'transform 0.2s ease-in-out',
+                zIndex: isHandleHovered ? 50 : 10,
+                // Increase hit area with padding (invisible but clickable)
+                padding: '4px',
+                margin: '-4px',
+              }}
+              onMouseEnter={() => setHoveredHandleId(handleId)}
+              onMouseLeave={() => setHoveredHandleId(null)}
+            />
+          )
+        })}
       </div>
     )
   },

@@ -34,7 +34,7 @@ export function NodeHeader({
       <div
         data-action-bar
         className={cn(
-          'absolute -top-12 left-0 right-0 flex items-center justify-center gap-1 z-[100] transition-opacity duration-200',
+          'absolute -top-14 left-0 right-0 flex items-center justify-center z-[100] transition-opacity duration-200',
           showActions
             ? 'opacity-100 pointer-events-auto'
             : 'opacity-0 pointer-events-none'
@@ -46,40 +46,43 @@ export function NodeHeader({
           onActionBarLeave?.()
         }}
       >
-        <Button
-          size="sm"
-          variant="default"
-          className="h-7 px-2 bg-gray-900 hover:bg-gray-800 text-white text-xs"
-          onClick={(e) => {
-            e.stopPropagation()
-            onRun?.()
-          }}
-        >
-          <Play className="w-3 h-3 mr-1" />
-          Run
-        </Button>
-        <Button
-          size="sm"
-          variant="outline"
-          className="h-7 w-7 p-0 bg-white hover:bg-gray-50"
-          onClick={(e) => {
-            e.stopPropagation()
-            onDuplicate?.()
-          }}
-        >
-          <Copy className="w-3 h-3" />
-        </Button>
-        <Button
-          size="sm"
-          variant="outline"
-          className="h-7 w-7 p-0 bg-white hover:bg-gray-50"
-          onClick={(e) => {
-            e.stopPropagation()
-            onDelete?.()
-          }}
-        >
-          <Trash2 className="w-3 h-3" />
-        </Button>
+        {/* Container with background and shadow */}
+        <div className="flex items-center gap-1 bg-gray-200 rounded-lg px-2 py-1.5 shadow-md">
+          <Button
+            size="sm"
+            variant="outline"
+            className="h-7 px-2 bg-white border-gray-300 text-gray-900 text-xs font-medium"
+            onClick={(e) => {
+              e.stopPropagation()
+              onRun?.()
+            }}
+          >
+            <Play className="w-3 h-3 mr-1 fill-black" />
+            Run
+          </Button>
+          <Button
+            size="sm"
+            variant="outline"
+            className="h-7 w-7 p-0 bg-white border-gray-300"
+            onClick={(e) => {
+              e.stopPropagation()
+              onDuplicate?.()
+            }}
+          >
+            <Copy className="w-3 h-3" />
+          </Button>
+          <Button
+            size="sm"
+            variant="outline"
+            className="h-7 w-7 p-0 bg-white border-gray-300"
+            onClick={(e) => {
+              e.stopPropagation()
+              onDelete?.()
+            }}
+          >
+            <Trash2 className="w-3 h-3 text-red-500" />
+          </Button>
+        </div>
       </div>
 
       {/* Node Header - Only this part is draggable */}
@@ -117,7 +120,7 @@ export function NodeHeader({
               onRun?.()
             }}
           >
-            <Play className="w-3 h-3 text-blue-600" />
+            <Play className="w-3 h-3" style={{ color: 'rgb(171, 223, 0)' }} />
           </Button>
         </div>
       </div>

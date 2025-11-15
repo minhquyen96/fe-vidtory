@@ -228,7 +228,7 @@ export function WorkflowCanvas({
         <MiniMap
           nodeColor={(node) => {
             if (node.selected) {
-              return '#2563eb' // Blue for selected
+              return 'rgb(171, 223, 0)' // Primary color for selected
             }
             return '#e5e7eb' // Gray for normal
           }}

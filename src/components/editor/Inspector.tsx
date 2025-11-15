@@ -297,7 +297,7 @@ export function Inspector({
         <div className="p-4 border-t border-gray-200">
           <Button
             onClick={() => onRunNode?.(selectedNode.id)}
-            className="w-full bg-blue-600 hover:bg-blue-700"
+            className="w-full"
           >
             <Play className="w-4 h-4 mr-2" />
             Run This Node
