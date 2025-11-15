@@ -10,6 +10,7 @@ export interface ImageGenNodeData {
   resolution: string
   model: string
   aspectRatio: string
+  variants?: number
   label?: string
 }
 
@@ -45,35 +46,42 @@ export function ImageGenNode({
         {
           type: 'target',
           position: Position.Left,
+          id: 'prompt',
           className: 'w-3 h-3 bg-blue-500',
           style: { top: '25%' },
+          label: 'Prompt (text)',
         },
         {
           type: 'target',
           position: Position.Left,
-          id: 'analysis',
+          id: 'styleBrand',
           className: 'w-3 h-3 bg-blue-500',
           style: { top: '50%' },
+          label: 'Style/Brand (brand-guide)',
         },
         {
           type: 'target',
           position: Position.Left,
-          id: 'brand',
+          id: 'reference',
           className: 'w-3 h-3 bg-blue-500',
           style: { top: '75%' },
+          label: 'Reference (image)',
         },
         {
           type: 'source',
           position: Position.Right,
+          id: 'generatedImage',
           className: 'w-3 h-3 bg-green-500',
           style: { top: '30%' },
+          label: 'Generated Image (image)',
         },
         {
           type: 'source',
           position: Position.Right,
-          id: 'output',
+          id: 'metadata',
           className: 'w-3 h-3 bg-green-500',
           style: { top: '70%' },
+          label: 'Metadata (structured)',
         },
       ]}
     >

@@ -2,6 +2,8 @@ import React from 'react'
 import { Lightbulb, Trash2, FolderOpen, Save, Play } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
+import { CustomIcon } from '../ui/custom-icon'
+import LogoIcon from '@/assets/icons/logo.svg'
 
 interface WorkflowHeaderProps {
   onLoadExample?: () => void
@@ -22,8 +24,9 @@ export function WorkflowHeader({
     <header className="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-6">
       {/* Left side - Logo and Title */}
       <div className="flex items-center gap-4">
-        <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-purple-500 to-blue-500 flex items-center justify-center">
-          <span className="text-white font-bold text-lg">AI</span>
+        <div className="flex items-center justify-center">
+          {/* <span className="text-white font-bold text-lg">AI</span> */}
+          <CustomIcon icon={LogoIcon} className="w-32 h-10" />
         </div>
         <div>
           <h1 className="text-lg font-bold text-gray-900">AI Workflow Builder</h1>

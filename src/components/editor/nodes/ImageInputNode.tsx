@@ -60,6 +60,7 @@ export function ImageInputNode({
           id: 'image',
           className: 'w-3 h-3 bg-green-500',
           style: { top: '30%' },
+          label: 'Image (image)',
         },
         {
           type: 'source',
@@ -67,6 +68,7 @@ export function ImageInputNode({
           id: 'analysis',
           className: 'w-3 h-3 bg-green-500',
           style: { top: '70%' },
+          label: 'Analysis (structured)',
         },
       ]}
     >

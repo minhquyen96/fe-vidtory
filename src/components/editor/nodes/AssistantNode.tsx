@@ -8,6 +8,9 @@ export interface AssistantNodeData {
   model: string
   systemPrompt?: string
   label?: string
+  preset?: string
+  systemInstruction?: string
+  brief?: string
 }
 
 interface AssistantNodeProps extends NodeProps<AssistantNodeData> {
@@ -42,12 +45,34 @@ export function AssistantNode({
         {
           type: 'target',
           position: Position.Left,
+          id: 'context',
           className: 'w-3 h-3 bg-blue-500',
+          style: { top: '50%' },
+          label: 'Context (any)',
         },
         {
           type: 'source',
           position: Position.Right,
+          id: 'prompt',
           className: 'w-3 h-3 bg-green-500',
+          style: { top: '25%' },
+          label: 'Prompt (text)',
+        },
+        {
+          type: 'source',
+          position: Position.Right,
+          id: 'storyboard',
+          className: 'w-3 h-3 bg-green-500',
+          style: { top: '50%' },
+          label: 'Storyboard (structured)',
+        },
+        {
+          type: 'source',
+          position: Position.Right,
+          id: 'script',
+          className: 'w-3 h-3 bg-green-500',
+          style: { top: '75%' },
+          label: 'Script (text)',
         },
       ]}
     >

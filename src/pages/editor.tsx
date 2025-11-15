@@ -63,8 +63,14 @@ export default function EditorPage() {
   const getDefaultData = (paletteType: NodePaletteType): any => {
     switch (paletteType) {
       case 'text-link':
-      case 'data-input':
         return { text: '', mode: 'text' } as TextInputNodeData
+      case 'data-input':
+        return { 
+          text: '', 
+          mode: 'text',
+          isDataInput: true,
+          fields: [] 
+        } as TextInputNodeData & { isDataInput: boolean; fields: any[] }
       case 'upload-image':
         return { imageUrl: undefined } as ImageInputNodeData
       case 'upload-video':
@@ -73,14 +79,18 @@ export default function EditorPage() {
         return {
           text: '',
           model: 'gemini-1',
+          preset: 'image-prompt',
+          systemInstruction: 'You are a creative AI assistant helping to generate visual content.',
+          brief: '',
         } as AssistantNodeData
       case 'image-gen':
         return {
           upscale: true,
           scale: '2x',
           resolution: '2k',
-          model: 'gemini-1',
-          aspectRatio: '4:3',
+          model: 'flux-pro',
+          aspectRatio: '1:1',
+          variants: 1,
         } as ImageGenNodeData
       case 'video-gen':
         return {
@@ -225,6 +235,170 @@ export default function EditorPage() {
   const handleClear = useCallback(() => {
     setNodes([])
     setEdges([])
+    setSelectedNode(null)
+  }, [])
+
+  const handleLoadExample = useCallback(() => {
+    const primaryColor = 'rgb(171, 223, 0)'
+    
+    // Create sample nodes
+    const sampleNodes: Node[] = [
+      // Upload Image (top left)
+      {
+        id: generateNodeId(),
+        type: 'imageInput',
+        position: { x: 100, y: 100 },
+        data: {
+          label: 'Upload Image',
+        },
+      },
+      // Brand Guide / Data Input (bottom left)
+      {
+        id: generateNodeId(),
+        type: 'textInput',
+        position: { x: 100, y: 400 },
+        data: {
+          label: 'Brand Guide',
+          isDataInput: true,
+          fields: [
+            {
+              id: nanoid(),
+              label: 'Brand Name',
+              type: 'text',
+              defaultValue: '',
+            },
+            {
+              id: nanoid(),
+              label: 'Primary Color',
+              type: 'color',
+              defaultValue: '#2A66F4',
+            },
+          ],
+        },
+      },
+      // AI Assistant (middle)
+      {
+        id: generateNodeId(),
+        type: 'assistant',
+        position: { x: 500, y: 200 },
+        data: {
+          label: 'AI Assistant',
+          preset: 'image-prompt',
+          systemInstruction: 'You are a creative AI assistant helping to generate visual content.',
+          brief: '',
+        },
+      },
+      // Image Generation (right)
+      {
+        id: generateNodeId(),
+        type: 'imageGen',
+        position: { x: 900, y: 200 },
+        data: {
+          label: 'Image Generation',
+          model: 'flux-pro',
+          aspectRatio: '1:1',
+          variants: 1,
+        },
+      },
+    ]
+
+    // Create sample edges
+    const sampleEdges: Edge[] = [
+      // Upload Image -> AI Assistant (image port -> context port)
+      {
+        id: generateEdgeId(sampleNodes[0].id, sampleNodes[2].id, 'image', 'context'),
+        source: sampleNodes[0].id,
+        target: sampleNodes[2].id,
+        sourceHandle: 'image',
+        targetHandle: 'context',
+        type: 'smoothstep',
+        style: {
+          stroke: primaryColor,
+          strokeWidth: 2,
+          strokeDasharray: '5 5',
+        },
+        markerEnd: {
+          type: MarkerType.ArrowClosed,
+          color: primaryColor,
+        },
+      },
+      // Brand Guide -> AI Assistant (data port -> context port)
+      {
+        id: generateEdgeId(sampleNodes[1].id, sampleNodes[2].id, 'data', 'context'),
+        source: sampleNodes[1].id,
+        target: sampleNodes[2].id,
+        sourceHandle: 'data',
+        targetHandle: 'context',
+        type: 'smoothstep',
+        style: {
+          stroke: primaryColor,
+          strokeWidth: 2,
+          strokeDasharray: '5 5',
+        },
+        markerEnd: {
+          type: MarkerType.ArrowClosed,
+          color: primaryColor,
+        },
+      },
+      // AI Assistant -> Image Generation (prompt -> prompt)
+      {
+        id: generateEdgeId(sampleNodes[2].id, sampleNodes[3].id, 'prompt', 'prompt'),
+        source: sampleNodes[2].id,
+        target: sampleNodes[3].id,
+        sourceHandle: 'prompt',
+        targetHandle: 'prompt',
+        type: 'smoothstep',
+        style: {
+          stroke: primaryColor,
+          strokeWidth: 2,
+          strokeDasharray: '5 5',
+        },
+        markerEnd: {
+          type: MarkerType.ArrowClosed,
+          color: primaryColor,
+        },
+      },
+      // AI Assistant -> Image Generation (storyboard -> styleBrand)
+      {
+        id: generateEdgeId(sampleNodes[2].id, sampleNodes[3].id, 'storyboard', 'styleBrand'),
+        source: sampleNodes[2].id,
+        target: sampleNodes[3].id,
+        sourceHandle: 'storyboard',
+        targetHandle: 'styleBrand',
+        type: 'smoothstep',
+        style: {
+          stroke: primaryColor,
+          strokeWidth: 2,
+          strokeDasharray: '5 5',
+        },
+        markerEnd: {
+          type: MarkerType.ArrowClosed,
+          color: primaryColor,
+        },
+      },
+      // AI Assistant -> Image Generation (script -> reference)
+      {
+        id: generateEdgeId(sampleNodes[2].id, sampleNodes[3].id, 'script', 'reference'),
+        source: sampleNodes[2].id,
+        target: sampleNodes[3].id,
+        sourceHandle: 'script',
+        targetHandle: 'reference',
+        type: 'smoothstep',
+        style: {
+          stroke: primaryColor,
+          strokeWidth: 2,
+          strokeDasharray: '5 5',
+        },
+        markerEnd: {
+          type: MarkerType.ArrowClosed,
+          color: primaryColor,
+        },
+      },
+    ]
+
+    // Load sample workflow
+    setNodes(sampleNodes)
+    setEdges(sampleEdges)
     setSelectedNode(null)
   }, [])
 
@@ -403,10 +577,7 @@ export default function EditorPage() {
       <div className="flex flex-col h-full bg-gray-50">
         {/* Header */}
         <WorkflowHeader
-          onLoadExample={() => {
-            // TODO: Implement load example
-            console.log('Load example')
-          }}
+          onLoadExample={handleLoadExample}
           onClear={handleClear}
           onLoad={handleLoad}
           onSave={handleSave}
@@ -439,10 +610,7 @@ export default function EditorPage() {
             {/* Welcome Card - Show when canvas is empty */}
             {nodes.length === 0 && (
               <WelcomeCard
-                onLoadExample={() => {
-                  // TODO: Implement load example functionality
-                  console.log('Load example clicked')
-                }}
+                onLoadExample={handleLoadExample}
               />
             )}
           </div>

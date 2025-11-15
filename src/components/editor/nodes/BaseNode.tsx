@@ -19,6 +19,7 @@ interface BaseNodeProps {
     id?: string
     className?: string
     style?: React.CSSProperties
+    label?: string
   }[]
 }
 
@@ -75,7 +76,7 @@ export function BaseNode({
   return (
     <div
       className={cn(
-        'bg-white rounded-lg border-2 shadow-sm w-[320px] transition-colors',
+        'bg-white rounded-lg border-2 shadow-sm w-[320px] transition-colors relative',
         selected ? 'shadow-md' : isHovered ? 'bg-gray-50' : ''
       )}
       style={{
@@ -86,6 +87,7 @@ export function BaseNode({
             : 'rgb(229, 231, 235)', // gray-200
         transition:
           'border-color 0.2s ease-in-out, background-color 0.2s ease-in-out',
+        overflow: 'visible', // Allow labels to overflow
       }}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
@@ -122,13 +124,51 @@ export function BaseNode({
 
         const handleId = handle.id || `${handle.type}-${index}`
         const isHandleHovered = hoveredHandleId === handleId
+        const hasLabel = handle.label && handle.label.trim() !== ''
+
+        // Get handle's custom position (if any)
+        const handleTop = handle.style?.top
+        const handleLeft = handle.style?.left
+
+        // Calculate label position based on handle position
+        const getLabelStyle = () => {
+          if (handle.position === Position.Right) {
+            // Right side - label to the right of handle, 16px away
+            return {
+              left: 'calc(100% + 16px)',
+              top: handleTop || '50%',
+              transform: 'translateY(-50%)',
+            }
+          } else if (handle.position === Position.Left) {
+            // Left side - label to the left of handle, 16px away
+            return {
+              right: 'calc(100% + 16px)',
+              top: handleTop || '50%',
+              transform: 'translateY(-50%)',
+            }
+          } else if (handle.position === Position.Top) {
+            // Top - label above handle, 16px away
+            return {
+              bottom: 'calc(100% + 16px)',
+              left: handleLeft || '50%',
+              transform: 'translateX(-50%)',
+            }
+          } else {
+            // Bottom - label below handle, 16px away
+            return {
+              top: 'calc(100% + 16px)',
+              left: handleLeft || '50%',
+              transform: 'translateX(-50%)',
+            }
+          }
+        }
 
         return (
           <Handle
             key={handleId}
             type={handle.type}
             position={handle.position}
-            id={handle.id}
+            id={handle.id || handleId}
             className={cn(handle.className || 'w-3 h-3', 'cursor-crosshair')}
             style={{
               ...handle.style,
@@ -144,6 +184,76 @@ export function BaseNode({
             onMouseEnter={() => setHoveredHandleId(handleId)}
             onMouseLeave={() => setHoveredHandleId(null)}
           />
+        )
+      })}
+      
+      {/* Port Labels - Render separately to avoid interfering with Handle interaction */}
+      {handles.map((handle, index) => {
+        const handleColor =
+          handle.type === 'target'
+            ? '#3b82f6' // Blue for input (left)
+            : '#22c55e' // Green for output (right)
+
+        const handleId = handle.id || `${handle.type}-${index}`
+        const isHandleHovered = hoveredHandleId === handleId
+        const hasLabel = handle.label && handle.label.trim() !== ''
+        const handleTop = handle.style?.top
+        const handleLeft = handle.style?.left
+
+        const getLabelStyle = () => {
+          if (handle.position === Position.Right) {
+            return {
+              left: 'calc(100% + 16px)',
+              top: handleTop || '50%',
+              transform: 'translateY(-50%)',
+            }
+          } else if (handle.position === Position.Left) {
+            return {
+              right: 'calc(100% + 16px)',
+              top: handleTop || '50%',
+              transform: 'translateY(-50%)',
+            }
+          } else if (handle.position === Position.Top) {
+            return {
+              bottom: 'calc(100% + 16px)',
+              left: handleLeft || '50%',
+              transform: 'translateX(-50%)',
+            }
+          } else {
+            return {
+              top: 'calc(100% + 16px)',
+              left: handleLeft || '50%',
+              transform: 'translateX(-50%)',
+            }
+          }
+        }
+
+        // Show label when hovering the node
+        if (!hasLabel || !isHovered) {
+          return null
+        }
+
+        return (
+          <div
+            key={`label-${handleId}`}
+            className="absolute pointer-events-none"
+            style={{
+              ...getLabelStyle(),
+              pointerEvents: 'none',
+              zIndex: 0,
+            }}
+          >
+            <div
+              className="px-2 py-1 rounded-md text-xs font-medium text-white whitespace-nowrap pointer-events-none"
+              style={{
+                backgroundColor: handleColor,
+                pointerEvents: 'none',
+                userSelect: 'none',
+              }}
+            >
+              {handle.label}
+            </div>
+          </div>
         )
       })}
     </div>

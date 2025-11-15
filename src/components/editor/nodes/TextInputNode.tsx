@@ -1,13 +1,21 @@
 import React from 'react'
 import { Position, NodeProps } from 'reactflow'
 import { Textarea } from '@/components/ui/textarea'
-import { FileText } from 'lucide-react'
+import { Input } from '@/components/ui/input'
+import { FileText, Database } from 'lucide-react'
 import { BaseNode } from './BaseNode'
 
 export interface TextInputNodeData {
   text: string
   label?: string
   mode?: string
+  isDataInput?: boolean
+  fields?: Array<{
+    id: string
+    label: string
+    type: string
+    defaultValue: string
+  }>
 }
 
 interface TextInputNodeProps extends NodeProps<TextInputNodeData> {
@@ -37,31 +45,113 @@ export function TextInputNode({
     }
   }
 
+  const handleFieldValueChange = (fieldId: string, value: string) => {
+    if (!data.fields) return
+    
+    const updatedFields = data.fields.map((field) =>
+      field.id === fieldId ? { ...field, defaultValue: value } : field
+    )
+    
+    if (onDataChange) {
+      onDataChange(id, { fields: updatedFields })
+    }
+  }
+
+  // Check if this is a data-input node
+  const isDataInput = data.isDataInput
+  const fields = data.fields || []
+
+  // Define handles based on node type
+  const getHandles = () => {
+    if (isDataInput) {
+      // Data Input: 1 port
+      return [
+        {
+          type: 'source' as const,
+          position: Position.Right,
+          id: 'data',
+          className: 'w-3 h-3 bg-green-500',
+          style: { top: '50%' },
+          label: 'Data (structured)',
+        },
+      ]
+    } else {
+      // Text / Link Input: 3 ports
+      return [
+        {
+          type: 'source' as const,
+          position: Position.Right,
+          id: 'rawText',
+          className: 'w-3 h-3 bg-green-500',
+          style: { top: '25%' },
+          label: 'Raw Text (text)',
+        },
+        {
+          type: 'source' as const,
+          position: Position.Right,
+          id: 'summary',
+          className: 'w-3 h-3 bg-green-500',
+          style: { top: '50%' },
+          label: 'Summary (text)',
+        },
+        {
+          type: 'source' as const,
+          position: Position.Right,
+          id: 'keywords',
+          className: 'w-3 h-3 bg-green-500',
+          style: { top: '75%' },
+          label: 'Keywords (structured)',
+        },
+      ]
+    }
+  }
+
   return (
     <BaseNode
       id={id}
       selected={selected}
-      title={data.label || 'Text / Link Input'}
-      icon={<FileText className="w-4 h-4 text-gray-600" />}
+      title={data.label || (isDataInput ? 'Data Input' : 'Text / Link Input')}
+      icon={isDataInput ? <Database className="w-4 h-4 text-gray-600" /> : <FileText className="w-4 h-4 text-gray-600" />}
       onRun={onRun}
       onDuplicate={onDuplicate}
       onDelete={onDelete}
       onMarkDraggable={onMarkDraggable}
-      handles={[
-        {
-          type: 'source',
-          position: Position.Right,
-          className: 'w-3 h-3 bg-green-500',
-        },
-      ]}
+      handles={getHandles()}
     >
       <div className="p-4">
-        <Textarea
-          value={data.text || ''}
-          onChange={handleChange}
-          className="min-h-[120px] text-sm"
-          placeholder="Paste your text here..."
-        />
+        {isDataInput ? (
+          // Data Input: Show dynamic fields
+          <div className="space-y-3">
+            {fields.length === 0 ? (
+              <div className="text-sm text-gray-500 text-center py-4">
+                No fields defined. Configure fields in the Inspector panel.
+              </div>
+            ) : (
+              fields.map((field) => (
+                <div key={field.id} className="space-y-1">
+                  <label className="text-xs font-medium text-gray-700">
+                    {field.label || 'Unnamed Field'}
+                  </label>
+                  <Input
+                    type={field.type === 'number' ? 'number' : field.type === 'email' ? 'email' : field.type === 'url' ? 'url' : field.type === 'color' ? 'color' : 'text'}
+                    value={field.defaultValue || ''}
+                    onChange={(e) => handleFieldValueChange(field.id, e.target.value)}
+                    placeholder={field.type === 'color' ? '#000000' : `Enter ${field.label.toLowerCase()}...`}
+                    className="h-9 text-sm"
+                  />
+                </div>
+              ))
+            )}
+          </div>
+        ) : (
+          // Regular Text / Link Input
+          <Textarea
+            value={data.text || ''}
+            onChange={handleChange}
+            className="min-h-[120px] text-sm"
+            placeholder="Paste your text here..."
+          />
+        )}
       </div>
     </BaseNode>
   )
