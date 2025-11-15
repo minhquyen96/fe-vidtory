@@ -29,8 +29,14 @@ const generateNodeId = (): string => {
   return `node-${nanoid()}`
 }
 
-const generateEdgeId = (source: string, target: string, sourceHandle?: string | null, targetHandle?: string | null): string => {
-  const handlePart = sourceHandle && targetHandle ? `-${sourceHandle}-${targetHandle}` : ''
+const generateEdgeId = (
+  source: string,
+  target: string,
+  sourceHandle?: string | null,
+  targetHandle?: string | null
+): string => {
+  const handlePart =
+    sourceHandle && targetHandle ? `-${sourceHandle}-${targetHandle}` : ''
   return `edge-${source}-${target}${handlePart}-${nanoid()}`
 }
 
@@ -284,39 +290,45 @@ export default function EditorPage() {
             }
 
             // Restore nodes
-            const restoredNodes: Node[] = workflowData.nodes.map((node: any) => ({
-              id: node.id,
-              type: node.type || 'textInput',
-              position: node.position || { x: 0, y: 0 },
-              data: node.data || {},
-            }))
+            const restoredNodes: Node[] = workflowData.nodes.map(
+              (node: any) => ({
+                id: node.id,
+                type: node.type || 'textInput',
+                position: node.position || { x: 0, y: 0 },
+                data: node.data || {},
+              })
+            )
 
             // Restore edges - keep original IDs if they exist, otherwise generate new ones
-            const restoredEdges: Edge[] = workflowData.edges.map((edge: any) => {
-              const primaryColor = 'rgb(171, 223, 0)'
-              return {
-                id: edge.id || generateEdgeId(
-                  edge.source,
-                  edge.target,
-                  edge.sourceHandle,
-                  edge.targetHandle
-                ),
-                source: edge.source,
-                target: edge.target,
-                sourceHandle: edge.sourceHandle,
-                targetHandle: edge.targetHandle,
-                type: edge.type || 'smoothstep',
-                style: edge.style || {
-                  stroke: primaryColor,
-                  strokeWidth: 2,
-                  strokeDasharray: '5 5',
-                },
-                markerEnd: edge.markerEnd || {
-                  type: MarkerType.ArrowClosed,
-                  color: primaryColor,
-                },
+            const restoredEdges: Edge[] = workflowData.edges.map(
+              (edge: any) => {
+                const primaryColor = 'rgb(171, 223, 0)'
+                return {
+                  id:
+                    edge.id ||
+                    generateEdgeId(
+                      edge.source,
+                      edge.target,
+                      edge.sourceHandle,
+                      edge.targetHandle
+                    ),
+                  source: edge.source,
+                  target: edge.target,
+                  sourceHandle: edge.sourceHandle,
+                  targetHandle: edge.targetHandle,
+                  type: edge.type || 'smoothstep',
+                  style: edge.style || {
+                    stroke: primaryColor,
+                    strokeWidth: 2,
+                    strokeDasharray: '5 5',
+                  },
+                  markerEnd: edge.markerEnd || {
+                    type: MarkerType.ArrowClosed,
+                    color: primaryColor,
+                  },
+                }
               }
-            })
+            )
 
             // Update state
             setNodes(restoredNodes)
@@ -325,7 +337,10 @@ export default function EditorPage() {
 
             // Update nodeIdCounter based on number of restored nodes
             // Since we're using nanoid now, we just need to ensure counter is higher than node count
-            nodeIdCounter.current = Math.max(nodeIdCounter.current, restoredNodes.length)
+            nodeIdCounter.current = Math.max(
+              nodeIdCounter.current,
+              restoredNodes.length
+            )
           } catch (error) {
             console.error('Error loading workflow:', error)
             alert('Failed to load workflow. Please check the file format.')
