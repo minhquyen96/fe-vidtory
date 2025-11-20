@@ -1,4 +1,5 @@
-import React, { useState, useCallback, useMemo } from 'react'
+import React, { useState, useCallback, useMemo, useEffect } from 'react'
+import { useRouter } from 'next/router'
 import { nanoid } from 'nanoid'
 import { Layout } from '@/components/layout/Layout'
 import { WorkflowHeader } from '@/components/editor/WorkflowHeader'
@@ -14,6 +15,7 @@ import {
   applyEdgeChanges,
   MarkerType,
 } from 'reactflow'
+import { getTemplateByIdApi } from '@/api/templates'
 import {
   TextInputNodeData,
   ImageInputNodeData,
@@ -41,11 +43,93 @@ const generateEdgeId = (
 }
 
 export default function EditorPage() {
+  const router = useRouter()
   const [nodes, setNodes] = useState<Node[]>([])
   const [edges, setEdges] = useState<Edge[]>([])
   const [selectedNode, setSelectedNode] = useState<Node | null>(null)
+  const [isLocked, setIsLocked] = useState(false)
+  const [workflowTitle, setWorkflowTitle] = useState('Untitled Workflow')
+
+  // Undo/Redo history
+  const [history, setHistory] = useState<Array<{ nodes: Node[]; edges: Edge[] }>>([
+    { nodes: [], edges: [] },
+  ])
+  const [historyIndex, setHistoryIndex] = useState(0)
+  const historyIndexRef = React.useRef(0)
+  const lastSavedStateRef = React.useRef<{ nodes: Node[]; edges: Edge[] } | null>(null)
+  const lastLoadedTemplateIdRef = React.useRef<string | null>(null)
 
   const nodeIdCounter = React.useRef(0)
+
+  // Update ref when state changes
+  React.useEffect(() => {
+    historyIndexRef.current = historyIndex
+  }, [historyIndex])
+
+  // Save state to history (only if different from last saved state)
+  const saveToHistory = useCallback((newNodes: Node[], newEdges: Edge[]) => {
+    // Deep compare with last saved state to avoid duplicates
+    const lastSaved = lastSavedStateRef.current
+    if (lastSaved) {
+      const nodesEqual = JSON.stringify(lastSaved.nodes) === JSON.stringify(newNodes)
+      const edgesEqual = JSON.stringify(lastSaved.edges) === JSON.stringify(newEdges)
+      if (nodesEqual && edgesEqual) {
+        // No change, skip saving
+        return
+      }
+    }
+
+    // Save new state
+    const stateToSave = {
+      nodes: JSON.parse(JSON.stringify(newNodes)),
+      edges: JSON.parse(JSON.stringify(newEdges))
+    }
+    lastSavedStateRef.current = stateToSave
+
+    setHistory((prev) => {
+      const currentIndex = historyIndexRef.current
+      const newHistory = prev.slice(0, currentIndex + 1)
+      newHistory.push(stateToSave)
+      const finalHistory = newHistory.slice(-50) // Keep last 50 states
+      const newIndex = Math.min(currentIndex + 1, finalHistory.length - 1)
+      // Update ref immediately
+      historyIndexRef.current = newIndex
+      // Update state
+      setHistoryIndex(newIndex)
+      return finalHistory
+    })
+  }, [])
+
+  // Undo handler
+  const handleUndo = useCallback(() => {
+    if (historyIndex > 0) {
+      const prevState = history[historyIndex - 1]
+      const restoredNodes = JSON.parse(JSON.stringify(prevState.nodes))
+      const restoredEdges = JSON.parse(JSON.stringify(prevState.edges))
+      setNodes(restoredNodes)
+      setEdges(restoredEdges)
+      setHistoryIndex((prev) => prev - 1)
+      // Update last saved state ref
+      lastSavedStateRef.current = { nodes: restoredNodes, edges: restoredEdges }
+    }
+  }, [history, historyIndex])
+
+  // Redo handler
+  const handleRedo = useCallback(() => {
+    if (historyIndex < history.length - 1) {
+      const nextState = history[historyIndex + 1]
+      const restoredNodes = JSON.parse(JSON.stringify(nextState.nodes))
+      const restoredEdges = JSON.parse(JSON.stringify(nextState.edges))
+      setNodes(restoredNodes)
+      setEdges(restoredEdges)
+      setHistoryIndex((prev) => prev + 1)
+      // Update last saved state ref
+      lastSavedStateRef.current = { nodes: restoredNodes, edges: restoredEdges }
+    }
+  }, [history, historyIndex])
+
+  const canUndo = historyIndex > 0
+  const canRedo = historyIndex < history.length - 1
 
   const getNodeType = (paletteType: NodePaletteType): string => {
     const typeMap: Record<NodePaletteType, string> = {
@@ -141,9 +225,17 @@ export default function EditorPage() {
         },
       }
 
-      setNodes((nds) => [...nds, newNode])
+      setNodes((nds) => {
+        const newNodes = [...nds, newNode]
+        // Use functional update to get latest edges
+        setEdges((eds) => {
+          saveToHistory(newNodes, eds)
+          return eds
+        })
+        return newNodes
+      })
     },
-    [nodes.length]
+    [nodes.length, saveToHistory]
   )
 
   const handleNodesChange = useCallback((changes: any) => {
@@ -151,6 +243,9 @@ export default function EditorPage() {
     setNodes((nds) => {
       // Apply changes using ReactFlow helper (more efficient)
       const updatedNodes = applyNodeChanges(changes, nds)
+
+      // Check if any position changes occurred (for drag operations)
+      const hasPositionChange = changes.some((change: any) => change.type === 'position')
 
       // Handle selection and removal side effects
       changes.forEach((change: any) => {
@@ -211,8 +306,16 @@ export default function EditorPage() {
         color: primaryColor,
       },
     }
-    setEdges((eds) => [...eds, newEdge])
-  }, [])
+    setEdges((eds) => {
+      const newEdges = [...eds, newEdge]
+      // Use functional update to get latest nodes
+      setNodes((nds) => {
+        saveToHistory(nds, newEdges)
+        return nds
+      })
+      return newEdges
+    })
+  }, [saveToHistory])
 
   const handleNodeDataChange = useCallback((nodeId: string, newData: any) => {
     setNodes((nds) =>
@@ -233,10 +336,13 @@ export default function EditorPage() {
   }, [])
 
   const handleClear = useCallback(() => {
-    setNodes([])
-    setEdges([])
+    const emptyNodes: Node[] = []
+    const emptyEdges: Edge[] = []
+    setNodes(emptyNodes)
+    setEdges(emptyEdges)
     setSelectedNode(null)
-  }, [])
+    saveToHistory(emptyNodes, emptyEdges)
+  }, [saveToHistory])
 
   const handleLoadExample = useCallback(() => {
     const primaryColor = 'rgb(171, 223, 0)'
@@ -400,7 +506,8 @@ export default function EditorPage() {
     setNodes(sampleNodes)
     setEdges(sampleEdges)
     setSelectedNode(null)
-  }, [])
+    saveToHistory(sampleNodes, sampleEdges)
+  }, [saveToHistory])
 
   const handleSave = useCallback(() => {
     try {
@@ -440,6 +547,122 @@ export default function EditorPage() {
     }
   }, [nodes, edges])
 
+  // Helper function to apply workflow data to canvas
+  const applyWorkflowData = useCallback((workflowData: any) => {
+    try {
+      // Validate workflow data structure
+      if (!workflowData.nodes || !Array.isArray(workflowData.nodes)) {
+        throw new Error('Invalid workflow format: missing nodes array')
+      }
+      if (!workflowData.edges || !Array.isArray(workflowData.edges)) {
+        throw new Error('Invalid workflow format: missing edges array')
+      }
+
+      // Restore nodes
+      const restoredNodes: Node[] = workflowData.nodes.map(
+        (node: any) => ({
+          id: node.id || generateNodeId(),
+          type: node.type || 'textInput',
+          position: node.position || { x: 0, y: 0 },
+          data: node.data || {},
+        })
+      )
+
+      // Restore edges - keep original IDs if they exist, otherwise generate new ones
+      const restoredEdges: Edge[] = workflowData.edges.map(
+        (edge: any) => {
+          const primaryColor = 'rgb(171, 223, 0)'
+          return {
+            id:
+              edge.id ||
+              generateEdgeId(
+                edge.source,
+                edge.target,
+                edge.sourceHandle,
+                edge.targetHandle
+              ),
+            source: edge.source,
+            target: edge.target,
+            sourceHandle: edge.sourceHandle,
+            targetHandle: edge.targetHandle,
+            type: edge.type || 'smoothstep',
+            style: edge.style || {
+              stroke: primaryColor,
+              strokeWidth: 2,
+              strokeDasharray: '5 5',
+            },
+            markerEnd: edge.markerEnd || {
+              type: MarkerType.ArrowClosed,
+              color: primaryColor,
+            },
+          }
+        }
+      )
+
+      // Update state
+      setNodes(restoredNodes)
+      setEdges(restoredEdges)
+      setSelectedNode(null)
+      saveToHistory(restoredNodes, restoredEdges)
+
+      // Update nodeIdCounter based on number of restored nodes
+      nodeIdCounter.current = Math.max(
+        nodeIdCounter.current,
+        restoredNodes.length
+      )
+    } catch (error) {
+      console.error('Error applying workflow data:', error)
+      throw error
+    }
+  }, [saveToHistory])
+
+  // Load template from API
+  useEffect(() => {
+    const loadTemplate = async () => {
+      const templateId = router.query.template as string
+      if (!templateId) {
+        lastLoadedTemplateIdRef.current = null
+        return
+      }
+
+      // Prevent loading the same template multiple times
+      if (lastLoadedTemplateIdRef.current === templateId) {
+        return
+      }
+
+      try {
+        lastLoadedTemplateIdRef.current = templateId
+        const response = await getTemplateByIdApi(templateId)
+        
+        if (response?.data?.template) {
+          const template = response.data.template
+          
+          // Set workflow title
+          setWorkflowTitle(template.title)
+          
+          // Parse and apply workflow
+          const workflowData = JSON.parse(template.workflow)
+          applyWorkflowData(workflowData)
+          
+          // Remove template query param from URL
+          router.replace('/editor', undefined, { shallow: true })
+        } else {
+          console.error('Template not found')
+          alert('Template not found')
+          lastLoadedTemplateIdRef.current = null
+        }
+      } catch (error) {
+        console.error('Error loading template:', error)
+        alert('Failed to load template. Please try again.')
+        lastLoadedTemplateIdRef.current = null
+      }
+    }
+
+    if (router.isReady) {
+      loadTemplate()
+    }
+  }, [router.isReady, router.query.template, applyWorkflowData, router])
+
   const handleLoad = useCallback(() => {
     try {
       const input = document.createElement('input')
@@ -454,67 +677,7 @@ export default function EditorPage() {
           try {
             const jsonString = event.target?.result as string
             const workflowData = JSON.parse(jsonString)
-
-            // Validate workflow data structure
-            if (!workflowData.nodes || !Array.isArray(workflowData.nodes)) {
-              throw new Error('Invalid workflow format: missing nodes array')
-            }
-            if (!workflowData.edges || !Array.isArray(workflowData.edges)) {
-              throw new Error('Invalid workflow format: missing edges array')
-            }
-
-            // Restore nodes
-            const restoredNodes: Node[] = workflowData.nodes.map(
-              (node: any) => ({
-                id: node.id,
-                type: node.type || 'textInput',
-                position: node.position || { x: 0, y: 0 },
-                data: node.data || {},
-              })
-            )
-
-            // Restore edges - keep original IDs if they exist, otherwise generate new ones
-            const restoredEdges: Edge[] = workflowData.edges.map(
-              (edge: any) => {
-                const primaryColor = 'rgb(171, 223, 0)'
-                return {
-                  id:
-                    edge.id ||
-                    generateEdgeId(
-                      edge.source,
-                      edge.target,
-                      edge.sourceHandle,
-                      edge.targetHandle
-                    ),
-                  source: edge.source,
-                  target: edge.target,
-                  sourceHandle: edge.sourceHandle,
-                  targetHandle: edge.targetHandle,
-                  type: edge.type || 'smoothstep',
-                  style: edge.style || {
-                    stroke: primaryColor,
-                    strokeWidth: 2,
-                    strokeDasharray: '5 5',
-                  },
-                  markerEnd: edge.markerEnd || {
-                    type: MarkerType.ArrowClosed,
-                    color: primaryColor,
-                  },
-                }
-              }
-            )
-
-            // Update state
-            setNodes(restoredNodes)
-            setEdges(restoredEdges)
-            setSelectedNode(null)
-
-            // Update nodeIdCounter based on number of restored nodes
-            // Since we're using nanoid now, we just need to ensure counter is higher than node count
-            nodeIdCounter.current = Math.max(
-              nodeIdCounter.current,
-              restoredNodes.length
-            )
+            applyWorkflowData(workflowData)
           } catch (error) {
             console.error('Error loading workflow:', error)
             alert('Failed to load workflow. Please check the file format.')
@@ -527,7 +690,7 @@ export default function EditorPage() {
       console.error('Error opening file dialog:', error)
       alert('Failed to open file dialog. Please try again.')
     }
-  }, [])
+  }, [applyWorkflowData])
 
   const handleNodeClick = useCallback((event: React.MouseEvent, node: Node) => {
     setSelectedNode(node)
@@ -553,19 +716,42 @@ export default function EditorPage() {
           },
           selected: false,
         }
-        return [...nds, newNode]
+        const newNodes = [...nds, newNode]
+        // Use functional update to get latest edges
+        setEdges((eds) => {
+          saveToHistory(newNodes, eds)
+          return eds
+        })
+        return newNodes
       }
       return nds
     })
-  }, [])
+  }, [saveToHistory])
 
   const handleNodeDelete = useCallback((nodeId: string) => {
-    setNodes((nds) => nds.filter((n) => n.id !== nodeId))
-    setEdges((eds) =>
-      eds.filter((e) => e.source !== nodeId && e.target !== nodeId)
-    )
-    setSelectedNode((prev) => (prev?.id === nodeId ? null : prev))
-  }, [])
+    setNodes((nds) => {
+      const newNodes = nds.filter((n) => n.id !== nodeId)
+      setEdges((eds) => {
+        const newEdges = eds.filter((e) => e.source !== nodeId && e.target !== nodeId)
+        saveToHistory(newNodes, newEdges)
+        setSelectedNode((prev) => (prev?.id === nodeId ? null : prev))
+        return newEdges
+      })
+      return newNodes
+    })
+  }, [saveToHistory])
+
+  // Handle node drag stop - save to history when user finishes moving a node
+  const handleNodeDragStop = useCallback((event: React.MouseEvent, node: Node) => {
+    // Get current state and save to history
+    setNodes((nds) => {
+      setEdges((eds) => {
+        saveToHistory(nds, eds)
+        return eds
+      })
+      return nds
+    })
+  }, [saveToHistory])
 
   return (
     <Layout
@@ -577,6 +763,8 @@ export default function EditorPage() {
       <div className="flex flex-col h-full bg-gray-50">
         {/* Header */}
         <WorkflowHeader
+          workflowTitle={workflowTitle}
+          onTitleChange={setWorkflowTitle}
           onLoadExample={handleLoadExample}
           onClear={handleClear}
           onLoad={handleLoad}
@@ -589,11 +777,10 @@ export default function EditorPage() {
 
         {/* Main Content Area */}
         <div className="flex flex-1 overflow-hidden">
-          {/* Left Sidebar - Node Palette */}
-          <NodePalette onAddNode={handleAddNode} />
-
           {/* Main Canvas Area */}
           <div className="flex-1 relative">
+            {/* Floating Node Palette */}
+            <NodePalette onAddNode={handleAddNode} />
             <WorkflowCanvas
               nodes={nodes}
               edges={edges}
@@ -605,6 +792,13 @@ export default function EditorPage() {
               onNodeRun={handleNodeRun}
               onNodeDuplicate={handleNodeDuplicate}
               onNodeDelete={handleNodeDelete}
+              onUndo={handleUndo}
+              onRedo={handleRedo}
+              canUndo={canUndo}
+              canRedo={canRedo}
+              isLocked={isLocked}
+              onToggleLock={setIsLocked}
+              onNodeDragStop={handleNodeDragStop}
             />
 
             {/* Welcome Card - Show when canvas is empty */}

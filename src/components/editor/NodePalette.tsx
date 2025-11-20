@@ -1,6 +1,7 @@
 import React from 'react'
-import { Upload, Video, FileText, Database, Wand2, Image as ImageIcon, Film } from 'lucide-react'
+import { Upload, Video, FileText, Database, Sparkles, Wand2, Film, ImageIcon } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 
 export type NodePaletteType =
   | 'upload-image'
@@ -18,7 +19,7 @@ interface NodePaletteProps {
 const nodeTypes = [
   {
     type: 'upload-image' as NodePaletteType,
-    icon: Upload,
+    icon: ImageIcon,
     title: 'Upload Image',
     subtitle: 'Upload and analyze an image',
   },
@@ -42,13 +43,13 @@ const nodeTypes = [
   },
   {
     type: 'assistant' as NodePaletteType,
-    icon: Wand2,
+    icon: Sparkles,
     title: 'AI Assistant',
     subtitle: 'Generate prompts and creative direction',
   },
   {
     type: 'image-gen' as NodePaletteType,
-    icon: ImageIcon,
+    icon: Wand2,
     title: 'Image Generation',
     subtitle: 'Generate images with AI',
   },
@@ -62,55 +63,38 @@ const nodeTypes = [
 
 export function NodePalette({ onAddNode }: NodePaletteProps) {
   return (
-    <div className="w-64 bg-white border-r border-gray-200 h-full flex flex-col">
-      <div className="p-4 border-b border-gray-200">
-        <h2 className="text-sm font-semibold text-gray-900 mb-1">Node Palette</h2>
-        <p className="text-xs text-gray-500">Click to add nodes to canvas</p>
-      </div>
-      <div className="flex-1 overflow-y-auto p-3 space-y-2">
+    <div 
+      className="absolute left-8 top-1/2 -translate-y-1/2 z-50"
+      style={{ transform: 'translateY(-50%)' }}
+    >
+      <div className="bg-white rounded-xl border border-gray-200 shadow-lg p-2 space-y-1">
         {nodeTypes.map((nodeType) => {
           const Icon = nodeType.icon
           return (
-            <button
-              key={nodeType.type}
-              onClick={() => onAddNode(nodeType.type)}
-              className={cn(
-                'w-full text-left p-3 rounded-lg border border-gray-200',
-                'transition-colors cursor-pointer',
-                'group hover:border-[rgb(171,223,0)] hover:bg-[rgba(171,223,0,0.05)]'
-              )}
-            >
-              <div className="flex items-start gap-3">
-                <div className="mt-0.5">
-                  <div className="w-8 h-8 rounded-lg bg-gray-100 group-hover:bg-[rgba(171,223,0,0.1)] flex items-center justify-center transition-colors">
-                    <Icon className="w-4 h-4 text-gray-600 group-hover:text-[rgb(171,223,0)] transition-colors" />
-                  </div>
+            <Tooltip key={nodeType.type} delayDuration={200}>
+              <TooltipTrigger asChild>
+                <button
+                  onClick={() => onAddNode(nodeType.type)}
+                  className={cn(
+                    'w-12 h-12 rounded-lg border border-gray-200',
+                    'transition-all cursor-pointer',
+                    'group hover:border-[rgb(171,223,0)] hover:bg-[rgba(171,223,0,0.05)]',
+                    'flex items-center justify-center',
+                    'hover:scale-105 active:scale-95'
+                  )}
+                >
+                  <Icon className="w-5 h-5 text-gray-600 group-hover:text-[rgb(171,223,0)] transition-colors" />
+                </button>
+              </TooltipTrigger>
+              <TooltipContent side="right" sideOffset={8} className="max-w-[200px]">
+                <div className="space-y-0.5">
+                  <div className="font-semibold text-sm">{nodeType.title}</div>
+                  <div className="text-xs text-gray-500">{nodeType.subtitle}</div>
                 </div>
-                <div className="flex-1 min-w-0">
-                  <h3 className="text-sm font-medium text-gray-900 mb-0.5">
-                    {nodeType.title}
-                  </h3>
-                  <p className="text-xs text-gray-500 line-clamp-2">
-                    {nodeType.subtitle}
-                  </p>
-                </div>
-              </div>
-            </button>
+              </TooltipContent>
+            </Tooltip>
           )
         })}
-      </div>
-      <div className="p-4 border-t border-gray-200">
-        <div className="text-xs font-medium text-gray-700 mb-2">Port Types:</div>
-        <div className="space-y-2">
-          <div className="flex items-center gap-2">
-            <div className="w-3 h-3 rounded-full bg-blue-500"></div>
-            <span className="text-xs text-gray-600">Input (left)</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <div className="w-3 h-3 rounded-full bg-green-500"></div>
-            <span className="text-xs text-gray-600">Output (right)</span>
-          </div>
-        </div>
       </div>
     </div>
   )

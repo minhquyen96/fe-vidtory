@@ -1,6 +1,6 @@
 import React from 'react'
 import { Position, NodeProps } from 'reactflow'
-import { Image as ImageIcon } from 'lucide-react'
+import { Wand2 } from 'lucide-react'
 import { BaseNode } from './BaseNode'
 
 export interface ImageGenNodeData {
@@ -37,7 +37,7 @@ export function ImageGenNode({
       id={id}
       selected={selected}
       title={data.label || 'Image Generation'}
-      icon={<ImageIcon className="w-4 h-4 text-gray-600" />}
+      icon={<Wand2 className="w-4 h-4 text-gray-600" />}
       onRun={onRun}
       onDuplicate={onDuplicate}
       onDelete={onDelete}

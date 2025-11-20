@@ -3,6 +3,7 @@ import { cn } from '@/lib/utils'
 import useTranslationWithHTMLParser from '@/hooks/useTranslationWithHTMLParser'
 import { I18N_NAMESPACES } from '@/constants/i18n'
 import { Button } from '@/components/ui/button'
+import { useRouter } from 'next/router'
 
 interface BrandInspirationSectionProps {
   className?: string
@@ -10,6 +11,7 @@ interface BrandInspirationSectionProps {
 
 export function BrandInspirationSection({ className }: BrandInspirationSectionProps) {
   const { t } = useTranslationWithHTMLParser(I18N_NAMESPACES.HOME)
+  const router = useRouter()
 
   const examples = [
     {
@@ -76,7 +78,7 @@ export function BrandInspirationSection({ className }: BrandInspirationSectionPr
               variant="outline"
               className="mt-3 sm+:mt-4"
               onClick={() => {
-                // Handle create now
+                router.push('/dashboard')
               }}
             >
               {t('brandInspiration.cta')}

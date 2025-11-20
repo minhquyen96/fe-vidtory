@@ -1,6 +1,6 @@
 import React from 'react'
 import { Position, NodeProps } from 'reactflow'
-import { Wand2 } from 'lucide-react'
+import { Sparkles } from 'lucide-react'
 import { BaseNode } from './BaseNode'
 
 export interface AssistantNodeData {
@@ -36,7 +36,7 @@ export function AssistantNode({
       id={id}
       selected={selected}
       title={data.label || 'AI Assistant'}
-      icon={<Wand2 className="w-4 h-4 text-gray-600" />}
+      icon={<Sparkles className="w-4 h-4 text-gray-600" />}
       onRun={onRun}
       onDuplicate={onDuplicate}
       onDelete={onDelete}

@@ -2,6 +2,7 @@ import { cn } from '@/lib/utils'
 import useTranslationWithHTMLParser from '@/hooks/useTranslationWithHTMLParser'
 import { I18N_NAMESPACES } from '@/constants/i18n'
 import { Button } from '@/components/ui/button'
+import { useRouter } from 'next/router'
 
 interface StatsSectionProps {
   className?: string
@@ -9,6 +10,7 @@ interface StatsSectionProps {
 
 export function StatsSection({ className }: StatsSectionProps) {
   const { t } = useTranslationWithHTMLParser(I18N_NAMESPACES.HOME)
+  const router = useRouter()
 
   const stats = [
     {
@@ -65,7 +67,13 @@ export function StatsSection({ className }: StatsSectionProps) {
 
           {/* CTA Button */}
           <div className="text-center">
-            <Button size="lg" className="text-base sm+:text-lg px-8 sm+:px-12 py-6 sm+:py-8">
+            <Button 
+              size="lg" 
+              className="text-base sm+:text-lg px-8 sm+:px-12 py-6 sm+:py-8"
+              onClick={() => {
+                router.push('/dashboard')
+              }}
+            >
               {t('statsSection.cta')}
             </Button>
           </div>

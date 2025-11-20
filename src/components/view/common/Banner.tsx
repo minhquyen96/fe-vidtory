@@ -26,17 +26,20 @@ export function Banner({
   const { openLoginModal, user } = useAuth()
 
   const handleGetStartedClick = () => {
-    if (user) return
     trackEvent(
       trackingLocation,
       `${trackingLocation.toLowerCase()}_get_started_click`,
       {
         button_location: 'banner',
         button_text: t('hero.cta'),
-        destination: '/',
+        destination: user ? '/dashboard' : '/',
       }
     )
-    openLoginModal()
+    if (user) {
+      router.push('/dashboard')
+    } else {
+      openLoginModal()
+    }
   }
 
   const [selectedUseCase, setSelectedUseCase] = useState<string>('videoEditing')

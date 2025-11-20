@@ -6,7 +6,6 @@ import ReactFlow, {
   Edge,
   addEdge,
   Connection,
-  Controls,
   Background,
   MiniMap,
   BackgroundVariant,
@@ -23,6 +22,7 @@ import {
   PreviewNode,
 } from './nodes'
 import { CustomEdge } from './CustomEdge'
+import { CanvasControls } from './CanvasControls'
 
 // Define node types outside component to avoid recreation
 const nodeTypes = {
@@ -46,6 +46,13 @@ interface WorkflowCanvasProps {
   onNodeRun?: (nodeId: string) => void
   onNodeDuplicate?: (nodeId: string) => void
   onNodeDelete?: (nodeId: string) => void
+  onUndo?: () => void
+  onRedo?: () => void
+  canUndo?: boolean
+  canRedo?: boolean
+  isLocked?: boolean
+  onToggleLock?: (locked: boolean) => void
+  onNodeDragStop?: (event: React.MouseEvent, node: Node) => void
 }
 
 export function WorkflowCanvas({
@@ -59,6 +66,13 @@ export function WorkflowCanvas({
   onNodeRun,
   onNodeDuplicate,
   onNodeDelete,
+  onUndo,
+  onRedo,
+  canUndo = false,
+  canRedo = false,
+  isLocked = false,
+  onToggleLock,
+  onNodeDragStop: externalOnNodeDragStop,
 }: WorkflowCanvasProps) {
   // Store callbacks in refs to avoid recreating nodeTypes
   const callbacksRef = useRef({
@@ -191,9 +205,10 @@ export function WorkflowCanvas({
     }
   }, [])
 
-  const onNodeDragStop = useCallback(() => {
+  const onNodeDragStop = useCallback((event: React.MouseEvent, node: Node) => {
     draggableNodeIdRef.current = null
-  }, [])
+    externalOnNodeDragStop?.(event, node)
+  }, [externalOnNodeDragStop])
 
   // Update callbacks ref to include markNodeDraggable
   useEffect(() => {
@@ -215,7 +230,7 @@ export function WorkflowCanvas({
         onPaneClick={handlePaneClick}
         onNodeDragStart={onNodeDragStart}
         onNodeDragStop={onNodeDragStop}
-        nodesDraggable={true}
+        nodesDraggable={!isLocked}
         nodeTypes={nodeTypesWithCallbacks}
         edgeTypes={edgeTypes}
         nodeDragThreshold={1}
@@ -224,7 +239,14 @@ export function WorkflowCanvas({
         fitView
         className="bg-gray-50"
       >
-        <Controls />
+        <CanvasControls
+          onUndo={onUndo}
+          onRedo={onRedo}
+          canUndo={canUndo}
+          canRedo={canRedo}
+          isLocked={isLocked}
+          onToggleLock={onToggleLock}
+        />
         <MiniMap
           nodeColor={(node) => {
             if (node.selected) {
@@ -234,7 +256,7 @@ export function WorkflowCanvas({
           }}
           maskColor="rgba(0, 0, 0, 0.05)"
         />
-        <Background variant={BackgroundVariant.Dots} gap={12} size={1} />
+        <Background variant={BackgroundVariant.Dots} gap={24} size={1} />
       </ReactFlow>
     </div>
   )
