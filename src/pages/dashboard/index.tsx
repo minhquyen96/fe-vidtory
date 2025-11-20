@@ -75,6 +75,46 @@ export default function DashboardPage() {
     router.push('/dashboard/templates')
   }
 
+  const handleStartBuilding = () => {
+    router.push('/editor')
+  }
+
+  const handleBrowseTemplates = () => {
+    router.push('/dashboard/templates')
+  }
+
+  const handleImportNow = () => {
+    try {
+      const input = document.createElement('input')
+      input.type = 'file'
+      input.accept = 'application/json'
+      input.onchange = (e) => {
+        const file = (e.target as HTMLInputElement).files?.[0]
+        if (!file) return
+
+        const reader = new FileReader()
+        reader.onload = (event) => {
+          try {
+            const jsonString = event.target?.result as string
+            const workflowData = JSON.parse(jsonString)
+            // Store workflow data in localStorage to be loaded in editor
+            localStorage.setItem('pending_import_workflow', JSON.stringify(workflowData))
+            // Navigate to editor
+            router.push('/editor?import=true')
+          } catch (error) {
+            console.error('Error loading workflow:', error)
+            alert('Failed to load workflow. Please check the file format.')
+          }
+        }
+        reader.readAsText(file)
+      }
+      input.click()
+    } catch (error) {
+      console.error('Error opening file dialog:', error)
+      alert('Failed to open file dialog. Please try again.')
+    }
+  }
+
   const formatDate = (timestamp: number) => {
     const date = new Date(timestamp * 1000)
     const now = new Date()
@@ -134,7 +174,10 @@ export default function DashboardPage() {
                   <p className="text-sm text-gray-600 mb-4">
                     Create your first AI workflow in minutes.
                   </p>
-                  <Button className="w-full bg-[rgb(171,223,0)] hover:bg-[rgb(171,223,0)]/90 text-gray-900">
+                  <Button 
+                    onClick={handleStartBuilding}
+                    className="w-full bg-[rgb(171,223,0)] hover:bg-[rgb(171,223,0)]/90 text-gray-900"
+                  >
                     Start Building
                   </Button>
                 </div>
@@ -150,7 +193,11 @@ export default function DashboardPage() {
                   <p className="text-sm text-gray-600 mb-4">
                     Explore pre-built workflow templates.
                   </p>
-                  <Button variant="outline" className="w-full">
+                  <Button 
+                    onClick={handleBrowseTemplates}
+                    variant="outline" 
+                    className="w-full"
+                  >
                     Browse Templates
                   </Button>
                 </div>
@@ -166,7 +213,11 @@ export default function DashboardPage() {
                   <p className="text-sm text-gray-600 mb-4">
                     Import your saved workflow files.
                   </p>
-                  <Button variant="outline" className="w-full">
+                  <Button 
+                    onClick={handleImportNow}
+                    variant="outline" 
+                    className="w-full"
+                  >
                     Import Now
                   </Button>
                 </div>

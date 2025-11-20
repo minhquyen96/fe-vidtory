@@ -10,6 +10,38 @@ export function DashboardHeader() {
     router.push('/editor')
   }
 
+  const handleImport = () => {
+    try {
+      const input = document.createElement('input')
+      input.type = 'file'
+      input.accept = 'application/json'
+      input.onchange = (e) => {
+        const file = (e.target as HTMLInputElement).files?.[0]
+        if (!file) return
+
+        const reader = new FileReader()
+        reader.onload = (event) => {
+          try {
+            const jsonString = event.target?.result as string
+            const workflowData = JSON.parse(jsonString)
+            // Store workflow data in localStorage to be loaded in editor
+            localStorage.setItem('pending_import_workflow', JSON.stringify(workflowData))
+            // Navigate to editor
+            router.push('/editor?import=true')
+          } catch (error) {
+            console.error('Error loading workflow:', error)
+            alert('Failed to load workflow. Please check the file format.')
+          }
+        }
+        reader.readAsText(file)
+      }
+      input.click()
+    } catch (error) {
+      console.error('Error opening file dialog:', error)
+      alert('Failed to open file dialog. Please try again.')
+    }
+  }
+
   return (
     <header className="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-6">
       {/* Search Bar */}
@@ -30,6 +62,7 @@ export function DashboardHeader() {
           variant="outline"
           size="sm"
           className="gap-2"
+          onClick={handleImport}
         >
           <Upload className="w-4 h-4" />
           Import

@@ -616,10 +616,34 @@ export default function EditorPage() {
     }
   }, [saveToHistory])
 
-  // Load template from API
+  // Load template from API or import from localStorage
   useEffect(() => {
     const loadTemplate = async () => {
       const templateId = router.query.template as string
+      const shouldImport = router.query.import === 'true'
+      
+      // Handle import from localStorage
+      if (shouldImport && router.isReady) {
+        try {
+          const pendingWorkflow = localStorage.getItem('pending_import_workflow')
+          if (pendingWorkflow) {
+            const workflowData = JSON.parse(pendingWorkflow)
+            applyWorkflowData(workflowData)
+            // Clear localStorage
+            localStorage.removeItem('pending_import_workflow')
+            // Remove import query param from URL
+            router.replace('/editor', undefined, { shallow: true })
+          }
+        } catch (error) {
+          console.error('Error loading imported workflow:', error)
+          alert('Failed to load imported workflow. Please check the file format.')
+          localStorage.removeItem('pending_import_workflow')
+          router.replace('/editor', undefined, { shallow: true })
+        }
+        return
+      }
+
+      // Handle template loading
       if (!templateId) {
         lastLoadedTemplateIdRef.current = null
         return
@@ -661,7 +685,7 @@ export default function EditorPage() {
     if (router.isReady) {
       loadTemplate()
     }
-  }, [router.isReady, router.query.template, applyWorkflowData, router])
+  }, [router.isReady, router.query.template, router.query.import, applyWorkflowData, router])
 
   const handleLoad = useCallback(() => {
     try {
