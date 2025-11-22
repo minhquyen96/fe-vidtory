@@ -1,33 +1,79 @@
 {
   "header": {
-    "dark_mode": "Dark Mode",
-    "light_mode": "Light Mode"
+    "dark_mode": "Chế Độ Tối",
+    "light_mode": "Chế Độ Sáng"
+  },
+  "login": {
+    "continueWithGoogle": "Tiếp tục với Google",
+    "continueWithFacebook": "Tiếp tục với Facebook",
+    "continueWithApple": "Tiếp tục với Apple",
+    "continueWithEmail": "Tiếp tục với Email",
+    "emailPlaceholder": "Nhập email của bạn",
+    "emailRequired": "Vui lòng nhập email",
+    "emailLoginError": "Gửi liên kết đăng nhập thất bại. Vui lòng thử lại sau.",
+    "emailLoginHint": "Nếu bạn gặp vấn đề khi đăng nhập bằng Google hoặc Apple, hãy thử đăng nhập bằng email",
+    "back": "Quay lại",
+    "emailSentTitle": "Kiểm tra email của bạn",
+    "emailSentDescription": "Một liên kết đăng nhập đã được gửi đến {{email}}. Nhấp vào liên kết để truy cập tài khoản",
+    "resendEmail": "Gửi lại Email",
+    "orContinueWith": "hoặc tiếp tục với",
+    "termsText": "Bằng cách tiếp tục, bạn đồng ý với Điều khoản Dịch vụ và Chính sách Bảo mật của chúng tôi",
+    "failed": "Đã có lỗi xảy ra. Vui lòng thử đăng nhập lại.",
+    "encourage": {
+      "title": "Bạn đang yêu thích Vidtory?",
+      "subtitle": "Hãy đăng nhập để tận dụng tối đa!",
+      "computedGrades": "Nhận đánh giá dựa trên trình độ của bạn và độ khó của bài học",
+      "trackProgress": "Theo dõi tiến trình học tập của bạn qua hệ thống cấp độ"
+    }
   },
   "footer": {
-    "information": "Information",
-    "features": "Features",
-    "privacy": "Privacy Policy",
-    "about_us": "About Us",
-    "terms": "Terms of Service",
-    "contact_us": "Contact Us",
-    "feedbacks": "Feedbacks",
-    "shadowing": "Shadowing",
-    "dictation": "Dictation",
-    "vocabulary": "Vocabulary"
+    "description": "Tạo video chuyên nghiệp bằng AI dành cho kể chuyện, giáo dục, giải trí và marketing. Biến ý tưởng của bạn thành video hấp dẫn với nền tảng tạo video AI mạnh mẽ.",
+    "copyright": "Đã đăng ký bản quyền.",
+    "terms": "Điều Khoản Dịch Vụ",
+    "privacy": "Chính Sách Bảo Mật",
+    "about_us": "Về Chúng Tôi",
+    "contact_us": "Liên Hệ",
+    "feedbacks": "Phản Hồi",
+    "features": "Tính Năng",
+    "information": "Thông Tin",
+    "downloadApp": "Tải Ứng Dụng",
+    "feature1": {
+      "title": "Tạo Video AI",
+      "description": "Tạo video chuyên nghiệp với avatar AI, lồng tiếng và chỉnh sửa tự động"
+    },
+    "feature2": {
+      "title": "Template Đa Lĩnh Vực",
+      "description": "Chọn từ các mẫu dành cho kể chuyện, giáo dục, giải trí và marketing"
+    },
+    "feature3": {
+      "title": "Xuất & Chia Sẻ Dễ Dàng",
+      "description": "Xuất video với nhiều định dạng và chia sẻ trực tiếp lên nền tảng bạn muốn"
+    }
+  },
+  "error": {
+    "title": "Lỗi",
+    "token_expired": {
+      "title": "Lỗi Xác Thực",
+      "description": "Vui lòng kiểm tra và đặt lại thời gian đúng trên thiết bị để có thể truy cập các tính năng của ứng dụng."
+    },
+    "failToLoadData": "Đã xảy ra lỗi từ phía chúng tôi. Vui lòng tải lại trang và thử lại.",
+    "404": {
+      "title": "Không Tìm Thấy Trang",
+      "description": "Trang bạn đang tìm không tồn tại hoặc đã được di chuyển."
+    }
   },
   "share": {
-    "title": "Share this page"
+    "title": "Chia sẻ trang này"
   },
   "buyCreditModal": {
     "title": "Mua Credit",
     "description": "Chọn gói credit phù hợp với nhu cầu của bạn",
     "outOfCreditTitle": "Bạn đã hết credit AI!",
-    "outOfCreditDescription": "Đừng lo lắng, bạn có thể dễ dàng nạp thêm credit để tiếp tục tạo ra những chỉnh sửa tuyệt vời.",
-    "noPackages": "Hiện tại không có gói credit nào",
-    "contactToBuy": "Liên hệ mua",
+    "outOfCreditDescription": "Đừng lo, bạn có thể nạp thêm credit để tiếp tục tạo ra những video tuyệt vời.",
+    "noPackages": "Hiện chưa có gói credit nào",
+    "contactToBuy": "Liên hệ để mua",
     "contactMessenger": "Liên hệ qua Facebook Messenger",
-    "getCredit": "Nhận credit",
+    "getCredit": "Nạp Credit",
     "popular": "Phổ Biến"
   }
 }
-

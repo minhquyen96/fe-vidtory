@@ -1,129 +1,217 @@
 {
-  "title": "Vidtory - AI Video Generator for Every Niche",
-  "description": "Create professional AI-generated videos for stories, education, entertainment, and more. Transform your ideas into engaging video content with our powerful AI video generation platform.",
+  "title": "Vidtory - Trình Tạo Video AI cho Mọi Lĩnh Vực",
+  "description": "Tạo video chuyên nghiệp bằng AI cho kể chuyện, giáo dục, giải trí và nhiều hơn nữa. Biến ý tưởng thành video hấp dẫn với nền tảng AI mạnh mẽ của chúng tôi.",
   "hero": {
-    "title": "Create Pro-Level AI Videos in Minutes",
-    "subtitle": "Generate stunning videos for any niche - from educational content to entertainment stories. Powered by advanced AI technology.",
-    "cta": "Start Creating Free",
-    "cta_secondary": "Watch Demo"
+    "title": "Tạo video chuyên nghiệp chỉ trong chớp mắt nhờ AI",
+    "subtitle": "Làm video tốt hơn – nhanh hơn. Bộ công cụ tạo video thông minh dành cho mọi đội ngũ",
+    "cta": "Bắt đầu miễn phí",
+    "cta_note": "* Không cần thẻ tín dụng",
+    "rating": "Được đánh giá 4.6/5 trên G2",
+    "features": {
+      "autoSubtitles": {
+        "title": "Tự động tạo phụ đề",
+        "description": "Thêm phụ đề chỉ với một cú nhấp chuột"
+      },
+      "brandKit": {
+        "title": "Bộ nhận diện thương hiệu",
+        "description": "Luôn đồng nhất thương hiệu với font, logo và tài sản chung"
+      },
+      "dubbing": {
+        "title": "Lồng tiếng",
+        "description": "Dịch và lồng tiếng video sang nhiều ngôn ngữ tự động"
+      },
+      "textToVideo": {
+        "title": "AI chuyển văn bản thành video",
+        "description": "Tạo video từ văn bản với công nghệ AI nâng cao"
+      },
+      "aiClips": {
+        "title": "AI Clips",
+        "description": "Tự động tạo clip ngắn hấp dẫn từ nội dung của bạn"
+      },
+      "aiAvatars": {
+        "title": "AI Avatars",
+        "description": "Tạo video nói chuyện với avatar AI chất lượng cao"
+      },
+      "recorder": {
+        "title": "Trình quay",
+        "description": "Ghi lại bạn hoặc màn hình dễ dàng. Chỉnh sửa và chia sẻ ngay"
+      }
+    }
   },
   "howTo": {
-    "title": "How It Works",
-    "subtitle": "Create professional AI videos in just 4 simple steps",
+    "title": "Cách Hoạt Động",
+    "subtitle": "Tạo video AI chuyên nghiệp trong 4 bước đơn giản",
     "steps": {
       "1": {
-        "title": "Choose Your Niche",
-        "description": "Select from our wide range of templates designed for different niches - stories, education, entertainment, marketing, and more. Each template is optimized for its specific use case.",
-        "alt": "Niche selection interface showing different video categories like stories, education, and entertainment"
+        "title": "Chọn lĩnh vực",
+        "description": "Chọn từ hàng loạt template theo từng lĩnh vực: kể chuyện, giáo dục, giải trí, marketing và nhiều hơn. Mỗi template đều được tối ưu cho mục đích riêng.",
+        "alt": "Giao diện chọn lĩnh vực với các danh mục video như kể chuyện, giáo dục và giải trí"
       },
       "2": {
-        "title": "Customize Your Content",
-        "description": "Add your script, choose AI avatars, select backgrounds, and customize every aspect of your video. Our AI helps you create content that matches your brand and message perfectly.",
-        "alt": "Video customization interface with script editor, avatar selection, and styling options"
+        "title": "Tùy chỉnh nội dung",
+        "description": "Thêm kịch bản, chọn avatar AI, chọn phông nền và tùy chỉnh mọi chi tiết của video. AI hỗ trợ bạn tạo nội dung phù hợp thương hiệu và thông điệp.",
+        "alt": "Giao diện tùy chỉnh video với trình soạn thảo kịch bản, chọn avatar và tùy chọn phong cách"
       },
       "3": {
-        "title": "Generate with AI",
-        "description": "Let our advanced AI technology generate your video. Our system creates realistic avatars, natural voiceovers, and professional animations - all automatically.",
-        "alt": "AI video generation process showing automated creation of video content"
+        "title": "Tạo video bằng AI",
+        "description": "AI của chúng tôi sẽ tự động tạo video với avatar chân thực, giọng đọc tự nhiên và hiệu ứng chuyên nghiệp.",
+        "alt": "Quá trình AI tạo video tự động"
       },
       "4": {
-        "title": "Publish & Share",
-        "description": "Download your video in high quality or publish directly to your preferred platform. Share your AI-generated content across social media, websites, or use in presentations.",
-        "alt": "Video publishing options showing download and sharing capabilities"
+        "title": "Xuất và chia sẻ",
+        "description": "Tải video chất lượng cao hoặc đăng trực tiếp lên nền tảng bạn muốn. Chia sẻ lên mạng xã hội, website hoặc sử dụng trong thuyết trình.",
+        "alt": "Tùy chọn xuất video và chia sẻ"
       }
     }
   },
   "features": {
-    "title": "Powerful Features for Every Creator",
-    "subtitle": "Everything you need to create professional AI videos",
+    "title": "Tính Năng Mạnh Mẽ Cho Mọi Nhà Sáng Tạo",
+    "subtitle": "Mọi thứ bạn cần để tạo video AI chuyên nghiệp",
     "listening": {
-      "title": "Multi-Niche Templates",
-      "description": "Pre-built templates for stories, education, entertainment, marketing, and more. Start with professional designs tailored to your niche."
+      "title": "Template đa lĩnh vực",
+      "description": "Template dựng sẵn cho kể chuyện, giáo dục, giải trí, marketing và hơn thế nữa."
     },
     "speaking": {
-      "title": "AI Voice & Avatars",
-      "description": "Choose from hundreds of AI avatars and voices. Create realistic talking-head videos with natural speech patterns and expressions."
+      "title": "Giọng nói & Avatar AI",
+      "description": "Hàng trăm avatar và giọng AI. Tạo video nói chuyện tự nhiên, chân thực."
     },
     "memory": {
-      "title": "Smart Script Generator",
-      "description": "AI-powered script generation that creates engaging content for your chosen niche. Get suggestions and optimize your message automatically."
+      "title": "AI viết kịch bản",
+      "description": "AI tạo kịch bản hấp dẫn theo lĩnh vực bạn chọn. Đưa gợi ý và tối ưu nội dung tự động."
     },
     "progress": {
-      "title": "Easy Editing & Export",
-      "description": "Intuitive video editor with drag-and-drop functionality. Export in multiple formats and resolutions for any platform or use case."
+      "title": "Dễ chỉnh sửa & xuất bản",
+      "description": "Trình chỉnh sửa trực quan, kéo-thả. Xuất nhiều định dạng và độ phân giải."
     }
   },
   "useCases": {
-    "title": "Perfect for Every Use Case",
-    "subtitle": "See how creators use Vidtory across different niches",
+    "title": "Phù Hợp Cho Mọi Nhu Cầu",
+    "subtitle": "Xem cách creator sử dụng Vidtory cho từng lĩnh vực",
     "stories": {
-      "title": "Story Videos",
-      "description": "Create engaging story videos for social media, YouTube, or educational purposes. Perfect for narrative content and storytelling."
+      "title": "Video kể chuyện",
+      "description": "Tạo video kể chuyện cho mạng xã hội, YouTube hoặc giảng dạy."
     },
     "education": {
-      "title": "Educational Content",
-      "description": "Generate educational videos for courses, tutorials, and learning materials. Make complex topics easy to understand with AI-powered explanations."
+      "title": "Video giáo dục",
+      "description": "Tạo video cho khóa học, hướng dẫn và tài liệu học tập."
     },
     "entertainment": {
-      "title": "Entertainment",
-      "description": "Create entertaining content for social media, streaming platforms, or promotional videos. Keep your audience engaged with dynamic AI-generated content."
+      "title": "Giải trí",
+      "description": "Tạo nội dung giải trí hấp dẫn cho mạng xã hội hoặc chiến dịch truyền thông."
     },
     "marketing": {
-      "title": "Marketing & Ads",
-      "description": "Produce professional marketing videos and advertisements. Create compelling campaigns that convert with AI-generated content tailored to your brand."
+      "title": "Marketing & Quảng cáo",
+      "description": "Sản xuất video marketing chuyên nghiệp, tối ưu chuyển đổi."
     }
   },
   "faqs": {
-    "title": "Frequently Asked Questions",
-    "subtitle": "Everything you need to know about creating AI videos",
+    "title": "Câu Hỏi Thường Gặp",
+    "subtitle": "Tất cả những gì bạn cần biết về tạo video bằng AI",
     "questions": {
       "1": {
-        "question": "What niches does Vidtory support?",
-        "answer": "Vidtory supports a wide range of niches including stories, education, entertainment, marketing, sales, training, and more. We offer specialized templates and features for each niche to help you create the perfect video."
+        "question": "Vidtory hỗ trợ những lĩnh vực nào?",
+        "answer": "Vidtory hỗ trợ nhiều lĩnh vực như kể chuyện, giáo dục, giải trí, marketing, bán hàng, đào tạo và nhiều hơn. Mỗi lĩnh vực có template và tính năng riêng."
       },
       "2": {
-        "question": "How does AI video generation work?",
-        "answer": "Our AI technology uses advanced algorithms to generate realistic avatars, natural voiceovers, and professional animations. Simply provide your script and choose your preferences, and our AI will create a complete video for you."
+        "question": "AI tạo video hoạt động như thế nào?",
+        "answer": "AI sử dụng thuật toán nâng cao để tạo avatar, giọng đọc và chuyển động chuyên nghiệp. Bạn chỉ cần nhập kịch bản và chọn tùy chọn."
       },
       "3": {
-        "question": "Can I customize the AI avatars?",
-        "answer": "Yes! You can choose from hundreds of pre-made AI avatars or create custom avatars that match your brand. Customize appearance, voice, and behavior to create the perfect presenter for your content."
+        "question": "Tôi có thể tùy chỉnh avatar AI không?",
+        "answer": "Có! Bạn có thể chọn avatar có sẵn hoặc tạo avatar tùy chỉnh phù hợp thương hiệu."
       },
       "4": {
-        "question": "What video formats can I export?",
-        "answer": "You can export your videos in multiple formats including MP4, MOV, and WebM. We support various resolutions from 720p to 4K, optimized for different platforms like YouTube, Instagram, TikTok, and more."
+        "question": "Tôi có thể xuất video ở những định dạng nào?",
+        "answer": "Hỗ trợ MP4, MOV, WebM và nhiều độ phân giải từ 720p đến 4K."
       },
       "5": {
-        "question": "Is there a limit to video length?",
-        "answer": "Free plans include videos up to 5 minutes. Premium plans support longer videos up to 30 minutes or more, depending on your subscription tier."
+        "question": "Video có giới hạn độ dài không?",
+        "answer": "Gói miễn phí: tối đa 5 phút. Gói Premium: lên đến 30 phút hoặc hơn."
       },
       "6": {
-        "question": "Can I use Vidtory for commercial purposes?",
-        "answer": "Yes, all videos created with Vidtory can be used for commercial purposes. You own the rights to all content you generate through our platform."
+        "question": "Tôi có thể dùng video cho mục đích thương mại không?",
+        "answer": "Hoàn toàn được. Bạn sở hữu toàn bộ quyền sử dụng video tạo ra."
       },
       "7": {
-        "question": "Do I need video editing experience?",
-        "answer": "No prior experience needed! Vidtory is designed to be user-friendly. Our intuitive interface and AI assistance make it easy for anyone to create professional videos, regardless of their technical background."
+        "question": "Có cần kỹ năng chỉnh sửa video không?",
+        "answer": "Không cần! Vidtory dành cho mọi người – dễ dùng và được AI hỗ trợ mạnh mẽ."
       },
       "8": {
-        "question": "How long does it take to generate a video?",
-        "answer": "Video generation typically takes 2-5 minutes depending on length and complexity. Shorter videos (under 1 minute) usually generate in under 2 minutes, while longer videos may take up to 5 minutes."
+        "question": "Tạo video mất bao lâu?",
+        "answer": "Thường mất 2–5 phút tùy độ dài và độ phức tạp. Video ngắn dưới 1 phút thường dưới 2 phút."
       },
       "9": {
-        "question": "Can I edit videos after generation?",
-        "answer": "Absolutely! Our built-in video editor allows you to make changes anytime. Edit text, swap avatars, adjust timing, add effects, and more - all without regenerating the entire video."
+        "question": "Tôi có thể chỉnh sửa sau khi AI tạo video không?",
+        "answer": "Có! Bạn có thể chỉnh sửa bất cứ lúc nào trong trình chỉnh sửa."
       },
       "10": {
-        "question": "What languages are supported?",
-        "answer": "Vidtory supports multiple languages for both voiceovers and subtitles. You can create videos in English, Spanish, French, German, and many other languages to reach a global audience."
+        "question": "Hỗ trợ ngôn ngữ nào?",
+        "answer": "Vidtory hỗ trợ nhiều ngôn ngữ cho cả giọng đọc và phụ đề, như Anh, Tây Ban Nha, Pháp, Đức và nhiều hơn."
       }
     }
   },
   "cta": {
-    "title": "Ready to Create Your First AI Video?",
-    "subtitle": "Join thousands of creators using Vidtory to generate professional videos",
-    "button": "Get Started Free",
-    "note": "No credit card required"
+    "title": "Sẵn sàng tạo video AI đầu tiên của bạn?",
+    "subtitle": "Tham gia hàng nghìn creator đang dùng Vidtory mỗi ngày",
+    "button": "Bắt đầu miễn phí"
+  },
+  "aiAvatar": {
+    "title": "Avatar AI",
+    "subtitle": "Chân thực • Đồng nhất • Tùy chỉnh"
+  },
+  "aiPoweredVideo": {
+    "title": "Video được tạo bởi AI",
+    "subtitle": "Chỉnh sửa • Tạo • Ấn tượng"
+  },
+  "brandInspiration": {
+    "title": "Khám phá cảm hứng từ các thương hiệu thực",
+    "cta": "Tạo ngay",
+    "loadMore": "Xem thêm"
+  },
+  "viralVideos": {
+    "title": "Video marketing viral 100% tạo bởi AI"
+  },
+  "realAIFeatures": {
+    "title": "AI thực sự dành cho chỉnh sửa video"
+  },
+  "statsSection": {
+    "title": "Cách đơn giản nhất để tạo video marketing sản phẩm",
+    "subtitle": "Tăng hiệu suất làm video lên gấp 5 lần với công cụ AI chạy trên web. Không cần kỹ năng — và chỉ tốn 5% chi phí so với thuê editor.",
+    "cta": "Bắt đầu miễn phí"
+  },
+  "userReviews": {
+    "title": "Đánh giá thực tế từ người dùng",
+    "1": {
+      "title": "Tạo video AI tuyệt vời",
+      "content": "Vidtory đã thay đổi hoàn toàn cách tôi làm video marketing. Avatar AI rất chân thực và quy trình cực kỳ dễ!"
+    },
+    "2": {
+      "title": "Hoàn hảo cho thương mại điện tử",
+      "content": "Là chủ shop online, tôi tạo video sản phẩm trong vài phút. Chất lượng chuyên nghiệp và tiết kiệm thời gian."
+    },
+    "3": {
+      "title": "Công cụ thay đổi cuộc chơi",
+      "content": "Tôi đã thử nhiều công cụ, nhưng Vidtory thực sự nổi bật. Tính năng AI đỉnh và kết quả luôn ấn tượng."
+    },
+    "4": {
+      "title": "Khoản đầu tư đáng giá",
+      "content": "Tôi có thể tạo nhiều video trong thời gian trước đây chỉ làm được một. Công nghệ AI thật sự choáng ngợp!"
+    },
+    "5": {
+      "title": "Chất lượng và tốc độ đáng kinh ngạc",
+      "content": "Vidtory tạo video chất lượng studio chỉ trong vài phút. Avatar và giọng đọc rất tự nhiên."
+    },
+    "6": {
+      "title": "Dễ dùng nhưng cực mạnh",
+      "content": "Dù không có kinh nghiệm chỉnh video, tôi vẫn làm được video đẹp. Giao diện trực quan và AI làm phần khó."
+    },
+    "7": {
+      "title": "Hoàn hảo cho mạng xã hội",
+      "content": "Tạo nội dung cho Instagram và TikTok chưa bao giờ dễ thế. Template và AI giúp tôi làm video viral!"
+    },
+    "8": {
+      "title": "Hỗ trợ khách hàng xuất sắc",
+      "content": "Sản phẩm tốt mà support cũng tuyệt. Họ hướng dẫn tôi tối ưu video rất nhanh và chu đáo."
+    }
   }
 }
-

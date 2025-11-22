@@ -148,10 +148,10 @@ export const ComicForm: React.FC<Props<ComicInputs>> = ({ data, onChange, mode, 
   return (
     <div className="space-y-8 pb-8 relative">
       
-      {/* First Time User Guide Tooltip - Fixed positioning to prevent layout shift */}
+      {/* First Time User Guide Tooltip */}
       {showGuide && onDismissGuide && (
-        <div className="fixed top-20 z-50 animate-bounce pointer-events-none" style={{ left: 'calc(72px + 360px + 16px)', maxWidth: '360px' }}>
-          <div className="relative pointer-events-auto">
+        <div className="absolute top-16 left-0 right-0 z-50 animate-bounce">
+          <div className="mx-auto w-full max-w-md relative">
             <div className="absolute -top-2 left-8 w-4 h-4 bg-blue-600 rotate-45"></div>
             <div className="bg-blue-600 text-white text-xs p-3 rounded-lg shadow-xl relative flex items-center justify-between">
               <div className="font-medium">
