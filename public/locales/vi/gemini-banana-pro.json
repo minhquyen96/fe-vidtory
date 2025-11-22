@@ -1,0 +1,145 @@
+{
+  "modes": {
+    "COMIC": "Tạo Truyện Tranh",
+    "ADVERTISING": "Thiết Kế Quảng Cáo",
+    "INFOGRAPHIC": "Đồ Họa Thông Tin"
+  },
+  "sidebar": {
+    "COMIC": "Truyện",
+    "ADVERTISING": "QCáo",
+    "INFOGRAPHIC": "Info"
+  },
+  "labels": {
+    "story": "Ý Tưởng Cốt Truyện",
+    "refImages": "Ảnh Tham Khảo",
+    "mangaRef": "Phong Cách Manga",
+    "artStyle": "Phong Cách Vẽ",
+    "layout": "Số Lượng Khung Tranh",
+    "task": "Chế Độ Tác Vụ",
+    "brand": "Tên Thương Hiệu",
+    "headline": "Tiêu Đề Chính",
+    "desc": "Mô Tả",
+    "target": "Khách Hàng Mục Tiêu",
+    "topic": "Chủ Đề Chính",
+    "data": "Dữ Liệu Chính",
+    "summary": "Tóm Tắt / Bối Cảnh",
+    "generate": "Tạo Thiết Kế",
+    "generating": "Đang Tạo...",
+    "history": "Thư Viện Gần Đây",
+    "addRef": "Thêm Ảnh",
+    "selectKey": "Chọn API Key",
+    "accessRequired": "Yêu Cầu Truy Cập",
+    "billingText": "Vui lòng chọn API key để tiếp tục.",
+    "download": "Tải Về",
+    "delete": "Xóa",
+    "remix": "Dùng Lại",
+    "downloadAll": "Tải Tất Cả",
+    "confirmDelete": "Bạn có chắc muốn xóa item này?",
+    "upgrade": "Nâng Cấp",
+    "buyCredit": "Mua Credit",
+    "optional": "(Tuỳ chọn)",
+    "required": "(Bắt buộc)",
+    "selectOption": "Chọn một tùy chọn..."
+  },
+  "placeholders": {
+    "story": "Mô tả cốt truyện trang truyện của bạn...",
+    "brand": "vd: NeonEnergy",
+    "headline": "vd: Bùng Nổ Năng Lượng",
+    "desc": "Mô tả sản phẩm hoặc hình ảnh mong muốn...",
+    "target": "vd: Game thủ, Vận động viên",
+    "topic": "vd: Vòng đời của sao",
+    "data": "vd: Tinh vân, Sao nguyên thủy, Sao khổng lồ đỏ",
+    "summary": "Bối cảnh cho người xem..."
+  },
+  "guide": {
+    "title": "Bắt đầu từ đây! Mô tả ý tưởng cốt truyện của bạn hoặc nhấp vào gợi ý bên dưới."
+  },
+  "storyIdeas": {
+    "cyberpunkDetective": {
+      "short": "Thám Tử Cyberpunk",
+      "full": "Cảnh thám tử cyberpunk đen tối, nơi một điều tra viên gai góc đang kiểm tra manh mối hình ba chiều phát sáng trong con hẻm mưa, ngập tràn ánh đèn neon."
+    },
+    "wizardLibrary": {
+      "short": "Thư Viện Phù Thủy",
+      "full": "Góc rộng của một thư viện phép thuật với những cuốn sách trôi nổi, cổ ngữ phát sáng và một phù thủy trẻ đang niệm chú tạo ra vòng xoáy ánh sáng."
+    },
+    "cozyCatCafe": {
+      "short": "Cà Phê Mèo",
+      "full": "Một cảnh đời thường ấm áp bên trong quán cà phê mèo đầy nắng. Bánh ngọt chi tiết trên bàn, mèo ngủ trên kệ và khách hàng trò chuyện vui vẻ."
+    },
+    "spaceBattle": {
+      "short": "Chiến Tranh Vũ Trụ",
+      "full": "Trận chiến không gian khoa học viễn tưởng dữ dội. Một tàu chiến đấu nhỏ của quân nổi dậy né tránh các chùm tia laser từ một tàu dreadnought khổng lồ gần một ngôi sao xanh đang sụp đổ."
+    }
+  },
+  "taskActions": {
+    "story": {
+      "label": "Sáng Tác Mới",
+      "prompt": "Tạo một câu chuyện hoàn toàn mới dựa trên mô tả."
+    },
+    "continue": {
+      "label": "Vẽ Trang Tiếp Theo",
+      "prompt": "Ảnh tham khảo là trang trước đó. Hãy vẽ TRANG TIẾP THEO của câu chuyện này."
+    },
+    "mix": {
+      "label": "Mix Nhân Vật/Bối Cảnh",
+      "prompt": "Kết hợp các yếu tố hình ảnh và nhân vật từ ảnh tham khảo vào một kịch bản mới."
+    },
+    "remake": {
+      "label": "Vẽ Lại Style Khác",
+      "prompt": "Giữ nguyên bố cục của ảnh tham khảo nhưng vẽ lại theo phong cách nghệ thuật đã chọn."
+    }
+  },
+  "styles": {
+    "comic": [
+      "Manga Hiện Đại",
+      "Siêu Anh Hùng Mỹ",
+      "Phim Noir",
+      "Nét Vẽ Line Art",
+      "Màu Nước",
+      "Webtoon"
+    ],
+    "advertising": [
+      "Tối Giản",
+      "Sang Trọng",
+      "Pop Art",
+      "Doanh Nghiệp",
+      "Cyberpunk"
+    ],
+    "infographic": [
+      "Thiết Kế Phẳng",
+      "Góc Nhìn 3D",
+      "Vẽ Tay",
+      "Doanh Nghiệp Sạch",
+      "Dữ Liệu Neon"
+    ]
+  },
+  "mangaStyles": [
+    "Dragon Ball",
+    "One Piece",
+    "Naruto",
+    "Attack on Titan",
+    "JoJo's Bizarre Adventure",
+    "Sailor Moon",
+    "Demon Slayer",
+    "My Hero Academia",
+    "Bleach",
+    "Studio Ghibli",
+    "Junji Ito",
+    "Berserk"
+  ],
+  "ui": {
+    "project": "Dự án",
+    "untitledDesign": "Thiết Kế Chưa Đặt Tên",
+    "emptyState": "Sử dụng bảng điều khiển bên trái để cấu hình thiết kế của bạn.",
+    "emptyHistory": "Chưa có lịch sử tạo ảnh",
+    "credits": "Credit",
+    "error": "Đã xảy ra lỗi không mong muốn.",
+    "frameCountNote": "Gemini sẽ sắp xếp sáng tạo {count} khung tranh này.",
+    "version": "v3.3"
+  },
+  "seo": {
+    "title": "Tạo Truyện Tranh, Quảng Cáo & Đồ Họa Thông Tin với AI - Gemini Banana Pro",
+    "description": "Sử dụng AI để tạo truyện tranh, thiết kế quảng cáo và đồ họa thông tin chuyên nghiệp. Công cụ sáng tạo mạnh mẽ với Google Gemini AI."
+  }
+}

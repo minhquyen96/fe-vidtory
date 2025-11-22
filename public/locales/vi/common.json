@@ -17,6 +17,17 @@
   },
   "share": {
     "title": "Share this page"
+  },
+  "buyCreditModal": {
+    "title": "Mua Credit",
+    "description": "Chọn gói credit phù hợp với nhu cầu của bạn",
+    "outOfCreditTitle": "Bạn đã hết credit AI!",
+    "outOfCreditDescription": "Đừng lo lắng, bạn có thể dễ dàng nạp thêm credit để tiếp tục tạo ra những chỉnh sửa tuyệt vời.",
+    "noPackages": "Hiện tại không có gói credit nào",
+    "contactToBuy": "Liên hệ mua",
+    "contactMessenger": "Liên hệ qua Facebook Messenger",
+    "getCredit": "Nhận credit",
+    "popular": "Phổ Biến"
   }
 }
 

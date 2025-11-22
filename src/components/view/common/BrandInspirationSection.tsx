@@ -78,7 +78,7 @@ export function BrandInspirationSection({ className }: BrandInspirationSectionPr
               variant="outline"
               className="mt-3 sm+:mt-4"
               onClick={() => {
-                router.push('/dashboard')
+                router.push('/gemini-banana-pro')
               }}
             >
               {t('brandInspiration.cta')}

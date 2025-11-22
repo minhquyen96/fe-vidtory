@@ -1,0 +1,145 @@
+{
+  "modes": {
+    "COMIC": "Create Comic",
+    "ADVERTISING": "Design Advertisement",
+    "INFOGRAPHIC": "Infographic Design"
+  },
+  "sidebar": {
+    "COMIC": "Comic",
+    "ADVERTISING": "Ads",
+    "INFOGRAPHIC": "Info"
+  },
+  "labels": {
+    "story": "Story Idea",
+    "refImages": "Reference Images",
+    "mangaRef": "Manga Style",
+    "artStyle": "Art Style",
+    "layout": "Number of Panels",
+    "task": "Task Mode",
+    "brand": "Brand Name",
+    "headline": "Main Headline",
+    "desc": "Description",
+    "target": "Target Audience",
+    "topic": "Main Topic",
+    "data": "Key Data",
+    "summary": "Summary / Context",
+    "generate": "Generate Design",
+    "generating": "Generating...",
+    "history": "Recent Library",
+    "addRef": "Add Image",
+    "selectKey": "Select API Key",
+    "accessRequired": "Access Required",
+    "billingText": "Please select an API key to continue.",
+    "download": "Download",
+    "delete": "Delete",
+    "remix": "Remix",
+    "downloadAll": "Download All",
+    "confirmDelete": "Are you sure you want to delete this item?",
+    "upgrade": "Upgrade",
+    "buyCredit": "Buy Credits",
+    "optional": "(Optional)",
+    "required": "(Required)",
+    "selectOption": "Choose an option..."
+  },
+  "placeholders": {
+    "story": "Describe the plot idea for your comic page...",
+    "brand": "e.g., NeonEnergy",
+    "headline": "e.g., Explosive Energy",
+    "desc": "Describe the product or desired visuals...",
+    "target": "e.g., Gamers, Athletes",
+    "topic": "e.g., Life cycle of a star",
+    "data": "e.g., Nebula, Protostar, Red Giant",
+    "summary": "Context for the viewer..."
+  },
+  "guide": {
+    "title": "Start here! Describe your story idea or click a suggestion below."
+  },
+  "storyIdeas": {
+    "cyberpunkDetective": {
+      "short": "Cyberpunk Detective",
+      "full": "A dark cyberpunk detective scene where a gritty investigator examines a glowing holographic clue in a rainy alley filled with neon lights."
+    },
+    "wizardLibrary": {
+      "short": "Wizard Library",
+      "full": "A wide-angle view of a magical library with floating books, glowing runes, and a young wizard casting a spell that creates a whirl of light."
+    },
+    "cozyCatCafe": {
+      "short": "Cat Café",
+      "full": "A warm slice-of-life scene inside a sunny cat café. Detailed pastries on the table, cats sleeping on shelves, and customers chatting happily."
+    },
+    "spaceBattle": {
+      "short": "Space Battle",
+      "full": "An intense sci-fi space battle. A small rebel fighter dodges laser beams from a massive dreadnought near a collapsing blue star."
+    }
+  },
+  "taskActions": {
+    "story": {
+      "label": "Create New Story",
+      "prompt": "Generate a completely new story based on the description."
+    },
+    "continue": {
+      "label": "Draw Next Page",
+      "prompt": "Reference image is the previous page. Draw the NEXT PAGE of this story."
+    },
+    "mix": {
+      "label": "Mix Characters/Scenes",
+      "prompt": "Combine visual elements and characters from the reference images into a new scenario."
+    },
+    "remake": {
+      "label": "Re-draw with New Style",
+      "prompt": "Keep the layout of the reference image but redraw it with the selected art style."
+    }
+  },
+  "styles": {
+    "comic": [
+      "Modern Manga",
+      "American Superhero",
+      "Film Noir",
+      "Line Art",
+      "Watercolor",
+      "Webtoon"
+    ],
+    "advertising": [
+      "Minimalist",
+      "Luxury",
+      "Pop Art",
+      "Corporate",
+      "Cyberpunk"
+    ],
+    "infographic": [
+      "Flat Design",
+      "3D Perspective",
+      "Hand-drawn",
+      "Clean Corporate",
+      "Neon Data"
+    ]
+  },
+  "mangaStyles": [
+    "Dragon Ball",
+    "One Piece",
+    "Naruto",
+    "Attack on Titan",
+    "JoJo's Bizarre Adventure",
+    "Sailor Moon",
+    "Demon Slayer",
+    "My Hero Academia",
+    "Bleach",
+    "Studio Ghibli",
+    "Junji Ito",
+    "Berserk"
+  ],
+  "ui": {
+    "project": "Project",
+    "untitledDesign": "Untitled Design",
+    "emptyState": "Use the left panel to configure your design.",
+    "emptyHistory": "No image history yet",
+    "credits": "Credits",
+    "error": "An unexpected error occurred.",
+    "frameCountNote": "Gemini will creatively arrange these {count} panels.",
+    "version": "v3.3"
+  },
+  "seo": {
+    "title": "Create Comics, Ads & Infographics with AI - Gemini Banana Pro",
+    "description": "Use AI to create professional comics, advertisement designs, and infographics. Powerful creative tool powered by Google Gemini AI."
+  }
+}

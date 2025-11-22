@@ -64,6 +64,17 @@
   },
   "share": {
     "title": "Share this page"
+  },
+  "buyCreditModal": {
+    "title": "Buy Credit",
+    "description": "Choose a credit package that suits your needs",
+    "outOfCreditTitle": "You've run out of AI credits!",
+    "outOfCreditDescription": "Don't worry, you can easily top up credits to continue creating amazing edits.",
+    "noPackages": "No credit packages available at the moment",
+    "contactToBuy": "Contact to Buy",
+    "contactMessenger": "Contact via Facebook Messenger",
+    "getCredit": "Get Credit",
+    "popular": "Popular"
   }
 }
 

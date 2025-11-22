@@ -259,7 +259,7 @@ export default function Home(props: { schema: string }) {
   ]
 
   return (
-    <Layout title={t('title')} description={t('description')} noIndex>
+    <Layout title={t('title')} description={t('description')}>
       {/* {renderPageSchema(schema as any)} */}
       <div className="mx-auto bg-background">
         <Banner {...commonProps} />

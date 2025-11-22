@@ -23,6 +23,7 @@ export interface Premium {
   activated_at?: number | null
   price_id?: string | null
   total_months?: number | null
+  credit?: number
 }
 
 export interface ActiveBadge {

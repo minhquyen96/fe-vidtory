@@ -21,6 +21,7 @@ export const I18N_NAMESPACES = {
   PRICING: 'pricing',
   COMMUNITY: 'community',
   LEARNING_VOCABULARY: 'learning-vocabulary',
+  GEMINI_BANANA_PRO: 'gemini-banana-pro',
 } as const
 
 export type I18nNamespace =

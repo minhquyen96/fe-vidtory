@@ -32,14 +32,10 @@ export function Banner({
       {
         button_location: 'banner',
         button_text: t('hero.cta'),
-        destination: user ? '/dashboard' : '/',
+        destination: '/gemini-banana-pro',
       }
     )
-    if (user) {
-      router.push('/dashboard')
-    } else {
-      openLoginModal()
-    }
+    router.push('/gemini-banana-pro')
   }
 
   const [selectedUseCase, setSelectedUseCase] = useState<string>('videoEditing')

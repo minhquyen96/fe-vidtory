@@ -71,7 +71,7 @@ export function StatsSection({ className }: StatsSectionProps) {
               size="lg" 
               className="text-base sm+:text-lg px-8 sm+:px-12 py-6 sm+:py-8"
               onClick={() => {
-                router.push('/dashboard')
+                router.push('/gemini-banana-pro')
               }}
             >
               {t('statsSection.cta')}
