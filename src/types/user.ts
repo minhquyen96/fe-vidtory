@@ -83,6 +83,7 @@ export interface AuthContextType {
   logout: () => Promise<void>
   closeLoginModal: () => void
   openLoginModal: (redirectUrl?: string) => void
+  updateUserCredit: (remainingCredit: number) => void
 }
 
 export enum UserLevel {

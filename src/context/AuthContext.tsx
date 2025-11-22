@@ -247,6 +247,20 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     return null
   }
 
+  const updateUserCredit = (remainingCredit: number) => {
+    if (userData) {
+      const updatedUserData = {
+        ...userData,
+        premium: {
+          ...(userData.premium || {}),
+          credit: remainingCredit,
+        },
+      }
+      setUserData(updatedUserData)
+      localStorage.setItem('userData', JSON.stringify(updatedUserData))
+    }
+  }
+
   // Theo dõi trạng thái đăng nhập từ Firebase
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(
@@ -317,6 +331,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
         logout,
         closeLoginModal,
         openLoginModal,
+        updateUserCredit,
       }}
     >
       {children}

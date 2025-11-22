@@ -66,6 +66,7 @@ export default function GeminiBananaProPage() {
     loading: authLoading,
     openLoginModal,
     logout,
+    updateUserCredit,
   } = useAuth()
   const [activePage, setActivePage] = useState<AppMode>(AppMode.COMIC)
   const [isLoading, setIsLoading] = useState(false)
@@ -181,6 +182,11 @@ export default function GeminiBananaProPage() {
       const result = await generateCreativeContent(activePage, currentData)
       setResultImage(result.imageUrl)
 
+      // Update user credit with remaining credit from API response
+      if (result.remainingCredit !== undefined) {
+        updateUserCredit(result.remainingCredit)
+      }
+
       // Reload history to get the new item from backend
       const historyResult = await getGenerationHistory({
         page: 1,
@@ -189,9 +195,6 @@ export default function GeminiBananaProPage() {
         sort_order: 'desc',
       })
       setHistory(historyResult.histories)
-
-      // Reload user data to get updated credit
-      // Note: This should be handled by AuthContext automatically after API call
     } catch (e) {
       if (e instanceof Error) {
         // Check if error is about insufficient credit
