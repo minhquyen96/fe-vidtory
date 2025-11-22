@@ -44,6 +44,8 @@ import {
 import { I18N_NAMESPACES } from '@/constants/i18n'
 import { useAuth } from '@/context/AuthContext'
 import { BuyCreditModal } from '@/components/gemini-banana-pro/BuyCreditModal'
+import { ConfirmDialog } from '@/components/ui/confirm-dialog'
+import JSZip from 'jszip'
 
 export default function GeminiBananaProPage() {
   const { t } = useTranslation(I18N_NAMESPACES.GEMINI_BANANA_PRO)
@@ -61,6 +63,7 @@ export default function GeminiBananaProPage() {
   const [history, setHistory] = useState<HistoryItem[]>([])
   const [loadingHistory, setLoadingHistory] = useState(false)
   const [showBuyCreditModal, setShowBuyCreditModal] = useState(false)
+  const [deleteConfirmId, setDeleteConfirmId] = useState<string | null>(null)
 
   // UI State - Initialize theme from DOM or default to dark
   const [theme, setTheme] = useState<'light' | 'dark'>(() => {
@@ -209,59 +212,101 @@ export default function GeminiBananaProPage() {
     setResultImage(item.image_url)
   }
 
-  const handleDownload = () => {
-    if (resultImage) {
-      // Since imageUrl is from GCS, we can download directly
+  const handleDownload = async () => {
+    if (!resultImage) return
+
+    try {
+      // Fetch image as blob
+      const response = await fetch(resultImage)
+      if (!response.ok) throw new Error('Failed to fetch image')
+      
+      const blob = await response.blob()
+      const url = window.URL.createObjectURL(blob)
+      
       const link = document.createElement('a')
-      link.href = resultImage
+      link.href = url
       link.download = `creative-studio-${Date.now()}.png`
-      link.target = '_blank'
       document.body.appendChild(link)
       link.click()
       document.body.removeChild(link)
+      
+      // Clean up object URL
+      window.URL.revokeObjectURL(url)
+    } catch (error) {
+      console.error('Failed to download image:', error)
+      setError(error instanceof Error ? error.message : t('ui.error'))
     }
   }
 
   const handleDownloadAll = async () => {
     if (history.length === 0) return
-    
-    for (const item of history) {
-      try {
-        const link = document.createElement('a')
-        link.href = item.image_url
-        link.download = `gemini-${item.id}.png`
-        link.target = '_blank'
-        document.body.appendChild(link)
-        link.click()
-        document.body.removeChild(link)
-        // Small delay to avoid browser blocking multiple downloads
-        await new Promise(resolve => setTimeout(resolve, 200))
-      } catch (error) {
-        console.error(`Failed to download ${item.id}:`, error)
-      }
+
+    try {
+      setIsLoading(true)
+      setError(null)
+
+      const zip = new JSZip()
+      const downloadPromises = history.map(async (item, index) => {
+        try {
+          const response = await fetch(item.image_url)
+          if (!response.ok) throw new Error(`Failed to fetch image ${item.id}`)
+          
+          const blob = await response.blob()
+          // Get file extension from content type or default to png
+          const extension = blob.type.split('/')[1] || 'png'
+          const filename = `gemini-${item.id || index}.${extension}`
+          zip.file(filename, blob)
+        } catch (error) {
+          console.error(`Failed to fetch image ${item.id}:`, error)
+          // Continue with other images even if one fails
+        }
+      })
+
+      await Promise.all(downloadPromises)
+
+      // Generate zip file
+      const zipBlob = await zip.generateAsync({ type: 'blob' })
+      const url = window.URL.createObjectURL(zipBlob)
+
+      const link = document.createElement('a')
+      link.href = url
+      link.download = `vidtory-history-${Date.now()}.zip`
+      document.body.appendChild(link)
+      link.click()
+      document.body.removeChild(link)
+
+      // Clean up object URL
+      window.URL.revokeObjectURL(url)
+    } catch (error) {
+      console.error('Failed to create zip file:', error)
+      setError(error instanceof Error ? error.message : t('ui.error'))
+    } finally {
+      setIsLoading(false)
     }
   }
 
-  const handleDeleteHistory = async (id: string, e: React.MouseEvent) => {
+  const handleDeleteHistory = (id: string, e: React.MouseEvent) => {
     e.stopPropagation()
-    
-    const confirmMessage = t('labels.confirmDelete') || 'Bạn có chắc muốn xóa item này?'
-    if (!confirm(confirmMessage)) {
-      return
-    }
+    setDeleteConfirmId(id)
+  }
+
+  const confirmDeleteHistory = async () => {
+    if (!deleteConfirmId) return
 
     try {
-      await deleteHistory(id)
+      await deleteHistory(deleteConfirmId)
       // Remove from local state
-      setHistory((h) => h.filter((x) => x.id !== id))
+      setHistory((h) => h.filter((x) => x.id !== deleteConfirmId))
       // If deleted item is currently displayed, clear it
-      if (resultImage && history.find(item => item.id === id && item.image_url === resultImage)) {
+      if (resultImage && history.find(item => item.id === deleteConfirmId && item.image_url === resultImage)) {
         setResultImage(null)
       }
+      setDeleteConfirmId(null)
     } catch (err) {
       console.error('Failed to delete history:', err)
       const errorMessage = err instanceof Error ? err.message : t('ui.error')
       alert(errorMessage)
+      setDeleteConfirmId(null)
     }
   }
 
@@ -566,15 +611,27 @@ export default function GeminiBananaProPage() {
          </div>
        </div>
 
-       {/* Buy Credit Modal */}
-       <BuyCreditModal
-         isOpen={showBuyCreditModal}
-         onClose={() => setShowBuyCreditModal(false)}
-       />
-     </div>
-    </Layout>
-   )
- }
+      {/* Buy Credit Modal */}
+      <BuyCreditModal
+        isOpen={showBuyCreditModal}
+        onClose={() => setShowBuyCreditModal(false)}
+      />
+
+      {/* Delete Confirm Dialog */}
+      <ConfirmDialog
+        isOpen={deleteConfirmId !== null}
+        onClose={() => setDeleteConfirmId(null)}
+        onConfirm={confirmDeleteHistory}
+        title={t('labels.delete')}
+        description={t('labels.confirmDelete')}
+        confirmText={t('labels.delete')}
+        cancelText={t('labels.cancel')}
+        variant="destructive"
+      />
+    </div>
+   </Layout>
+  )
+}
 
 export const getStaticProps: GetStaticProps = async ({ locale = 'vi' }) => {
   return {

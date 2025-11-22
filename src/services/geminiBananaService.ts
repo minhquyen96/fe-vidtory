@@ -1,94 +1,98 @@
-import { AppMode, InputUnion } from "@/types/gemini-banana-pro";
-import { apiService } from './api';
+import { AppMode, InputUnion } from '@/types/gemini-banana-pro'
+import { apiService } from './api'
 
 interface GenerateResponse {
-  status: 'success' | 'error';
-  message: string;
+  status: 'success' | 'error'
+  message: string
   data?: {
-    imageUrl: string;
-    remainingCredit: number;
-    historyId: string;
-  };
-  error?: string;
+    imageUrl: string
+    remainingCredit: number
+    historyId: string
+  }
+  error?: string
 }
 
 interface HistoryItem {
-  id: string;
-  user_id: string;
-  mode: 'comic' | 'advertising' | 'infographic';
-  inputs: any;
-  image_url: string;
-  credit_used: number;
-  created_at: number;
+  id: string
+  user_id: string
+  mode: 'comic' | 'advertising' | 'infographic'
+  inputs: any
+  image_url: string
+  credit_used: number
+  created_at: number
 }
 
 interface HistoryResponse {
-  status: 'success' | 'error';
-  message: string;
+  status: 'success' | 'error'
+  message: string
   data?: {
-    histories: HistoryItem[];
+    histories: HistoryItem[]
     pagination?: {
-      current_page: number;
-      per_page: number;
-      total: number;
-      total_pages: number;
-    };
-  };
+      current_page: number
+      per_page: number
+      total: number
+      total_pages: number
+    }
+  }
 }
 
 interface SingleHistoryResponse {
-  status: 'success' | 'error';
-  message: string;
+  status: 'success' | 'error'
+  message: string
   data?: {
-    history: HistoryItem;
-  };
+    history: HistoryItem
+  }
 }
 
 // Helper to convert File to Base64
-const fileToBase64 = async (file: File): Promise<{ data: string; mimeType: string }> => {
+const fileToBase64 = async (
+  file: File
+): Promise<{ data: string; mimeType: string }> => {
   return new Promise((resolve, reject) => {
-    const reader = new FileReader();
+    const reader = new FileReader()
     reader.onloadend = () => {
-      const base64String = reader.result as string;
+      const base64String = reader.result as string
       // Remove the data URL prefix (e.g., "data:image/jpeg;base64,")
-      const base64Data = base64String.split(',')[1];
+      const base64Data = base64String.split(',')[1]
       resolve({
         data: base64Data,
         mimeType: file.type,
-      });
-    };
-    reader.onerror = reject;
-    reader.readAsDataURL(file);
-  });
-};
+      })
+    }
+    reader.onerror = reject
+    reader.readAsDataURL(file)
+  })
+}
 
 // Convert AppMode enum to API mode string
-const modeToApiMode = (mode: AppMode): 'comic' | 'advertising' | 'infographic' => {
+const modeToApiMode = (
+  mode: AppMode
+): 'comic' | 'advertising' | 'infographic' => {
   switch (mode) {
     case AppMode.COMIC:
-      return 'comic';
+      return 'comic'
     case AppMode.ADVERTISING:
-      return 'advertising';
+      return 'advertising'
     case AppMode.INFOGRAPHIC:
-      return 'infographic';
+      return 'infographic'
     default:
-      return 'comic';
+      return 'comic'
   }
-};
+}
 
 // Convert API mode string to AppMode enum
 const apiModeToAppMode = (mode: string): AppMode => {
   switch (mode) {
     case 'comic':
-      return AppMode.COMIC;
+      return AppMode.COMIC
     case 'advertising':
-      return AppMode.ADVERTISING;
+      return AppMode.ADVERTISING
     case 'infographic':
-      return AppMode.INFOGRAPHIC;
+      return AppMode.INFOGRAPHIC
     default:
-      return AppMode.COMIC;
+      return AppMode.COMIC
   }
-};
+}
 
 /**
  * Generate creative content using Gemini API
@@ -99,14 +103,18 @@ const apiModeToAppMode = (mode: string): AppMode => {
 export const generateCreativeContent = async (
   mode: AppMode,
   inputs: InputUnion
-): Promise<{ imageUrl: string; remainingCredit: number; historyId: string }> => {
+): Promise<{
+  imageUrl: string
+  remainingCredit: number
+  historyId: string
+}> => {
   try {
     // Prepare reference images
-    const referenceImages: Array<{ data: string; mimeType: string }> = [];
+    const referenceImages: Array<{ data: string; mimeType: string }> = []
     if (inputs.referenceImages && inputs.referenceImages.length > 0) {
       for (const file of inputs.referenceImages) {
-        const imageData = await fileToBase64(file);
-        referenceImages.push(imageData);
+        const imageData = await fileToBase64(file)
+        referenceImages.push(imageData)
       }
     }
 
@@ -115,10 +123,10 @@ export const generateCreativeContent = async (
       mode: modeToApiMode(mode),
       inputs,
       referenceImages: referenceImages.length > 0 ? referenceImages : undefined,
-    });
-    
+    })
+
     if (result.status === 'error') {
-      throw new Error(result.message || 'Failed to generate image');
+      throw new Error(result.message || 'Failed to generate image')
     }
 
     if (result.data?.imageUrl && result.data?.historyId) {
@@ -126,36 +134,37 @@ export const generateCreativeContent = async (
         imageUrl: result.data.imageUrl,
         remainingCredit: result.data.remainingCredit,
         historyId: result.data.historyId,
-      };
+      }
     }
 
-    throw new Error("No image generated in response.");
-
+    throw new Error('No image generated in response.')
   } catch (error: any) {
-    console.error("Gemini API Error:", error);
-    
+    console.error('Gemini API Error:', error)
+
     // Handle axios errors
     if (error.response?.data) {
-      const errorData = error.response.data as GenerateResponse;
-      
+      const errorData = error.response.data as GenerateResponse
+
       // Handle insufficient credit error (402)
       if (error.response?.status === 402) {
-        const errorMessage = errorData.message || 'Insufficient credit. Please purchase more credits to continue.';
-        const customError = new Error(errorMessage);
-        (customError as any).isInsufficientCredit = true;
-        throw customError;
+        const errorMessage =
+          errorData.message ||
+          'Insufficient credit. Please purchase more credits to continue.'
+        const customError = new Error(errorMessage)
+        ;(customError as any).isInsufficientCredit = true
+        throw customError
       }
-      
-      throw new Error(errorData.message || 'Failed to generate image');
+
+      throw new Error(errorData.message || 'Failed to generate image')
     }
-    
+
     if (error instanceof Error) {
-      throw error;
+      throw error
     }
-    
-    throw new Error("An unexpected error occurred while generating image.");
+
+    throw new Error('An unexpected error occurred while generating image.')
   }
-};
+}
 
 /**
  * Get generation history from backend API
@@ -163,51 +172,53 @@ export const generateCreativeContent = async (
  * @returns History items with pagination info
  */
 export const getGenerationHistory = async (params?: {
-  page?: number;
-  limit?: number;
-  mode?: AppMode;
-  sort_by?: 'mode' | 'created_at';
-  sort_order?: 'asc' | 'desc';
+  page?: number
+  limit?: number
+  mode?: AppMode
+  sort_by?: 'mode' | 'created_at'
+  sort_order?: 'asc' | 'desc'
 }): Promise<{ histories: HistoryItem[]; pagination?: any }> => {
   try {
-    const queryParams: any = {};
-    
-    if (params?.page) queryParams.page = params.page;
-    if (params?.limit) queryParams.limit = params.limit;
-    if (params?.mode) queryParams.mode = modeToApiMode(params.mode);
-    if (params?.sort_by) queryParams.sort_by = params.sort_by;
-    if (params?.sort_order) queryParams.sort_order = params.sort_order;
+    const queryParams: any = {}
 
-    const result = await apiService.get<HistoryResponse>('/gemini/history', queryParams);
-    
+    if (params?.page) queryParams.page = params.page
+    if (params?.limit) queryParams.limit = params.limit
+    if (params?.mode) queryParams.mode = modeToApiMode(params.mode)
+    if (params?.sort_by) queryParams.sort_by = params.sort_by
+    if (params?.sort_order) queryParams.sort_order = params.sort_order
+
+    const result = await apiService.get<HistoryResponse>(
+      '/gemini/history',
+      queryParams
+    )
+
     if (result.status === 'error') {
-      throw new Error(result.message || 'Failed to fetch history');
+      throw new Error(result.message || 'Failed to fetch history')
     }
 
     if (result.data?.histories) {
       return {
         histories: result.data.histories,
         pagination: result.data.pagination,
-      };
+      }
     }
 
-    return { histories: [] };
-
+    return { histories: [] }
   } catch (error: any) {
-    console.error("Get History Error:", error);
-    
+    console.error('Get History Error:', error)
+
     if (error.response?.data) {
-      const errorData = error.response.data as HistoryResponse;
-      throw new Error(errorData.message || 'Failed to fetch history');
+      const errorData = error.response.data as HistoryResponse
+      throw new Error(errorData.message || 'Failed to fetch history')
     }
-    
+
     if (error instanceof Error) {
-      throw error;
+      throw error
     }
-    
-    throw new Error("An unexpected error occurred while fetching history.");
+
+    throw new Error('An unexpected error occurred while fetching history.')
   }
-};
+}
 
 /**
  * Get single history item by ID
@@ -216,33 +227,34 @@ export const getGenerationHistory = async (params?: {
  */
 export const getHistoryById = async (id: string): Promise<HistoryItem> => {
   try {
-    const result = await apiService.get<SingleHistoryResponse>(`/gemini/history/${id}`);
-    
+    const result = await apiService.get<SingleHistoryResponse>(
+      `/gemini/history/${id}`
+    )
+
     if (result.status === 'error') {
-      throw new Error(result.message || 'History not found');
+      throw new Error(result.message || 'History not found')
     }
 
     if (result.data?.history) {
-      return result.data.history;
+      return result.data.history
     }
 
-    throw new Error("History not found");
-
+    throw new Error('History not found')
   } catch (error: any) {
-    console.error("Get History By ID Error:", error);
-    
+    console.error('Get History By ID Error:', error)
+
     if (error.response?.data) {
-      const errorData = error.response.data as SingleHistoryResponse;
-      throw new Error(errorData.message || 'History not found');
+      const errorData = error.response.data as SingleHistoryResponse
+      throw new Error(errorData.message || 'History not found')
     }
-    
+
     if (error instanceof Error) {
-      throw error;
+      throw error
     }
-    
-    throw new Error("An unexpected error occurred while fetching history.");
+
+    throw new Error('An unexpected error occurred while fetching history.')
   }
-};
+}
 
 /**
  * Delete a history item by ID
@@ -250,28 +262,33 @@ export const getHistoryById = async (id: string): Promise<HistoryItem> => {
  */
 export const deleteHistory = async (id: string): Promise<void> => {
   try {
-    const result = await apiService.delete<{ status: 'success' | 'error'; message: string }>(`/gemini/history/${id}`);
-    
+    const result = await apiService.delete<{
+      status: 'success' | 'error'
+      message: string
+    }>(`/gemini/history/${id}`)
+
     if (result.status === 'error') {
-      throw new Error(result.message || 'Failed to delete history');
+      throw new Error(result.message || 'Failed to delete history')
     }
   } catch (error: any) {
-    console.error("Delete History Error:", error);
-    
+    console.error('Delete History Error:', error)
+
     if (error.response?.data) {
-      const errorData = error.response.data as { status: string; message: string };
-      throw new Error(errorData.message || 'Failed to delete history');
+      const errorData = error.response.data as {
+        status: string
+        message: string
+      }
+      throw new Error(errorData.message || 'Failed to delete history')
     }
-    
+
     if (error instanceof Error) {
-      throw error;
+      throw error
     }
-    
-    throw new Error("An unexpected error occurred while deleting history.");
+
+    throw new Error('An unexpected error occurred while deleting history.')
   }
-};
+}
 
 // Export helper functions for type conversion
-export { modeToApiMode, apiModeToAppMode };
-export type { HistoryItem };
-
+export { modeToApiMode, apiModeToAppMode }
+export type { HistoryItem }
