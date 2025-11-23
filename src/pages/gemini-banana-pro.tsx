@@ -264,7 +264,7 @@ export default function GeminiBananaProPage() {
           const watermarkImg = new Image()
           watermarkImg.crossOrigin = 'anonymous'
           watermarkImg.src =
-            'https://assets.vidtory.ai/images/logo.svg'
+            'http://assets.vidtory.ai/images/logo-wtm.png'
 
           watermarkImg.onload = () => {
             // Calculate watermark size (10% of image width, maintain aspect ratio)

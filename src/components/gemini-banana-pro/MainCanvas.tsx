@@ -177,7 +177,7 @@ export function MainCanvas({
               <div className="absolute bottom-2 right-2 z-30 group/watermark">
                 <div className="relative">
                   <img
-                    src="https://assets.vidtory.ai/images/logo.svg"
+                    src="http://assets.vidtory.ai/images/logo-wtm.png"
                     alt="Vidtory Logo"
                     className="sm+:h-8 h-4 w-auto opacity-80 group-hover/watermark:opacity-100 transition-opacity"
                   />
