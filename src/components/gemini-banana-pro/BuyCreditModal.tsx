@@ -196,7 +196,7 @@ export function BuyCreditModal({ isOpen, onClose }: BuyCreditModalProps) {
                                   isSelected ? 'text-primary' : 'text-foreground'
                                 }`}
                               >
-                                {pkg.credit.toLocaleString()} credit
+                                {pkg.name}
                               </div>
                               {isPopular && (
                                 <span className="px-1.5 sm+:px-2 py-0.5 bg-amber-500 text-white text-[9px] sm+:text-[10px] font-bold rounded-full">
