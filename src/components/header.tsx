@@ -77,7 +77,18 @@ export function Header() {
             </Link>
           </div>
 
-          {/*Navigation Menu - Desktop*/}
+          {/* AI Creative Generator Link - Only show on /ai-creative-generator */}
+          {/* {router.pathname === '/ai-creative-generator' && ( */}
+            <Link
+              href="/ai-creative-generator"
+              className="hidden sm+:flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium text-foreground/80 hover:text-foreground hover:bg-primary/10 transition-colors"
+            >
+              <Icons.sparkles className="h-4 w-4" />
+              <span>AI Creative Generator</span>
+            </Link>
+          {/* )} */}
+
+          {/* Navigation Menu - Desktop */}
           {/*<nav className="hidden sm+:flex items-center space-x-1 flex-1">*/}
           {/*  /!* Products Dropdown *!/*/}
           {/*  <div*/}
@@ -371,7 +382,7 @@ export function Header() {
                   <Button
                     variant="ghost"
                     size="icon"
-                    className="hidden sm+:inline-flex rounded-full"
+                    className="hidden sm+:inline-flex rounded-full relative"
                   >
                     <Avatar className="h-8 w-8">
                       <AvatarImage
@@ -395,6 +406,11 @@ export function Header() {
                           .toUpperCase()}
                       </AvatarFallback>
                     </Avatar>
+                    {userData?.premium?.status === 'active' && (
+                      <span className="absolute h-5 flex items-center justify-center -top-2 -right-1 bg-gradient-to-r from-amber-500 to-orange-600 text-white text-[8px] font-bold px-[1px] py-[1px] rounded-full border-2 border-background shadow-sm">
+                        PRO
+                      </span>
+                    )}
                   </Button>
                 </PopoverTrigger>
                 <PopoverContent align="end" className="w-56 p-2">
@@ -451,166 +467,89 @@ export function Header() {
                   <DrawerTitle>Menu</DrawerTitle>
                 </DrawerHeader>
                 <div className="flex flex-col p-4 space-y-6 max-h-[80vh] overflow-y-auto">
-                  {/* Products Section */}
-                  <div>
-                    <h3 className="text-sm font-semibold mb-3">Product</h3>
+                  {/* AI Creative Generator */}
+                  <Link
+                    href="/ai-creative-generator"
+                    className="flex items-center gap-2 px-3 py-2 rounded-md text-sm font-medium text-foreground/80 hover:text-foreground hover:bg-primary/10 transition-colors"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    <Icons.sparkles className="h-4 w-4" />
+                    <span>AI Creative Generator</span>
+                  </Link>
 
-                    <div className="space-y-4">
-                      <div>
-                        <h4 className="text-xs font-semibold text-foreground/60 mb-2">
-                          Create
-                        </h4>
-                        <div className="flex flex-col space-y-2">
-                          <Link
-                            href="/"
-                            className="text-sm text-foreground/80 hover:text-foreground"
-                            onClick={() => setIsMobileMenuOpen(false)}
-                          >
-                            Video Story Creator
-                          </Link>
-                          <Link
-                            href="/"
-                            className="text-sm text-foreground/80 hover:text-foreground"
-                            onClick={() => setIsMobileMenuOpen(false)}
-                          >
-                            Niche Templates
-                          </Link>
-                          <Link
-                            href="/"
-                            className="text-sm text-foreground/80 hover:text-foreground"
-                            onClick={() => setIsMobileMenuOpen(false)}
-                          >
-                            Script Generator
-                          </Link>
-                          <Link
-                            href="/"
-                            className="text-sm text-foreground/80 hover:text-foreground"
-                            onClick={() => setIsMobileMenuOpen(false)}
-                          >
-                            AI Avatars
-                          </Link>
+                  {/* User Profile / Login Section */}
+                  <div className="pt-4 border-t">
+                    {user ? (
+                      /* User Profile - Logged In */
+                      <div className="space-y-3">
+                        <div className="flex items-center gap-3 px-3 py-2">
+                          <div className="relative">
+                            <Avatar className="h-10 w-10">
+                              <AvatarImage
+                                src={userData?.photoURL || user.photoURL || undefined}
+                                alt={
+                                  userData?.displayName ||
+                                  userData?.name ||
+                                  user.displayName ||
+                                  'User'
+                                }
+                              />
+                              <AvatarFallback className="bg-primary/20 text-foreground">
+                                {(
+                                  userData?.displayName ||
+                                  userData?.name ||
+                                  user.displayName ||
+                                  user.email ||
+                                  'U'
+                                )
+                                  .charAt(0)
+                                  .toUpperCase()}
+                              </AvatarFallback>
+                            </Avatar>
+                            {userData?.premium?.status === 'active' && (
+                              <span className="absolute -bottom-0.5 -right-0.5 bg-gradient-to-r from-amber-500 to-orange-600 text-white text-[8px] font-bold px-1.5 py-0.5 rounded-full border-2 border-background shadow-sm">
+                                PRO
+                              </span>
+                            )}
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <p className="text-sm font-medium text-foreground truncate">
+                              {userData?.displayName ||
+                                userData?.name ||
+                                user.displayName ||
+                                'User'}
+                            </p>
+                            <p className="text-xs text-foreground/60 truncate">
+                              {user.email}
+                            </p>
+                          </div>
                         </div>
+                        <Button
+                          variant="ghost"
+                          className="justify-start w-full text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 hover:bg-red-50 dark:hover:bg-red-950/20"
+                          onClick={() => {
+                            logout()
+                            setIsMobileMenuOpen(false)
+                          }}
+                        >
+                          <Icons.logOut className="mr-2 h-4 w-4" />
+                          <span>Logout</span>
+                        </Button>
                       </div>
-
-                      <div>
-                        <h4 className="text-xs font-semibold text-foreground/60 mb-2">
-                          Edit
-                        </h4>
-                        <div className="flex flex-col space-y-2">
-                          <Link
-                            href="/"
-                            className="text-sm text-foreground/80 hover:text-foreground"
-                            onClick={() => setIsMobileMenuOpen(false)}
-                          >
-                            Video Editor
-                          </Link>
-                          <Link
-                            href="/"
-                            className="text-sm text-foreground/80 hover:text-foreground"
-                            onClick={() => setIsMobileMenuOpen(false)}
-                          >
-                            Translations
-                          </Link>
-                          <Link
-                            href="/"
-                            className="text-sm text-foreground/80 hover:text-foreground"
-                            onClick={() => setIsMobileMenuOpen(false)}
-                          >
-                            Subtitles
-                          </Link>
-                        </div>
-                      </div>
-
-                      <div>
-                        <h4 className="text-xs font-semibold text-foreground/60 mb-2">
-                          Publish
-                        </h4>
-                        <div className="flex flex-col space-y-2">
-                          <Link
-                            href="/"
-                            className="text-sm text-foreground/80 hover:text-foreground"
-                            onClick={() => setIsMobileMenuOpen(false)}
-                          >
-                            Video Player
-                          </Link>
-                          <Link
-                            href="/"
-                            className="text-sm text-foreground/80 hover:text-foreground"
-                            onClick={() => setIsMobileMenuOpen(false)}
-                          >
-                            Video Hosting
-                          </Link>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Use Cases Section */}
-                  <div>
-                    <h3 className="text-sm font-semibold mb-3">Use Cases</h3>
-                    <div className="flex flex-col space-y-2">
-                      <Link
-                        href="/"
-                        className="text-sm text-foreground/80 hover:text-foreground"
-                        onClick={() => setIsMobileMenuOpen(false)}
-                      >
-                        Marketing
-                      </Link>
-                      <Link
-                        href="/"
-                        className="text-sm text-foreground/80 hover:text-foreground"
-                        onClick={() => setIsMobileMenuOpen(false)}
-                      >
-                        Training
-                      </Link>
-                      <Link
-                        href="/"
-                        className="text-sm text-foreground/80 hover:text-foreground"
-                        onClick={() => setIsMobileMenuOpen(false)}
-                      >
-                        Sales
-                      </Link>
-                      <Link
-                        href="/"
-                        className="text-sm text-foreground/80 hover:text-foreground"
-                        onClick={() => setIsMobileMenuOpen(false)}
-                      >
-                        Media & Publishing
-                      </Link>
-                      <Link
-                        href="/"
-                        className="text-sm text-foreground/80 hover:text-foreground"
-                        onClick={() => setIsMobileMenuOpen(false)}
-                      >
-                        Internal Communications
-                      </Link>
-                    </div>
-                    <div className="mt-4 pt-4 border-t">
-                      <h4 className="text-xs font-semibold text-foreground/60 mb-2">
-                        BY COMPANY SIZE
-                      </h4>
-                      <Link
-                        href="/"
-                        className="text-sm text-foreground/80 hover:text-foreground"
-                        onClick={() => setIsMobileMenuOpen(false)}
-                      >
-                        Enterprise
-                      </Link>
-                    </div>
-                  </div>
-
-                  {/* Login Button - Mobile */}
-                  {!user && (
-                    <div className="pt-4 border-t">
+                    ) : (
+                      /* Login Button - Not Logged In */
                       <Button
                         variant="default"
                         className="w-full"
-                        onClick={() => openLoginModal()}
+                        onClick={() => {
+                          openLoginModal()
+                          setIsMobileMenuOpen(false)
+                        }}
                       >
                         Login
                       </Button>
-                    </div>
-                  )}
+                    )}
+                  </div>
                 </div>
               </DrawerContent>
             </Drawer>

@@ -160,7 +160,7 @@ export function SidebarNavigation({
         {isAuthenticated && user ? (
           <Popover>
             <PopoverTrigger asChild>
-              <button className="w-10 h-10 flex items-center justify-center rounded-lg hover:bg-default-100 dark:hover:bg-default-800 transition-all">
+              <button className="w-10 h-10 flex items-center justify-center rounded-lg hover:bg-default-100 dark:hover:bg-default-800 transition-all relative">
                 <Avatar className="h-10 w-10">
                   <AvatarImage
                     src={userData?.photoURL || user.photoURL || undefined}
@@ -170,6 +170,11 @@ export function SidebarNavigation({
                     {getUserInitial(userData, user)}
                   </AvatarFallback>
                 </Avatar>
+                {userData?.premium?.status === 'active' && (
+                  <span className="absolute -bottom-0.5 -right-0.5 bg-gradient-to-r from-amber-500 to-orange-600 text-white text-[8px] font-bold px-1.5 py-0.5 rounded-full border-2 border-content1 shadow-sm">
+                    PRO
+                  </span>
+                )}
               </button>
             </PopoverTrigger>
             <PopoverContent align="start" className="w-56 p-2">

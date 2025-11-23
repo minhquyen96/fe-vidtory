@@ -244,7 +244,7 @@ export default function DashboardPage() {
                 </div>
                 <div className="p-4">
                   <h3 className="font-semibold text-gray-900 mb-1">
-                    Holiday Campaign 2024
+                    Holiday Campaign 2025
                   </h3>
                   <p className="text-sm text-gray-600 mb-3 line-clamp-2">
                     Complete workflow for holiday marketing...

@@ -1,0 +1,89 @@
+{
+  "title": "Privacy Policy",
+  "description": "Privacy policy for Vidtory AI Creative Generator",
+  "lastUpdated": "Last updated: 2024",
+  "common": {
+    "back": "Back"
+  },
+  "sections": {
+    "introduction": {
+      "title": "1. Introduction",
+      "content": "We are committed to protecting your privacy. This policy explains how we collect, use, and protect your personal information when using Vidtory AI Creative Generator."
+    },
+    "informationCollection": {
+      "title": "2. Information We Collect",
+      "content": "We collect the following types of information:",
+      "personalData": {
+        "title": "Personal Information",
+        "items": {
+          "1": "Name and email address when you register an account",
+          "2": "Profile picture (if you provide)",
+          "3": "Payment information (processed by secure third parties)",
+          "4": "Contact information when you contact us"
+        }
+      },
+      "usageData": {
+        "title": "Usage Data",
+        "items": {
+          "1": "Content generation history and credit usage",
+          "2": "Your preferences and settings",
+          "3": "Device and browser information"
+        }
+      },
+      "paymentData": {
+        "title": "Payment Data",
+        "content": "Payment information is processed by secure third-party payment providers. We do not store credit card information or full payment details on our servers."
+      }
+    },
+    "usage": {
+      "title": "3. How We Use Information",
+      "items": {
+        "1": "Provide and improve our services",
+        "2": "Process transactions and manage your credits",
+        "3": "Send service notifications and updates",
+        "4": "Provide customer support and resolve issues",
+        "5": "Analyze service usage to improve experience",
+        "6": "Comply with legal obligations"
+      }
+    },
+    "sharing": {
+      "title": "4. Information Sharing",
+      "content": "We do not sell your personal information. We may share information with trusted third parties only when necessary to provide services, process payments, or comply with the law."
+    },
+    "payment": {
+      "title": "5. Payment Processing",
+      "content": "All payment transactions are processed by encrypted third-party payment providers that comply with the highest security standards. We only store information necessary to manage your transactions and credits."
+    },
+    "security": {
+      "title": "6. Data Security",
+      "content": "We use appropriate technical and organizational security measures to protect your personal information from unauthorized access, loss, or destruction. However, no method of transmission over the internet is 100% secure."
+    },
+    "rights": {
+      "title": "7. Your Rights",
+      "items": {
+        "1": "Right to access your personal information",
+        "2": "Right to correct inaccurate information",
+        "3": "Right to request deletion of your account and data",
+        "4": "Right to opt-out of marketing emails",
+        "5": "Right to complain about how we handle your data"
+      }
+    },
+    "cookies": {
+      "title": "8. Cookies",
+      "content": "We use cookies to improve your experience, remember your preferences, and analyze service usage. You can control cookies through your browser settings."
+    },
+    "children": {
+      "title": "9. Children's Privacy",
+      "content": "Our service is not intended for children under 13 years of age. We do not knowingly collect personal information from children under 13."
+    },
+    "changes": {
+      "title": "10. Policy Changes",
+      "content": "We may update this privacy policy from time to time. We will notify you of any significant changes by posting a notice on the service or sending you an email."
+    },
+    "contact": {
+      "title": "11. Contact",
+      "content": "If you have questions about this privacy policy or how we handle your data, please contact us via email or Facebook Messenger."
+    }
+  }
+}
+

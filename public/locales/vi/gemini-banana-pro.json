@@ -54,7 +54,9 @@
     "readyTitle": "Sẵn sàng sáng tạo?",
     "readyDesc": "Cấu hình cài đặt ở bảng bên trái và nhấn tạo để thấy điều kỳ diệu.",
     "openEditor": "Mở Trình Chỉnh Sửa",
-    "removeWatermark": "Nâng cấp để bỏ watermark"
+    "removeWatermark": "Nâng cấp để bỏ watermark",
+    "somethingWentWrong": "Đã xảy ra lỗi. Vui lòng thử lại.",
+    "errorCode": "Mã lỗi"
   },
   "tooltips": {
     "story": "Mô tả cốt truyện, nhân vật và bối cảnh cho trang truyện của bạn.",

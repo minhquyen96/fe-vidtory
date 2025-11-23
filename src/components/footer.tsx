@@ -111,10 +111,10 @@ export function Footer() {
       titleKey: 'footer.information',
       links: [
         { title: t('footer.privacy'), href: '/privacy-policy' },
-        { title: t('footer.about_us'), href: '/about-us' },
+        // { title: t('footer.about_us'), href: '/about-us' },
         { title: t('footer.terms'), href: '/terms-of-service' },
-        { title: t('footer.contact_us'), href: '/contact-us' },
-        { title: t('footer.feedbacks'), href: '/feedbacks' },
+        // { title: t('footer.contact_us'), href: '/contact-us' },
+        // { title: t('footer.feedbacks'), href: '/feedbacks' },
       ],
     },
     {

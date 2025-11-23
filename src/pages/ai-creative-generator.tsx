@@ -48,7 +48,7 @@ export default function GeminiBananaProPage() {
   const [activePage, setActivePage] = useState<AppMode>(AppMode.COMIC)
   const [isLoading, setIsLoading] = useState(false)
   const [resultImage, setResultImage] = useState<string | null>(null)
-  const [error, setError] = useState<string | null>(null)
+  const [error, setError] = useState<{ message: string; code?: string } | null>(null)
   const [history, setHistory] = useState<HistoryItem[]>([])
   const [loadingHistory, setLoadingHistory] = useState(false)
   const [showBuyCreditModal, setShowBuyCreditModal] = useState(false)
@@ -177,7 +177,7 @@ export default function GeminiBananaProPage() {
         sort_order: 'desc',
       })
       setHistory(historyResult.histories)
-    } catch (e) {
+    } catch (e: any) {
       if (e instanceof Error) {
         // Check if error is about insufficient credit
         if (
@@ -187,9 +187,14 @@ export default function GeminiBananaProPage() {
         ) {
           setShowBuyCreditModal(true)
         }
-        setError(e.message)
+        // Extract error code from response if available
+        const errorCode = e.response?.data?.code || e.code || (e as any).errorCode
+        setError({
+          message: e.message,
+          code: errorCode,
+        })
       } else {
-        setError(t('ui.error'))
+        setError({ message: t('ui.error') })
       }
     } finally {
       setIsLoading(false)
@@ -355,7 +360,11 @@ export default function GeminiBananaProPage() {
       window.URL.revokeObjectURL(url)
     } catch (error) {
       console.error('Failed to download image:', error)
-      setError(error instanceof Error ? error.message : t('ui.error'))
+      setError(
+        error instanceof Error
+          ? { message: error.message, code: (error as any).code || (error as any).response?.data?.code }
+          : { message: t('ui.error') }
+      )
     }
   }
 
@@ -411,7 +420,11 @@ export default function GeminiBananaProPage() {
       window.URL.revokeObjectURL(url)
     } catch (error) {
       console.error('Failed to create zip file:', error)
-      setError(error instanceof Error ? error.message : t('ui.error'))
+      setError(
+        error instanceof Error
+          ? { message: error.message, code: (error as any).code || (error as any).response?.data?.code }
+          : { message: t('ui.error') }
+      )
     } finally {
       setIsLoading(false)
     }
@@ -526,7 +539,11 @@ export default function GeminiBananaProPage() {
       }
     } catch (error) {
       console.error('Failed to convert image to reference:', error)
-      setError(error instanceof Error ? error.message : t('ui.error'))
+      setError(
+        error instanceof Error
+          ? { message: error.message, code: (error as any).code || (error as any).response?.data?.code }
+          : { message: t('ui.error') }
+      )
     }
   }
 

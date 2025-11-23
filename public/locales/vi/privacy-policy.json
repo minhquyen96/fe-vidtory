@@ -1,0 +1,89 @@
+{
+  "title": "Chính Sách Bảo Mật",
+  "description": "Chính sách bảo mật thông tin của Vidtory AI Creative Generator",
+  "lastUpdated": "Cập nhật lần cuối: 2024",
+  "common": {
+    "back": "Quay lại"
+  },
+  "sections": {
+    "introduction": {
+      "title": "1. Giới Thiệu",
+      "content": "Chúng tôi cam kết bảo vệ quyền riêng tư của bạn. Chính sách này giải thích cách chúng tôi thu thập, sử dụng và bảo vệ thông tin cá nhân của bạn khi sử dụng Vidtory AI Creative Generator."
+    },
+    "informationCollection": {
+      "title": "2. Thông Tin Chúng Tôi Thu Thập",
+      "content": "Chúng tôi thu thập các loại thông tin sau:",
+      "personalData": {
+        "title": "Thông Tin Cá Nhân",
+        "items": {
+          "1": "Tên và địa chỉ email khi bạn đăng ký tài khoản",
+          "2": "Ảnh đại diện (nếu bạn cung cấp)",
+          "3": "Thông tin thanh toán (được xử lý bởi bên thứ ba an toàn)",
+          "4": "Thông tin liên hệ khi bạn liên hệ với chúng tôi"
+        }
+      },
+      "usageData": {
+        "title": "Dữ Liệu Sử Dụng",
+        "items": {
+          "1": "Lịch sử tạo nội dung và sử dụng credit",
+          "2": "Tùy chọn và cài đặt của bạn",
+          "3": "Thông tin thiết bị và trình duyệt"
+        }
+      },
+      "paymentData": {
+        "title": "Dữ Liệu Thanh Toán",
+        "content": "Thông tin thanh toán được xử lý bởi các nhà cung cấp thanh toán bên thứ ba an toàn. Chúng tôi không lưu trữ thông tin thẻ tín dụng hoặc chi tiết thanh toán đầy đủ trên máy chủ của chúng tôi."
+      }
+    },
+    "usage": {
+      "title": "3. Cách Chúng Tôi Sử Dụng Thông Tin",
+      "items": {
+        "1": "Cung cấp và cải thiện dịch vụ của chúng tôi",
+        "2": "Xử lý giao dịch và quản lý credit của bạn",
+        "3": "Gửi thông báo về dịch vụ và cập nhật",
+        "4": "Hỗ trợ khách hàng và giải quyết vấn đề",
+        "5": "Phân tích cách sử dụng dịch vụ để cải thiện trải nghiệm",
+        "6": "Tuân thủ các nghĩa vụ pháp lý"
+      }
+    },
+    "sharing": {
+      "title": "4. Chia Sẻ Thông Tin",
+      "content": "Chúng tôi không bán thông tin cá nhân của bạn. Chúng tôi có thể chia sẻ thông tin với các bên thứ ba đáng tin cậy chỉ khi cần thiết để cung cấp dịch vụ, xử lý thanh toán, hoặc tuân thủ pháp luật."
+    },
+    "payment": {
+      "title": "5. Xử Lý Thanh Toán",
+      "content": "Tất cả các giao dịch thanh toán được xử lý bởi các nhà cung cấp thanh toán bên thứ ba được mã hóa và tuân thủ các tiêu chuẩn bảo mật cao nhất. Chúng tôi chỉ lưu trữ thông tin cần thiết để quản lý giao dịch và credit của bạn."
+    },
+    "security": {
+      "title": "6. Bảo Mật Dữ Liệu",
+      "content": "Chúng tôi sử dụng các biện pháp bảo mật kỹ thuật và tổ chức phù hợp để bảo vệ thông tin cá nhân của bạn khỏi truy cập trái phép, mất mát hoặc phá hủy. Tuy nhiên, không có phương pháp truyền tải qua internet nào là 100% an toàn."
+    },
+    "rights": {
+      "title": "7. Quyền Của Bạn",
+      "items": {
+        "1": "Quyền truy cập thông tin cá nhân của bạn",
+        "2": "Quyền chỉnh sửa thông tin không chính xác",
+        "3": "Quyền yêu cầu xóa tài khoản và dữ liệu của bạn",
+        "4": "Quyền từ chối nhận email marketing",
+        "5": "Quyền khiếu nại về cách chúng tôi xử lý dữ liệu của bạn"
+      }
+    },
+    "cookies": {
+      "title": "8. Cookies",
+      "content": "Chúng tôi sử dụng cookies để cải thiện trải nghiệm của bạn, ghi nhớ tùy chọn của bạn và phân tích cách sử dụng dịch vụ. Bạn có thể kiểm soát cookies thông qua cài đặt trình duyệt của mình."
+    },
+    "children": {
+      "title": "9. Quyền Riêng Tư Trẻ Em",
+      "content": "Dịch vụ của chúng tôi không dành cho trẻ em dưới 13 tuổi. Chúng tôi không cố ý thu thập thông tin cá nhân từ trẻ em dưới 13 tuổi."
+    },
+    "changes": {
+      "title": "10. Thay Đổi Chính Sách",
+      "content": "Chúng tôi có thể cập nhật chính sách bảo mật này theo thời gian. Chúng tôi sẽ thông báo cho bạn về bất kỳ thay đổi quan trọng nào bằng cách đăng thông báo trên dịch vụ hoặc gửi email cho bạn."
+    },
+    "contact": {
+      "title": "11. Liên Hệ",
+      "content": "Nếu bạn có câu hỏi về chính sách bảo mật này hoặc cách chúng tôi xử lý dữ liệu của bạn, vui lòng liên hệ với chúng tôi qua email hoặc Facebook Messenger."
+    }
+  }
+}
+

@@ -54,7 +54,9 @@
     "readyTitle": "Ready to Create?",
     "readyDesc": "Configure your settings on the left panel and hit generate to see magic.",
     "openEditor": "Open Editor",
-    "removeWatermark": "Upgrade to remove watermark"
+    "removeWatermark": "Upgrade to remove watermark",
+    "somethingWentWrong": "Something went wrong. Please try again.",
+    "errorCode": "Error Code"
   },
   "tooltips": {
     "story": "Describe the plot, characters, and setting for your comic page. Be descriptive!",

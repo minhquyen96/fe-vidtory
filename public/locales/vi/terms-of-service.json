@@ -1,0 +1,81 @@
+{
+  "title": "Điều Khoản Dịch Vụ",
+  "description": "Điều khoản và điều kiện sử dụng dịch vụ Vidtory AI Creative Generator",
+  "lastUpdated": "Cập nhật lần cuối: 2024",
+  "common": {
+    "back": "Quay lại"
+  },
+  "sections": {
+    "introduction": {
+      "title": "1. Giới Thiệu",
+      "content": "Chào mừng bạn đến với Vidtory AI Creative Generator. Bằng cách truy cập và sử dụng dịch vụ của chúng tôi, bạn đồng ý tuân thủ các điều khoản và điều kiện được nêu trong tài liệu này."
+    },
+    "acceptance": {
+      "title": "2. Chấp Nhận Điều Khoản",
+      "content": "Bằng việc sử dụng dịch vụ của chúng tôi, bạn xác nhận rằng bạn đã đọc, hiểu và đồng ý bị ràng buộc bởi các điều khoản này. Nếu bạn không đồng ý với bất kỳ phần nào của các điều khoản này, vui lòng không sử dụng dịch vụ của chúng tôi."
+    },
+    "services": {
+      "title": "3. Dịch Vụ",
+      "content": "Vidtory AI Creative Generator cung cấp các công cụ AI để tạo truyện tranh, thiết kế quảng cáo và đồ họa thông tin. Chúng tôi bảo lưu quyền thay đổi, tạm ngưng hoặc chấm dứt bất kỳ phần nào của dịch vụ mà không cần thông báo trước."
+    },
+    "credits": {
+      "title": "4. Credit và Mua Hàng",
+      "content": "Dịch vụ của chúng tôi hoạt động trên hệ thống credit. Bạn có thể mua credit để sử dụng các tính năng của dịch vụ:",
+      "items": {
+        "1": "Credit được sử dụng để tạo nội dung AI và không thể hoàn lại tiền sau khi đã sử dụng",
+        "2": "Giá credit có thể thay đổi mà không cần thông báo trước",
+        "3": "Credit không có thời hạn sử dụng, trừ khi có thông báo khác",
+        "4": "Credit không thể chuyển nhượng hoặc bán lại cho người dùng khác",
+        "5": "Chúng tôi bảo lưu quyền điều chỉnh số lượng credit cần thiết cho từng tính năng"
+      }
+    },
+    "activationCodes": {
+      "title": "5. Mã Kích Hoạt",
+      "content": "Mã kích hoạt có thể được sử dụng để nạp credit hoặc nâng cấp tài khoản:",
+      "items": {
+        "1": "Mỗi mã kích hoạt chỉ có thể sử dụng một lần",
+        "2": "Mã kích hoạt không thể hoàn lại tiền sau khi đã sử dụng",
+        "3": "Chúng tôi bảo lưu quyền vô hiệu hóa mã kích hoạt nếu phát hiện vi phạm"
+      }
+    },
+    "premium": {
+      "title": "6. Gói Premium",
+      "content": "Gói Premium cung cấp các tính năng cao cấp:",
+      "items": {
+        "1": "Tài khoản Premium cho phép tải xuống ảnh không có watermark",
+        "2": "Tài khoản Premium có thể được kích hoạt thông qua mã kích hoạt hoặc thanh toán trực tiếp",
+        "3": "Quyền lợi Premium có thể thay đổi và sẽ được thông báo trước khi có hiệu lực"
+      }
+    },
+    "refund": {
+      "title": "7. Chính Sách Hoàn Tiền",
+      "content": "Do tính chất kỹ thuật số của dịch vụ, chúng tôi không cung cấp hoàn tiền cho credit đã sử dụng hoặc mã kích hoạt đã kích hoạt. Trong trường hợp có lỗi kỹ thuật từ phía chúng tôi, chúng tôi sẽ xem xét từng trường hợp cụ thể."
+    },
+    "responsibilities": {
+      "title": "8. Trách Nhiệm Người Dùng",
+      "items": {
+        "1": "Bạn chịu trách nhiệm bảo mật thông tin tài khoản của mình",
+        "2": "Bạn không được sử dụng dịch vụ cho mục đích bất hợp pháp hoặc vi phạm quyền của người khác",
+        "3": "Bạn không được chia sẻ tài khoản hoặc mã kích hoạt với người khác",
+        "4": "Bạn chịu trách nhiệm về nội dung được tạo ra bằng dịch vụ của chúng tôi"
+      }
+    },
+    "intellectualProperty": {
+      "title": "9. Sở Hữu Trí Tuệ",
+      "content": "Tất cả nội dung được tạo ra thông qua dịch vụ của chúng tôi thuộc quyền sở hữu của bạn. Tuy nhiên, bạn cấp cho chúng tôi quyền sử dụng nội dung đó để cải thiện dịch vụ. Công nghệ và nền tảng của chúng tôi được bảo vệ bởi luật sở hữu trí tuệ."
+    },
+    "liability": {
+      "title": "10. Giới Hạn Trách Nhiệm",
+      "content": "Chúng tôi không chịu trách nhiệm cho bất kỳ thiệt hại trực tiếp, gián tiếp, ngẫu nhiên hoặc hậu quả nào phát sinh từ việc sử dụng hoặc không thể sử dụng dịch vụ của chúng tôi. Dịch vụ được cung cấp 'nguyên trạng' mà không có bảo đảm nào."
+    },
+    "changes": {
+      "title": "11. Thay Đổi Điều Khoản",
+      "content": "Chúng tôi bảo lưu quyền sửa đổi các điều khoản này bất cứ lúc nào. Các thay đổi sẽ có hiệu lực ngay sau khi được đăng tải. Việc bạn tiếp tục sử dụng dịch vụ sau khi có thay đổi được coi là chấp nhận các điều khoản mới."
+    },
+    "contact": {
+      "title": "12. Liên Hệ",
+      "content": "Nếu bạn có bất kỳ câu hỏi nào về các điều khoản này, vui lòng liên hệ với chúng tôi qua email hoặc Facebook Messenger."
+    }
+  }
+}
+

@@ -42,7 +42,7 @@ interface BuyCreditModalProps {
 }
 
 // Facebook URL
-const FACEBOOK_URL = 'https://www.facebook.com/lehuyducanh'
+const FACEBOOK_URL = 'https://www.facebook.com/Vidtory.AI.MovieMaker'
 
 export function BuyCreditModal({ isOpen, onClose }: BuyCreditModalProps) {
   const { t } = useTranslation(I18N_NAMESPACES.COMMON)

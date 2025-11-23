@@ -1,0 +1,81 @@
+{
+  "title": "Terms of Service",
+  "description": "Terms and conditions for using Vidtory AI Creative Generator service",
+  "lastUpdated": "Last updated: 2024",
+  "common": {
+    "back": "Back"
+  },
+  "sections": {
+    "introduction": {
+      "title": "1. Introduction",
+      "content": "Welcome to Vidtory AI Creative Generator. By accessing and using our service, you agree to comply with the terms and conditions set forth in this document."
+    },
+    "acceptance": {
+      "title": "2. Acceptance of Terms",
+      "content": "By using our service, you acknowledge that you have read, understood, and agree to be bound by these terms. If you do not agree with any part of these terms, please do not use our service."
+    },
+    "services": {
+      "title": "3. Services",
+      "content": "Vidtory AI Creative Generator provides AI tools for creating comics, advertisements, and infographics. We reserve the right to modify, suspend, or discontinue any part of the service without prior notice."
+    },
+    "credits": {
+      "title": "4. Credits and Purchases",
+      "content": "Our service operates on a credit system. You can purchase credits to use service features:",
+      "items": {
+        "1": "Credits are used to generate AI content and are non-refundable once used",
+        "2": "Credit prices may change without prior notice",
+        "3": "Credits do not expire unless otherwise stated",
+        "4": "Credits are non-transferable and cannot be resold to other users",
+        "5": "We reserve the right to adjust the credit amount required for each feature"
+      }
+    },
+    "activationCodes": {
+      "title": "5. Activation Codes",
+      "content": "Activation codes can be used to add credits or upgrade your account:",
+      "items": {
+        "1": "Each activation code can only be used once",
+        "2": "Activation codes are non-refundable once activated",
+        "3": "We reserve the right to deactivate codes if violations are detected"
+      }
+    },
+    "premium": {
+      "title": "6. Premium Subscription",
+      "content": "Premium subscription provides advanced features:",
+      "items": {
+        "1": "Premium accounts allow downloading images without watermarks",
+        "2": "Premium accounts can be activated through activation codes or direct payment",
+        "3": "Premium benefits may change and will be notified before taking effect"
+      }
+    },
+    "refund": {
+      "title": "7. Refund Policy",
+      "content": "Due to the digital nature of our service, we do not provide refunds for used credits or activated activation codes. In case of technical errors on our part, we will review each case individually."
+    },
+    "responsibilities": {
+      "title": "8. User Responsibilities",
+      "items": {
+        "1": "You are responsible for securing your account information",
+        "2": "You may not use the service for illegal purposes or to infringe on others' rights",
+        "3": "You may not share your account or activation codes with others",
+        "4": "You are responsible for content created using our service"
+      }
+    },
+    "intellectualProperty": {
+      "title": "9. Intellectual Property",
+      "content": "All content created through our service belongs to you. However, you grant us the right to use that content to improve the service. Our technology and platform are protected by intellectual property laws."
+    },
+    "liability": {
+      "title": "10. Limitation of Liability",
+      "content": "We are not liable for any direct, indirect, incidental, or consequential damages arising from the use or inability to use our service. The service is provided 'as is' without any warranties."
+    },
+    "changes": {
+      "title": "11. Changes to Terms",
+      "content": "We reserve the right to modify these terms at any time. Changes will take effect immediately upon posting. Your continued use of the service after changes constitutes acceptance of the new terms."
+    },
+    "contact": {
+      "title": "12. Contact",
+      "content": "If you have any questions about these terms, please contact us via email or Facebook Messenger."
+    }
+  }
+}
+

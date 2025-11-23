@@ -162,10 +162,15 @@ export const generateCreativeContent = async (
           'Insufficient credit. Please purchase more credits to continue.'
         const customError = new Error(errorMessage)
         ;(customError as any).isInsufficientCredit = true
+        ;(customError as any).code = (errorData as any).code || 'INSUFFICIENT_CREDIT'
+        ;(customError as any).response = error.response
         throw customError
       }
 
-      throw new Error(errorData.message || 'Failed to generate image')
+      const apiError = new Error(errorData.message || 'Failed to generate image')
+      ;(apiError as any).code = (errorData as any).code
+      ;(apiError as any).response = error.response
+      throw apiError
     }
 
     if (error instanceof Error) {

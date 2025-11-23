@@ -14,7 +14,7 @@ import { I18N_NAMESPACES } from '@/constants/i18n'
 interface MainCanvasProps {
   resultImage: string | null
   isLoading: boolean
-  error: string | null
+  error: { message: string; code?: string } | null
   activePage: AppMode
   mobileTab?: 'editor' | 'preview'
   premiumStatus?: 'active' | 'inactive' | 'expired' | undefined
@@ -66,7 +66,12 @@ export function MainCanvas({
 
         {error && (
           <div className="bg-danger/10 border border-danger/20 text-danger px-6 py-4 rounded-lg backdrop-blur-md max-w-md text-center z-20">
-            <p className="font-medium text-base">{error}</p>
+            <p className="font-medium text-base">{t('labels.somethingWentWrong')}</p>
+            {error.code && (
+              <p className="text-xs mt-2 text-danger/70 font-mono">
+                {t('labels.errorCode')}: {error.code}
+              </p>
+            )}
           </div>
         )}
 
