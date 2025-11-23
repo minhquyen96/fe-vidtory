@@ -30,6 +30,7 @@ interface InputDrawerProps {
   onDismissGuide: () => void
   userCredit: number
   mobileTab?: 'editor' | 'preview'
+  error?: { message: string; status?: number } | null
 }
 
 export function InputDrawer({
@@ -46,6 +47,7 @@ export function InputDrawer({
   onDismissGuide,
   userCredit,
   mobileTab = 'preview',
+  error,
 }: InputDrawerProps) {
   const { t } = useTranslation(I18N_NAMESPACES.GEMINI_BANANA_PRO)
   const router = useRouter()
@@ -116,6 +118,18 @@ export function InputDrawer({
             <span className="text-sm">🍌</span>
           </div>
         </div>
+
+        {/* Error Message - Show on mobile when in editor tab */}
+        {error && mobileTab === 'editor' && (
+          <div className="mx-4 mb-4 bg-danger/10 border border-danger/20 text-danger px-4 py-3 rounded-lg text-sm">
+            <p className="font-medium">{error.message}</p>
+            {error.status && (
+              <p className="text-xs mt-1 text-danger/70 font-mono">
+                {t('labels.errorStatus')}: {error.status}
+              </p>
+            )}
+          </div>
+        )}
 
         <div className="px-4 pt-2">
           {activePage === AppMode.COMIC && (

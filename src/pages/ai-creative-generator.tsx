@@ -700,6 +700,7 @@ export default function GeminiBananaProPage() {
             onDismissGuide={() => setShowGuide(false)}
             userCredit={userCredit}
             mobileTab={mobileTab}
+            error={error}
           />
 
           {/* 3. MAIN CANVAS (Preview & Gallery) */}

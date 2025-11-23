@@ -66,10 +66,12 @@ export function MainCanvas({
 
         {error && (
           <div className="bg-danger/10 border border-danger/20 text-danger px-6 py-4 rounded-lg backdrop-blur-md max-w-md text-center z-20">
-            <p className="font-medium text-base">{t('labels.somethingWentWrong')}</p>
-            {error.status && (
+            <p className="font-medium text-base">
+              {error?.message || t('labels.somethingWentWrong')}
+            </p>
+            {error?.status && (
               <p className="text-xs mt-2 text-danger/70 font-mono">
-                {t('labels.errorStatus')}: {error.status}
+                {t('labels.errorStatus')}: {error?.status}
               </p>
             )}
           </div>
@@ -120,7 +122,9 @@ export function MainCanvas({
                 title={t('labels.useAsRef')}
               >
                 <ImagePlus size={18} />
-                <span className="hidden sm+:inline">{t('labels.useAsRef')}</span>
+                <span className="hidden sm+:inline">
+                  {t('labels.useAsRef')}
+                </span>
               </button>
 
               <div className="w-px h-4 sm+:h-5 bg-default-300"></div>
@@ -133,7 +137,9 @@ export function MainCanvas({
                   title={t('labels.genNext')}
                 >
                   <StepForward size={18} />
-                  <span className="hidden sm+:inline">{t('labels.genNext')}</span>
+                  <span className="hidden sm+:inline">
+                    {t('labels.genNext')}
+                  </span>
                 </button>
               ) : (
                 /* Ads/Info Specific Actions */
@@ -144,7 +150,9 @@ export function MainCanvas({
                     title={t('labels.makeVariant')}
                   >
                     <CopyPlus size={18} />
-                    <span className="hidden sm+:inline">{t('labels.makeVariant')}</span>
+                    <span className="hidden sm+:inline">
+                      {t('labels.makeVariant')}
+                    </span>
                   </button>
 
                   <div className="w-px h-4 sm+:h-5 bg-default-300"></div>
@@ -155,7 +163,9 @@ export function MainCanvas({
                     title={t('labels.recreate')}
                   >
                     <Repeat size={18} />
-                    <span className="hidden sm+:inline">{t('labels.recreate')}</span>
+                    <span className="hidden sm+:inline">
+                      {t('labels.recreate')}
+                    </span>
                   </button>
                 </>
               )}
@@ -190,7 +200,10 @@ export function MainCanvas({
                     <button
                       onClick={onRemoveWatermark}
                       className="absolute -top-1 -right-1 w-5 h-5 bg-danger text-white rounded-full flex items-center justify-center opacity-0 group-hover/watermark:opacity-100 transition-opacity hover:bg-danger/90"
-                      title={t('labels.removeWatermark') || 'Nâng cấp để bỏ watermark'}
+                      title={
+                        t('labels.removeWatermark') ||
+                        'Nâng cấp để bỏ watermark'
+                      }
                     >
                       <X size={12} />
                     </button>
