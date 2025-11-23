@@ -82,7 +82,10 @@
     "contactToBuy": "Contact to Buy",
     "contactMessenger": "Contact via Facebook Messenger",
     "getCredit": "Get Credit",
-    "popular": "Popular"
+    "popular": "Popular",
+    "benefitsTitle": "Benefits when upgrading:",
+    "benefitNoWatermark": "No watermark on images",
+    "benefitHighQuality": "Download high-quality images without watermark"
   }
 }
 

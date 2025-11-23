@@ -146,16 +146,16 @@ export function BuyCreditModal({ isOpen, onClose }: BuyCreditModalProps) {
                 {/* Benefits Section - Show before packages */}
                 <div className="mb-4 p-3 bg-primary/5 rounded-lg border border-primary/20">
                   <h3 className="text-sm font-bold mb-2 text-foreground">
-                    Quyền lợi khi nâng cấp:
+                    {t('buyCreditModal.benefitsTitle')}
                   </h3>
                   <div className="space-y-1.5">
                     <div className="flex items-center gap-2 text-xs text-default-600">
                       <Check size={14} className="text-primary flex-shrink-0" />
-                      <span>Không có watermark trên ảnh</span>
+                      <span>{t('buyCreditModal.benefitNoWatermark')}</span>
                     </div>
                     <div className="flex items-center gap-2 text-xs text-default-600">
                       <Check size={14} className="text-primary flex-shrink-0" />
-                      <span>Tải ảnh chất lượng cao không watermark</span>
+                      <span>{t('buyCreditModal.benefitHighQuality')}</span>
                     </div>
                   </div>
                 </div>

@@ -32,10 +32,10 @@ export function Banner({
       {
         button_location: 'banner',
         button_text: t('hero.cta'),
-        destination: '/gemini-banana-pro',
+        destination: '/ai-creative-generator',
       }
     )
-    router.push('/gemini-banana-pro')
+    router.push('/ai-creative-generator')
   }
 
   const [selectedUseCase, setSelectedUseCase] = useState<string>('videoEditing')
