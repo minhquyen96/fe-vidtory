@@ -56,7 +56,11 @@
     "openEditor": "Open Editor",
     "removeWatermark": "Upgrade to remove watermark",
     "somethingWentWrong": "Something went wrong. Please try again.",
-    "errorCode": "Error Code"
+    "errorStatus": "Status"
+  },
+  "validation": {
+    "required": "This field is required",
+    "requiredFields": "Please fill in all required fields"
   },
   "tooltips": {
     "story": "Describe the plot, characters, and setting for your comic page. Be descriptive!",

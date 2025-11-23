@@ -1,3 +1,4 @@
+import React from 'react'
 import { Wand2, Loader2 } from 'lucide-react'
 import { useTranslation } from 'next-i18next'
 import { useRouter } from 'next/router'
@@ -49,6 +50,48 @@ export function InputDrawer({
   const { t } = useTranslation(I18N_NAMESPACES.GEMINI_BANANA_PRO)
   const router = useRouter()
   const lang = (router.locale || 'vi') as Language
+  const [errors, setErrors] = React.useState<Record<string, string>>({})
+
+  // Validation function
+  const validateForm = (): boolean => {
+    const newErrors: Record<string, string> = {}
+
+    if (activePage === AppMode.COMIC) {
+      if (!comicData.story || comicData.story.trim() === '') {
+        newErrors.story = t('validation.required') || 'Trường này là bắt buộc'
+      }
+    } else if (activePage === AppMode.ADVERTISING) {
+      if (!adData.brandName || adData.brandName.trim() === '') {
+        newErrors.brandName = t('validation.required') || 'Trường này là bắt buộc'
+      }
+    } else if (activePage === AppMode.INFOGRAPHIC) {
+      if (!infoData.topic || infoData.topic.trim() === '') {
+        newErrors.topic = t('validation.required') || 'Trường này là bắt buộc'
+      }
+    }
+
+    setErrors(newErrors)
+    return Object.keys(newErrors).length === 0
+  }
+
+  // Check if form is valid
+  const isFormValid = React.useMemo(() => {
+    if (activePage === AppMode.COMIC) {
+      return comicData.story && comicData.story.trim() !== ''
+    } else if (activePage === AppMode.ADVERTISING) {
+      return adData.brandName && adData.brandName.trim() !== ''
+    } else if (activePage === AppMode.INFOGRAPHIC) {
+      return infoData.topic && infoData.topic.trim() !== ''
+    }
+    return true
+  }, [activePage, comicData.story, adData.brandName, infoData.topic])
+
+  // Handle generate with validation
+  const handleGenerate = () => {
+    if (validateForm()) {
+      onGenerate()
+    }
+  }
 
   return (
     <div
@@ -78,27 +121,60 @@ export function InputDrawer({
           {activePage === AppMode.COMIC && (
             <ComicForm
               data={comicData}
-              onChange={onComicDataChange}
+              onChange={(key, value) => {
+                onComicDataChange(key, value)
+                // Clear error when user starts typing
+                if (key === 'story' && errors.story) {
+                  setErrors((prev) => {
+                    const newErrors = { ...prev }
+                    delete newErrors.story
+                    return newErrors
+                  })
+                }
+              }}
               mode={activePage}
               lang={lang}
               showGuide={showGuide}
               onDismissGuide={onDismissGuide}
+              errors={errors}
             />
           )}
           {activePage === AppMode.ADVERTISING && (
             <AdForm
               data={adData}
-              onChange={onAdDataChange}
+              onChange={(key, value) => {
+                onAdDataChange(key, value)
+                // Clear error when user starts typing
+                if (key === 'brandName' && errors.brandName) {
+                  setErrors((prev) => {
+                    const newErrors = { ...prev }
+                    delete newErrors.brandName
+                    return newErrors
+                  })
+                }
+              }}
               mode={activePage}
               lang={lang}
+              errors={errors}
             />
           )}
           {activePage === AppMode.INFOGRAPHIC && (
             <InfoForm
               data={infoData}
-              onChange={onInfoDataChange}
+              onChange={(key, value) => {
+                onInfoDataChange(key, value)
+                // Clear error when user starts typing
+                if (key === 'topic' && errors.topic) {
+                  setErrors((prev) => {
+                    const newErrors = { ...prev }
+                    delete newErrors.topic
+                    return newErrors
+                  })
+                }
+              }}
               mode={activePage}
               lang={lang}
+              errors={errors}
             />
           )}
         </div>
@@ -107,7 +183,7 @@ export function InputDrawer({
       {/* DESKTOP FOOTER - Hidden on Mobile */}
       <div className="hidden sm+:flex h-[88px] items-center px-6 py-4 border-t border-divider bg-content1 shrink-0 z-10">
         <button
-          onClick={onGenerate}
+          onClick={handleGenerate}
           disabled={isLoading}
           className={`w-full py-4 rounded-large font-semibold text-white shadow-lg transition-all flex items-center justify-center gap-3 active:scale-[0.98]
             ${

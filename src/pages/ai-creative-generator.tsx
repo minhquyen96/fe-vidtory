@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { GetStaticProps } from 'next'
 import { useTranslation } from 'next-i18next'
 import { useRouter } from 'next/router'
@@ -48,7 +48,7 @@ export default function GeminiBananaProPage() {
   const [activePage, setActivePage] = useState<AppMode>(AppMode.COMIC)
   const [isLoading, setIsLoading] = useState(false)
   const [resultImage, setResultImage] = useState<string | null>(null)
-  const [error, setError] = useState<{ message: string; code?: string } | null>(null)
+  const [error, setError] = useState<{ message: string; status?: number } | null>(null)
   const [history, setHistory] = useState<HistoryItem[]>([])
   const [loadingHistory, setLoadingHistory] = useState(false)
   const [showBuyCreditModal, setShowBuyCreditModal] = useState(false)
@@ -136,10 +136,48 @@ export default function GeminiBananaProPage() {
     aspectRatio: '1:1',
   })
 
+  // Validation function
+  const validateForm = (): boolean => {
+    if (activePage === AppMode.COMIC) {
+      if (!comicData.story || comicData.story.trim() === '') {
+        return false
+      }
+    } else if (activePage === AppMode.ADVERTISING) {
+      if (!adData.brandName || adData.brandName.trim() === '') {
+        return false
+      }
+    } else if (activePage === AppMode.INFOGRAPHIC) {
+      if (!infoData.topic || infoData.topic.trim() === '') {
+        return false
+      }
+    }
+    return true
+  }
+
+  // Check if form is valid
+  const isFormValid = useMemo(() => {
+    if (activePage === AppMode.COMIC) {
+      return comicData.story && comicData.story.trim() !== ''
+    } else if (activePage === AppMode.ADVERTISING) {
+      return adData.brandName && adData.brandName.trim() !== ''
+    } else if (activePage === AppMode.INFOGRAPHIC) {
+      return infoData.topic && infoData.topic.trim() !== ''
+    }
+    return true
+  }, [activePage, comicData.story, adData.brandName, infoData.topic])
+
   const handleGenerate = async () => {
     // Check authentication first
     if (!isAuthenticated) {
       openLoginModal()
+      return
+    }
+
+    // Validate required fields
+    if (!validateForm()) {
+      setError({
+        message: t('validation.requiredFields') || 'Vui lòng điền đầy đủ các trường bắt buộc',
+      })
       return
     }
 
@@ -187,11 +225,11 @@ export default function GeminiBananaProPage() {
         ) {
           setShowBuyCreditModal(true)
         }
-        // Extract error code from response if available
-        const errorCode = e.response?.data?.code || e.code || (e as any).errorCode
+        // Extract status from response if available
+        const errorStatus = (e as any)?.response?.status
         setError({
           message: e.message,
-          code: errorCode,
+          status: errorStatus,
         })
       } else {
         setError({ message: t('ui.error') })
@@ -362,7 +400,7 @@ export default function GeminiBananaProPage() {
       console.error('Failed to download image:', error)
       setError(
         error instanceof Error
-          ? { message: error.message, code: (error as any).code || (error as any).response?.data?.code }
+          ? { message: error.message, status: (error as any).response?.status }
           : { message: t('ui.error') }
       )
     }
@@ -422,7 +460,7 @@ export default function GeminiBananaProPage() {
       console.error('Failed to create zip file:', error)
       setError(
         error instanceof Error
-          ? { message: error.message, code: (error as any).code || (error as any).response?.data?.code }
+          ? { message: error.message, status: (error as any).response?.status }
           : { message: t('ui.error') }
       )
     } finally {
@@ -541,7 +579,7 @@ export default function GeminiBananaProPage() {
       console.error('Failed to convert image to reference:', error)
       setError(
         error instanceof Error
-          ? { message: error.message, code: (error as any).code || (error as any).response?.data?.code }
+          ? { message: error.message, status: (error as any).response?.status }
           : { message: t('ui.error') }
       )
     }
@@ -735,10 +773,10 @@ export default function GeminiBananaProPage() {
           {/* Generate Button (Larger - Flex 1.5) */}
           <button
             onClick={handleGenerate}
-            disabled={isLoading || userCredit <= 0}
+            disabled={isLoading}
             className={`flex-[1.5] h-10 rounded-large font-bold text-white shadow-lg transition-all flex items-center justify-center gap-2 text-sm active:scale-[0.98]
               ${
-                isLoading || userCredit <= 0
+                isLoading
                   ? 'bg-default-300 cursor-not-allowed'
                   : 'bg-gradient-to-r from-primary to-secondary shadow-primary-lg/50'
               }

@@ -56,7 +56,11 @@
     "openEditor": "Mở Trình Chỉnh Sửa",
     "removeWatermark": "Nâng cấp để bỏ watermark",
     "somethingWentWrong": "Đã xảy ra lỗi. Vui lòng thử lại.",
-    "errorCode": "Mã lỗi"
+    "errorStatus": "Status"
+  },
+  "validation": {
+    "required": "Trường này là bắt buộc",
+    "requiredFields": "Vui lòng điền đầy đủ các trường bắt buộc"
   },
   "tooltips": {
     "story": "Mô tả cốt truyện, nhân vật và bối cảnh cho trang truyện của bạn.",

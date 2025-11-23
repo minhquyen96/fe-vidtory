@@ -14,13 +14,7 @@ const nextConfig = {
         hostname: 'assets.parroto.app',
         port: '',
         pathname: '/**',
-      },
-      {
-        protocol: 'https',
-        hostname: 'assets.shadowdictation.com',
-        port: '',
-        pathname: '/**',
-      },
+      }
     ],
   },
   webpack(config) {
