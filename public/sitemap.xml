@@ -6,4 +6,10 @@
         <xhtml:link rel="alternate" hreflang="en" href="https://vidtory.ai"/>
         <xhtml:link rel="alternate" hreflang="vi" href="https://vidtory.ai/vi"/>
     </url>
+    <url>
+        <loc>https://vidtory.ai/ai-creative-generator</loc>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://vidtory.ai/ai-creative-generator"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://vidtory.ai/ai-creative-generator"/>
+        <xhtml:link rel="alternate" hreflang="vi" href="https://vidtory.ai/vi/ai-creative-generator"/>
+    </url>
 </urlset>
