@@ -143,6 +143,23 @@ export function BuyCreditModal({ isOpen, onClose }: BuyCreditModalProps) {
 
               {/* Packages List - Scrollable */}
               <div className="flex-1 overflow-y-auto custom-scrollbar px-4 sm+:px-6 py-3 sm+:py-4 min-h-0">
+                {/* Benefits Section - Show before packages */}
+                <div className="mb-4 p-3 bg-primary/5 rounded-lg border border-primary/20">
+                  <h3 className="text-sm font-bold mb-2 text-foreground">
+                    Quyền lợi khi nâng cấp:
+                  </h3>
+                  <div className="space-y-1.5">
+                    <div className="flex items-center gap-2 text-xs text-default-600">
+                      <Check size={14} className="text-primary flex-shrink-0" />
+                      <span>Không có watermark trên ảnh</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-xs text-default-600">
+                      <Check size={14} className="text-primary flex-shrink-0" />
+                      <span>Tải ảnh chất lượng cao không watermark</span>
+                    </div>
+                  </div>
+                </div>
+
                 <div className="space-y-1.5 sm+:space-y-2">
                   {packages.map((pkg) => {
                     const isPopular = pkg.id === popularPackageId

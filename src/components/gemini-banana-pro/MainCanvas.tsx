@@ -5,6 +5,7 @@ import {
   CopyPlus,
   Repeat,
   Trash2,
+  X,
 } from 'lucide-react'
 import { useTranslation } from 'next-i18next'
 import { AppMode } from '@/types/gemini-banana-pro'
@@ -16,10 +17,12 @@ interface MainCanvasProps {
   error: string | null
   activePage: AppMode
   mobileTab?: 'editor' | 'preview'
+  premiumStatus?: 'active' | 'inactive' | 'expired' | undefined
   onPreviewAction?: (
     action: 'remix' | 'ref' | 'delete' | 'continue' | 'variant' | 'recreate'
   ) => void
   onMobileTabChange?: (tab: 'editor' | 'preview') => void
+  onRemoveWatermark?: () => void
 }
 
 export function MainCanvas({
@@ -28,10 +31,13 @@ export function MainCanvas({
   error,
   activePage,
   mobileTab = 'preview',
+  premiumStatus,
   onPreviewAction,
   onMobileTabChange,
+  onRemoveWatermark,
 }: MainCanvasProps) {
   const { t } = useTranslation(I18N_NAMESPACES.GEMINI_BANANA_PRO)
+  const showWatermark = premiumStatus !== 'active'
   const handlePreviewAction = (
     action: 'remix' | 'ref' | 'delete' | 'continue' | 'variant' | 'recreate'
   ) => {
@@ -165,6 +171,28 @@ export function MainCanvas({
               alt="Result"
               className="w-auto h-auto max-w-full max-h-[calc(100vh-350px)] sm+:max-h-[calc(100vh-340px)] object-contain rounded-lg bg-white"
             />
+
+            {/* Watermark Overlay - Only show if not premium */}
+            {showWatermark && (
+              <div className="absolute bottom-2 right-2 z-30 group/watermark">
+                <div className="relative">
+                  <img
+                    src="https://assets.vidtory.ai/images/logo.svg"
+                    alt="Vidtory Logo"
+                    className="sm+:h-8 h-4 w-auto opacity-80 group-hover/watermark:opacity-100 transition-opacity"
+                  />
+                  {onRemoveWatermark && (
+                    <button
+                      onClick={onRemoveWatermark}
+                      className="absolute -top-1 -right-1 w-5 h-5 bg-danger text-white rounded-full flex items-center justify-center opacity-0 group-hover/watermark:opacity-100 transition-opacity hover:bg-danger/90"
+                      title={t('labels.removeWatermark') || 'Nâng cấp để bỏ watermark'}
+                    >
+                      <X size={12} />
+                    </button>
+                  )}
+                </div>
+              </div>
+            )}
           </div>
         )}
       </div>

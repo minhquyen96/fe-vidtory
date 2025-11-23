@@ -237,15 +237,109 @@ export default function GeminiBananaProPage() {
     handleSelectHistoryItem(item)
   }
 
+  // Helper function to add watermark to image
+  const addWatermarkToImage = async (
+    imageUrl: string
+  ): Promise<Blob> => {
+    return new Promise((resolve, reject) => {
+      const img = new Image()
+      img.crossOrigin = 'anonymous'
+
+      img.onload = async () => {
+        try {
+          const canvas = document.createElement('canvas')
+          canvas.width = img.width
+          canvas.height = img.height
+          const ctx = canvas.getContext('2d')
+
+          if (!ctx) {
+            reject(new Error('Failed to get canvas context'))
+            return
+          }
+
+          // Draw original image
+          ctx.drawImage(img, 0, 0)
+
+          // Load watermark logo
+          const watermarkImg = new Image()
+          watermarkImg.crossOrigin = 'anonymous'
+          watermarkImg.src =
+            'https://assets.vidtory.ai/images/logo.svg'
+
+          watermarkImg.onload = () => {
+            // Calculate watermark size (10% of image width, maintain aspect ratio)
+            const watermarkWidth = img.width * 0.1
+            const watermarkHeight =
+              (watermarkImg.height / watermarkImg.width) * watermarkWidth
+
+            // Position: bottom left with padding
+            const padding = 20
+            const x = img.width - watermarkWidth - padding
+            const y = img.height - watermarkHeight - padding
+
+            // Draw watermark
+            ctx.drawImage(watermarkImg, x, y, watermarkWidth, watermarkHeight)
+
+            // Convert to blob
+            canvas.toBlob(
+              (blob) => {
+                if (blob) {
+                  resolve(blob)
+                } else {
+                  reject(new Error('Failed to create blob'))
+                }
+              },
+              'image/png',
+              1.0
+            )
+          }
+
+          watermarkImg.onerror = () => {
+            // If watermark fails to load, return original image
+            canvas.toBlob(
+              (blob) => {
+                if (blob) {
+                  resolve(blob)
+                } else {
+                  reject(new Error('Failed to create blob'))
+                }
+              },
+              'image/png',
+              1.0
+            )
+          }
+        } catch (error) {
+          reject(error)
+        }
+      }
+
+      img.onerror = () => {
+        reject(new Error('Failed to load image'))
+      }
+
+      img.src = imageUrl
+    })
+  }
+
   const handleDownload = async () => {
     if (!resultImage) return
 
     try {
-      // Fetch image as blob
-      const response = await fetch(resultImage)
-      if (!response.ok) throw new Error('Failed to fetch image')
+      // Check premium status
+      const isPremiumActive = userData?.premium?.status === 'active'
 
-      const blob = await response.blob()
+      let blob: Blob
+
+      if (isPremiumActive) {
+        // Premium user: download without watermark
+        const response = await fetch(resultImage)
+        if (!response.ok) throw new Error('Failed to fetch image')
+        blob = await response.blob()
+      } else {
+        // Non-premium: add watermark
+        blob = await addWatermarkToImage(resultImage)
+      }
+
       const url = window.URL.createObjectURL(blob)
 
       const link = document.createElement('a')
@@ -270,13 +364,24 @@ export default function GeminiBananaProPage() {
       setIsLoading(true)
       setError(null)
 
+      // Check premium status
+      const isPremiumActive = userData?.premium?.status === 'active'
+
       const zip = new JSZip()
       const downloadPromises = history.map(async (item, index) => {
         try {
-          const response = await fetch(item.image_url)
-          if (!response.ok) throw new Error(`Failed to fetch image ${item.id}`)
+          let blob: Blob
 
-          const blob = await response.blob()
+          if (isPremiumActive) {
+            // Premium user: download without watermark
+            const response = await fetch(item.image_url)
+            if (!response.ok) throw new Error(`Failed to fetch image ${item.id}`)
+            blob = await response.blob()
+          } else {
+            // Non-premium: add watermark
+            blob = await addWatermarkToImage(item.image_url)
+          }
+
           // Get file extension from content type or default to png
           const extension = blob.type.split('/')[1] || 'png'
           const filename = `gemini-${item.id || index}.${extension}`
@@ -547,8 +652,10 @@ export default function GeminiBananaProPage() {
               error={error}
               activePage={activePage}
               mobileTab={mobileTab}
+              premiumStatus={userData?.premium?.status}
               onPreviewAction={handlePreviewAction}
               onMobileTabChange={setMobileTab}
+              onRemoveWatermark={handleBuyCredit}
             />
 
             <HistoryGallery

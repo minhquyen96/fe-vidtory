@@ -52,7 +52,8 @@
     "mobilePreview": "Preview",
     "readyTitle": "Ready to Create?",
     "readyDesc": "Configure your settings on the left panel and hit generate to see magic.",
-    "openEditor": "Open Editor"
+    "openEditor": "Open Editor",
+    "removeWatermark": "Upgrade to remove watermark"
   },
   "tooltips": {
     "story": "Describe the plot, characters, and setting for your comic page. Be descriptive!",

@@ -52,7 +52,8 @@
     "mobilePreview": "Xem Trước",
     "readyTitle": "Sẵn sàng sáng tạo?",
     "readyDesc": "Cấu hình cài đặt ở bảng bên trái và nhấn tạo để thấy điều kỳ diệu.",
-    "openEditor": "Mở Trình Chỉnh Sửa"
+    "openEditor": "Mở Trình Chỉnh Sửa",
+    "removeWatermark": "Nâng cấp để bỏ watermark"
   },
   "tooltips": {
     "story": "Mô tả cốt truyện, nhân vật và bối cảnh cho trang truyện của bạn.",
