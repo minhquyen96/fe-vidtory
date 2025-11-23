@@ -146,7 +146,7 @@ export const renderPageUseCaseSchema = (locale: LocaleCode, page: PageCode) => (
                 "alternateName": ${
                   MAPPING_SCHEMA_SCREEN?.[page]?.alternateName
                 },
-                "image": "https://vidtory.ai/preview.webp",
+                "image": "https://vidtory.ai/preview.jpg",
                 "inLanguage": "${MAPPING_LOCALES_SCHEMA?.[locale]?.code || ''}",
                 "isPartOf":{
                     "@type": "WebSite",
@@ -200,7 +200,7 @@ export const renderPageUseCaseSchema = (locale: LocaleCode, page: PageCode) => (
                 "description": "Create professional AI-generated videos for stories, education, entertainment, and marketing. Generate engaging video content with AI avatars, natural voiceovers, and automated editing tools.",
                 "operatingSystem": "Web Browser",
                 "applicationCategory": "MultimediaApplication",
-                "image": "https://vidtory.ai/preview.webp",
+                "image": "https://vidtory.ai/preview.jpg",
                 "contentRating": "Everyone",
                 "author": {
                     "@type": "Organization",

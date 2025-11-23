@@ -68,22 +68,22 @@ export function Layout({
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta itemProp="name" content={title} />
         <meta name="author" content="Vidtory Team" />
-        <meta itemProp="image" content="https://vidtory.ai/preview.webp" />
+        <meta itemProp="image" content="https://vidtory.ai/preview.jpg" />
 
         <meta name="twitter:card" content="summary" />
         <meta name="twitter:title" content={title} />
         <meta name="twitter:description" content={description} />
         <meta
           name="twitter:image:src"
-          content="https://vidtory.ai/preview.webp"
+          content="https://vidtory.ai/preview.jpg"
         />
-        <meta name="twitter:image" content="https://vidtory.ai/preview.webp" />
+        <meta name="twitter:image" content="https://vidtory.ai/preview.jpg" />
 
         <meta property="og:title" content={title} />
         <meta property="og:type" content="article" />
         <meta property="og:description" content={description} />
         <meta property="og:site_name" content={title} />
-        <meta property="og:image" content="https://vidtory.ai/preview.webp" />
+        <meta property="og:image" content="https://vidtory.ai/preview.jpg" />
 
         <link
           rel="apple-touch-icon"

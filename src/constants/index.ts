@@ -11,6 +11,7 @@ export const routes = {
   aboutUs: '/about-us',
   policy: '/privacy-policy',
   tos: '/terms-of-service',
+  gemini: '/ai-creative-generator',
 }
 
 export const ENCOURAGE_LOGIN_COOKIE = 'encourage_login_shown'

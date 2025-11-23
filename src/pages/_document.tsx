@@ -58,7 +58,7 @@ export default function Document() {
                 "https://en.wikipedia.org/wiki/Artificial_intelligence"
               ],
               "image": [
-                "https://vidtory.ai/preview.webp",
+                "https://vidtory.ai/preview.jpg",
                 "https://assets.vidtory.ai/images/favicon/logo.png"
               ],
               "contactPoint": {
@@ -102,7 +102,7 @@ export default function Document() {
                 "description": "Create professional AI-generated videos for stories, education, entertainment, and marketing. Generate engaging video content with AI avatars, natural voiceovers, and automated editing tools.",
                 "operatingSystem": "Web Browser",
                 "applicationCategory": "MultimediaApplication",
-                "image": "https://vidtory.ai/preview.webp",
+                "image": "https://vidtory.ai/preview.jpg",
                 "contentRating": "Everyone",
                 "author": {
                     "@type": "Organization",

@@ -19,6 +19,7 @@ import { Brain, Headphones, Mic, Target } from 'lucide-react'
 import useTranslationWithHTMLParser from '@/hooks/useTranslationWithHTMLParser'
 import { useAuth } from '@/context/AuthContext'
 import { useRouter } from 'next/router'
+import { routes } from '@/constants'
 
 export default function Home(props: { schema: string }) {
   const { schema } = props || {}
@@ -38,6 +39,12 @@ export default function Home(props: { schema: string }) {
   //     }, 100)
   //   }
   // }, [user])
+
+  useEffect(() => {
+    setTimeout(() => {
+      router.push(routes.gemini)
+    }, 100)
+  }, [user])
 
   useEffect(() => {
     trackPageView(EVENT_NAMES.PAGE_VIEW.HOME, {
