@@ -59,8 +59,7 @@ export function Layout({
         <link rel="icon" href="/favicon.ico" />
         <link
           rel="icon"
-          href="https://assets.vidtory.ai/images/favicon/favicon.svg"
-          type="image/svg+xml"
+          href="https://vidtory.ai/favicon/favicon.ico"
           sizes="any"
         />
         {/* Viewport */}
@@ -88,11 +87,11 @@ export function Layout({
         <link
           rel="apple-touch-icon"
           sizes="180x180"
-          href="https://assets.vidtory.ai/images/favicon/apple-touch-icon.png"
+          href="https://vidtory.ai/favicon/apple-touch-icon.png"
         />
         <link
           rel="icon"
-          href="https://assets.vidtory.ai/images/favicon/96x96.png"
+          href="https://vidtory.ai/favicon/96x96.png"
           sizes="96x96"
           type="image/png"
         />
@@ -100,13 +99,13 @@ export function Layout({
           rel="icon"
           type="image/png"
           sizes="32x32"
-          href="https://assets.vidtory.ai/images/favicon/32x32.png"
+          href="https://vidtory.ai/favicon/32x32.png"
         />
         <link
           rel="icon"
           type="image/png"
           sizes="16x16"
-          href="https://assets.vidtory.ai/images/favicon/16x16.png"
+          href="https://vidtory.ai/favicon/16x16.png"
         />
 
         <link rel="alternate" href="https://vidtory.ai" hrefLang="x-default" />
