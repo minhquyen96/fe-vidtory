@@ -1,4 +1,4 @@
-import { ArrowLeft, Coins, Zap, Download } from 'lucide-react'
+import { ArrowLeft, Coins, Zap, Download, Key } from 'lucide-react'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 import Link from 'next/link'
@@ -11,6 +11,7 @@ interface PageHeaderProps {
   resultImage: string | null
   onBuyCredit: () => void
   onDownload: () => void
+  onActivate?: () => void
 }
 
 export function PageHeader({
@@ -19,6 +20,7 @@ export function PageHeader({
   resultImage,
   onBuyCredit,
   onDownload,
+  onActivate,
 }: PageHeaderProps) {
   const { t } = useTranslation(I18N_NAMESPACES.GEMINI_BANANA_PRO)
   const router = useRouter()
@@ -76,6 +78,18 @@ export function PageHeader({
           <Coins size={14} className="text-amber-500 fill-amber-500 sm+:w-5 sm+:h-5" />
           <span className="font-bold text-xs sm+:text-base">{userCredit}</span>
         </div>
+
+        {/* Activation Button */}
+        {onActivate && (
+          <Link
+            href="/activation"
+            className="flex items-center gap-2 px-2 sm+:px-4 py-2 sm+:py-2.5 bg-gradient-to-r from-primary to-secondary text-white rounded-large font-bold text-xs sm+:text-sm transition-all shadow-lg shadow-primary/20 hover:shadow-primary/40 active:scale-95"
+            title={t('labels.activate')}
+          >
+            <Key size={16} className="sm+:w-4 sm+:h-4" />
+            <span className="hidden sm+:inline">{t('labels.activate')}</span>
+          </Link>
+        )}
 
         {/* Upgrade Button */}
         <button

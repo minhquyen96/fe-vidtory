@@ -77,290 +77,290 @@ export function Header() {
             </Link>
           </div>
 
-          {/* Navigation Menu - Desktop */}
-          <nav className="hidden sm+:flex items-center space-x-1 flex-1">
-            {/* Products Dropdown */}
-            <div
-              className="relative"
-              onMouseEnter={() => {
-                if (productMenuTimeoutRef.current) {
-                  clearTimeout(productMenuTimeoutRef.current)
-                  productMenuTimeoutRef.current = null
-                }
-                setIsProductMenuOpen(true)
-              }}
-              onMouseLeave={() => {
-                productMenuTimeoutRef.current = setTimeout(() => {
-                  setIsProductMenuOpen(false)
-                }, 150)
-              }}
-            >
-              <DropdownMenu
-                open={isProductMenuOpen}
-                onOpenChange={setIsProductMenuOpen}
-              >
-                <DropdownMenuTrigger asChild>
-                  <Button
-                    variant="ghost"
-                    className="text-sm font-medium text-foreground/80 hover:text-foreground hover:bg-primary/10"
-                  >
-                    Product
-                    <Icons.chevronDown className="ml-1 h-4 w-4" />
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent
-                  align="start"
-                  className="w-[600px] p-0 rounded-lg"
-                  onMouseEnter={() => {
-                    if (productMenuTimeoutRef.current) {
-                      clearTimeout(productMenuTimeoutRef.current)
-                      productMenuTimeoutRef.current = null
-                    }
-                    setIsProductMenuOpen(true)
-                  }}
-                  onMouseLeave={() => {
-                    productMenuTimeoutRef.current = setTimeout(() => {
-                      setIsProductMenuOpen(false)
-                    }, 150)
-                  }}
-                >
-                  <div className="grid grid-cols-2 gap-0">
-                    {/* Left Panel: PRODUCT */}
-                    <div className="p-6 border-r bg-muted/30">
-                      <DropdownMenuLabel className="px-0 mb-4 text-xs font-semibold uppercase tracking-wide">
-                        PRODUCT
-                      </DropdownMenuLabel>
-                      <div className="space-y-2">
-                        <DropdownMenuItem asChild>
-                          <Link
-                            href="/"
-                            className="px-3 py-2.5 rounded-md flex items-center gap-3 w-full hover:bg-primary/20 hover:text-foreground"
-                          >
-                            <div className="w-8 h-8 rounded-md bg-purple-500/20 flex items-center justify-center flex-shrink-0">
-                              <Icons.play className="w-4 h-4 text-purple-600" />
-                            </div>
-                            <span className="flex-1 text-sm">Create</span>
-                            <Icons.chevronRight className="w-4 h-4 text-foreground/40" />
-                          </Link>
-                        </DropdownMenuItem>
-                        <DropdownMenuItem asChild>
-                          <Link
-                            href="/"
-                            className="px-3 py-2.5 rounded-md flex items-center gap-3 w-full hover:bg-primary/20 hover:text-foreground"
-                          >
-                            <div className="w-8 h-8 rounded-md bg-purple-500/20 flex items-center justify-center flex-shrink-0">
-                              <Icons.edit className="w-4 h-4 text-purple-600" />
-                            </div>
-                            <span className="flex-1 text-sm">Edit</span>
-                            <Icons.chevronRight className="w-4 h-4 text-foreground/40" />
-                          </Link>
-                        </DropdownMenuItem>
-                        <DropdownMenuItem asChild>
-                          <Link
-                            href="/"
-                            className="px-3 py-2.5 rounded-md flex items-center gap-3 w-full hover:bg-primary/20 hover:text-foreground"
-                          >
-                            <div className="w-8 h-8 rounded-md bg-green-500/20 flex items-center justify-center flex-shrink-0">
-                              <Icons.play className="w-4 h-4 text-green-600" />
-                            </div>
-                            <span className="flex-1 text-sm">Publish</span>
-                            <Icons.chevronRight className="w-4 h-4 text-foreground/40" />
-                          </Link>
-                        </DropdownMenuItem>
-                      </div>
-                    </div>
+          {/*Navigation Menu - Desktop*/}
+          {/*<nav className="hidden sm+:flex items-center space-x-1 flex-1">*/}
+          {/*  /!* Products Dropdown *!/*/}
+          {/*  <div*/}
+          {/*    className="relative"*/}
+          {/*    onMouseEnter={() => {*/}
+          {/*      if (productMenuTimeoutRef.current) {*/}
+          {/*        clearTimeout(productMenuTimeoutRef.current)*/}
+          {/*        productMenuTimeoutRef.current = null*/}
+          {/*      }*/}
+          {/*      setIsProductMenuOpen(true)*/}
+          {/*    }}*/}
+          {/*    onMouseLeave={() => {*/}
+          {/*      productMenuTimeoutRef.current = setTimeout(() => {*/}
+          {/*        setIsProductMenuOpen(false)*/}
+          {/*      }, 150)*/}
+          {/*    }}*/}
+          {/*  >*/}
+          {/*    <DropdownMenu*/}
+          {/*      open={isProductMenuOpen}*/}
+          {/*      onOpenChange={setIsProductMenuOpen}*/}
+          {/*    >*/}
+          {/*      <DropdownMenuTrigger asChild>*/}
+          {/*        <Button*/}
+          {/*          variant="ghost"*/}
+          {/*          className="text-sm font-medium text-foreground/80 hover:text-foreground hover:bg-primary/10"*/}
+          {/*        >*/}
+          {/*          Product*/}
+          {/*          <Icons.chevronDown className="ml-1 h-4 w-4" />*/}
+          {/*        </Button>*/}
+          {/*      </DropdownMenuTrigger>*/}
+          {/*      <DropdownMenuContent*/}
+          {/*        align="start"*/}
+          {/*        className="w-[600px] p-0 rounded-lg"*/}
+          {/*        onMouseEnter={() => {*/}
+          {/*          if (productMenuTimeoutRef.current) {*/}
+          {/*            clearTimeout(productMenuTimeoutRef.current)*/}
+          {/*            productMenuTimeoutRef.current = null*/}
+          {/*          }*/}
+          {/*          setIsProductMenuOpen(true)*/}
+          {/*        }}*/}
+          {/*        onMouseLeave={() => {*/}
+          {/*          productMenuTimeoutRef.current = setTimeout(() => {*/}
+          {/*            setIsProductMenuOpen(false)*/}
+          {/*          }, 150)*/}
+          {/*        }}*/}
+          {/*      >*/}
+          {/*        <div className="grid grid-cols-2 gap-0">*/}
+          {/*          /!* Left Panel: PRODUCT *!/*/}
+          {/*          <div className="p-6 border-r bg-muted/30">*/}
+          {/*            <DropdownMenuLabel className="px-0 mb-4 text-xs font-semibold uppercase tracking-wide">*/}
+          {/*              PRODUCT*/}
+          {/*            </DropdownMenuLabel>*/}
+          {/*            <div className="space-y-2">*/}
+          {/*              <DropdownMenuItem asChild>*/}
+          {/*                <Link*/}
+          {/*                  href="/"*/}
+          {/*                  className="px-3 py-2.5 rounded-md flex items-center gap-3 w-full hover:bg-primary/20 hover:text-foreground"*/}
+          {/*                >*/}
+          {/*                  <div className="w-8 h-8 rounded-md bg-purple-500/20 flex items-center justify-center flex-shrink-0">*/}
+          {/*                    <Icons.play className="w-4 h-4 text-purple-600" />*/}
+          {/*                  </div>*/}
+          {/*                  <span className="flex-1 text-sm">Create</span>*/}
+          {/*                  <Icons.chevronRight className="w-4 h-4 text-foreground/40" />*/}
+          {/*                </Link>*/}
+          {/*              </DropdownMenuItem>*/}
+          {/*              <DropdownMenuItem asChild>*/}
+          {/*                <Link*/}
+          {/*                  href="/"*/}
+          {/*                  className="px-3 py-2.5 rounded-md flex items-center gap-3 w-full hover:bg-primary/20 hover:text-foreground"*/}
+          {/*                >*/}
+          {/*                  <div className="w-8 h-8 rounded-md bg-purple-500/20 flex items-center justify-center flex-shrink-0">*/}
+          {/*                    <Icons.edit className="w-4 h-4 text-purple-600" />*/}
+          {/*                  </div>*/}
+          {/*                  <span className="flex-1 text-sm">Edit</span>*/}
+          {/*                  <Icons.chevronRight className="w-4 h-4 text-foreground/40" />*/}
+          {/*                </Link>*/}
+          {/*              </DropdownMenuItem>*/}
+          {/*              <DropdownMenuItem asChild>*/}
+          {/*                <Link*/}
+          {/*                  href="/"*/}
+          {/*                  className="px-3 py-2.5 rounded-md flex items-center gap-3 w-full hover:bg-primary/20 hover:text-foreground"*/}
+          {/*                >*/}
+          {/*                  <div className="w-8 h-8 rounded-md bg-green-500/20 flex items-center justify-center flex-shrink-0">*/}
+          {/*                    <Icons.play className="w-4 h-4 text-green-600" />*/}
+          {/*                  </div>*/}
+          {/*                  <span className="flex-1 text-sm">Publish</span>*/}
+          {/*                  <Icons.chevronRight className="w-4 h-4 text-foreground/40" />*/}
+          {/*                </Link>*/}
+          {/*              </DropdownMenuItem>*/}
+          {/*            </div>*/}
+          {/*          </div>*/}
 
-                    {/* Right Panel: Sample items */}
-                    <div className="p-6">
-                      <DropdownMenuLabel className="px-0 mb-3 text-xs font-semibold uppercase tracking-wide">
-                        POPULAR
-                      </DropdownMenuLabel>
-                      <div className="space-y-1">
-                        <DropdownMenuItem asChild>
-                          <Link
-                            href="/"
-                            className="px-3 py-2.5 text-sm hover:bg-primary/20 hover:text-foreground"
-                          >
-                            Video Story Creator
-                          </Link>
-                        </DropdownMenuItem>
-                        <DropdownMenuItem asChild>
-                          <Link
-                            href="/"
-                            className="px-3 py-2.5 text-sm hover:bg-primary/20 hover:text-foreground"
-                          >
-                            Niche Templates
-                          </Link>
-                        </DropdownMenuItem>
-                        <DropdownMenuItem asChild>
-                          <Link
-                            href="/"
-                            className="px-3 py-2.5 text-sm hover:bg-primary/20 hover:text-foreground"
-                          >
-                            Video Editor
-                          </Link>
-                        </DropdownMenuItem>
-                      </div>
-                    </div>
-                  </div>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            </div>
+          {/*          /!* Right Panel: Sample items *!/*/}
+          {/*          <div className="p-6">*/}
+          {/*            <DropdownMenuLabel className="px-0 mb-3 text-xs font-semibold uppercase tracking-wide">*/}
+          {/*              POPULAR*/}
+          {/*            </DropdownMenuLabel>*/}
+          {/*            <div className="space-y-1">*/}
+          {/*              <DropdownMenuItem asChild>*/}
+          {/*                <Link*/}
+          {/*                  href="/"*/}
+          {/*                  className="px-3 py-2.5 text-sm hover:bg-primary/20 hover:text-foreground"*/}
+          {/*                >*/}
+          {/*                  Video Story Creator*/}
+          {/*                </Link>*/}
+          {/*              </DropdownMenuItem>*/}
+          {/*              <DropdownMenuItem asChild>*/}
+          {/*                <Link*/}
+          {/*                  href="/"*/}
+          {/*                  className="px-3 py-2.5 text-sm hover:bg-primary/20 hover:text-foreground"*/}
+          {/*                >*/}
+          {/*                  Niche Templates*/}
+          {/*                </Link>*/}
+          {/*              </DropdownMenuItem>*/}
+          {/*              <DropdownMenuItem asChild>*/}
+          {/*                <Link*/}
+          {/*                  href="/"*/}
+          {/*                  className="px-3 py-2.5 text-sm hover:bg-primary/20 hover:text-foreground"*/}
+          {/*                >*/}
+          {/*                  Video Editor*/}
+          {/*                </Link>*/}
+          {/*              </DropdownMenuItem>*/}
+          {/*            </div>*/}
+          {/*          </div>*/}
+          {/*        </div>*/}
+          {/*      </DropdownMenuContent>*/}
+          {/*    </DropdownMenu>*/}
+          {/*  </div>*/}
 
-            {/* Use Cases Dropdown */}
-            <div
-              className="relative"
-              onMouseEnter={() => {
-                if (useCasesMenuTimeoutRef.current) {
-                  clearTimeout(useCasesMenuTimeoutRef.current)
-                  useCasesMenuTimeoutRef.current = null
-                }
-                setIsUseCasesMenuOpen(true)
-              }}
-              onMouseLeave={() => {
-                useCasesMenuTimeoutRef.current = setTimeout(() => {
-                  setIsUseCasesMenuOpen(false)
-                }, 150)
-              }}
-            >
-              <DropdownMenu
-                open={isUseCasesMenuOpen}
-                onOpenChange={setIsUseCasesMenuOpen}
-              >
-                <DropdownMenuTrigger asChild>
-                  <Button
-                    variant="ghost"
-                    className="text-sm font-medium text-foreground/80 hover:text-foreground hover:bg-primary/10"
-                  >
-                    Use Cases
-                    <Icons.chevronDown className="ml-1 h-4 w-4" />
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent
-                  align="start"
-                  className="w-[500px] p-0 rounded-lg"
-                  onMouseEnter={() => {
-                    if (useCasesMenuTimeoutRef.current) {
-                      clearTimeout(useCasesMenuTimeoutRef.current)
-                      useCasesMenuTimeoutRef.current = null
-                    }
-                    setIsUseCasesMenuOpen(true)
-                  }}
-                  onMouseLeave={() => {
-                    useCasesMenuTimeoutRef.current = setTimeout(() => {
-                      setIsUseCasesMenuOpen(false)
-                    }, 150)
-                  }}
-                >
-                  <div className="grid grid-cols-2 gap-0">
-                    {/* Column 1: USE CASES */}
-                    <div className="p-6 border-r">
-                      <DropdownMenuLabel className="px-0 mb-4 text-xs font-semibold uppercase tracking-wide">
-                        USE CASES
-                      </DropdownMenuLabel>
-                      <div className="space-y-2">
-                        <DropdownMenuItem asChild>
-                          <Link
-                            href="/"
-                            className="px-3 py-2.5 rounded-md flex items-center gap-3 w-full hover:bg-primary/20 hover:text-foreground"
-                          >
-                            <div className="w-8 h-8 rounded-md bg-orange-500/20 flex items-center justify-center flex-shrink-0">
-                              <Icons.megaphone className="w-4 h-4 text-orange-600" />
-                            </div>
-                            <span className="flex-1 text-sm">Marketing</span>
-                            <Icons.chevronRight className="w-4 h-4 text-foreground/40" />
-                          </Link>
-                        </DropdownMenuItem>
-                        <DropdownMenuItem asChild>
-                          <Link
-                            href="/"
-                            className="px-3 py-2.5 rounded-md flex items-center gap-3 w-full hover:bg-primary/20 hover:text-foreground"
-                          >
-                            <div className="w-8 h-8 rounded-md bg-blue-500/20 flex items-center justify-center flex-shrink-0">
-                              <Icons.graduationCap className="w-4 h-4 text-blue-600" />
-                            </div>
-                            <span className="flex-1 text-sm">Training</span>
-                            <Icons.chevronRight className="w-4 h-4 text-foreground/40" />
-                          </Link>
-                        </DropdownMenuItem>
-                        <DropdownMenuItem asChild>
-                          <Link
-                            href="/"
-                            className="px-3 py-2.5 rounded-md flex items-center gap-3 w-full hover:bg-primary/20 hover:text-foreground"
-                          >
-                            <div className="w-8 h-8 rounded-md bg-green-500/20 flex items-center justify-center flex-shrink-0">
-                              <Icons.dollarSign className="w-4 h-4 text-green-600" />
-                            </div>
-                            <span className="flex-1 text-sm">Sales</span>
-                            <Icons.chevronRight className="w-4 h-4 text-foreground/40" />
-                          </Link>
-                        </DropdownMenuItem>
-                        <DropdownMenuItem asChild>
-                          <Link
-                            href="/"
-                            className="px-3 py-2.5 rounded-md flex items-center gap-3 w-full hover:bg-primary/20 hover:text-foreground"
-                          >
-                            <div className="w-8 h-8 rounded-md bg-pink-500/20 flex items-center justify-center flex-shrink-0">
-                              <Icons.newspaper className="w-4 h-4 text-pink-600" />
-                            </div>
-                            <span className="flex-1 text-sm">
-                              Media & Publishing
-                            </span>
-                            <Icons.chevronRight className="w-4 h-4 text-foreground/40" />
-                          </Link>
-                        </DropdownMenuItem>
-                        <DropdownMenuItem asChild>
-                          <Link
-                            href="/"
-                            className="px-3 py-2.5 rounded-md flex items-center gap-3 w-full hover:bg-primary/20 hover:text-foreground"
-                          >
-                            <div className="w-8 h-8 rounded-md bg-cyan-500/20 flex items-center justify-center flex-shrink-0">
-                              <Icons.users className="w-4 h-4 text-cyan-600" />
-                            </div>
-                            <span className="flex-1 text-sm">
-                              Internal Communications
-                            </span>
-                            <Icons.chevronRight className="w-4 h-4 text-foreground/40" />
-                          </Link>
-                        </DropdownMenuItem>
-                      </div>
-                    </div>
+          {/*  /!* Use Cases Dropdown *!/*/}
+          {/*  <div*/}
+          {/*    className="relative"*/}
+          {/*    onMouseEnter={() => {*/}
+          {/*      if (useCasesMenuTimeoutRef.current) {*/}
+          {/*        clearTimeout(useCasesMenuTimeoutRef.current)*/}
+          {/*        useCasesMenuTimeoutRef.current = null*/}
+          {/*      }*/}
+          {/*      setIsUseCasesMenuOpen(true)*/}
+          {/*    }}*/}
+          {/*    onMouseLeave={() => {*/}
+          {/*      useCasesMenuTimeoutRef.current = setTimeout(() => {*/}
+          {/*        setIsUseCasesMenuOpen(false)*/}
+          {/*      }, 150)*/}
+          {/*    }}*/}
+          {/*  >*/}
+          {/*    <DropdownMenu*/}
+          {/*      open={isUseCasesMenuOpen}*/}
+          {/*      onOpenChange={setIsUseCasesMenuOpen}*/}
+          {/*    >*/}
+          {/*      <DropdownMenuTrigger asChild>*/}
+          {/*        <Button*/}
+          {/*          variant="ghost"*/}
+          {/*          className="text-sm font-medium text-foreground/80 hover:text-foreground hover:bg-primary/10"*/}
+          {/*        >*/}
+          {/*          Use Cases*/}
+          {/*          <Icons.chevronDown className="ml-1 h-4 w-4" />*/}
+          {/*        </Button>*/}
+          {/*      </DropdownMenuTrigger>*/}
+          {/*      <DropdownMenuContent*/}
+          {/*        align="start"*/}
+          {/*        className="w-[500px] p-0 rounded-lg"*/}
+          {/*        onMouseEnter={() => {*/}
+          {/*          if (useCasesMenuTimeoutRef.current) {*/}
+          {/*            clearTimeout(useCasesMenuTimeoutRef.current)*/}
+          {/*            useCasesMenuTimeoutRef.current = null*/}
+          {/*          }*/}
+          {/*          setIsUseCasesMenuOpen(true)*/}
+          {/*        }}*/}
+          {/*        onMouseLeave={() => {*/}
+          {/*          useCasesMenuTimeoutRef.current = setTimeout(() => {*/}
+          {/*            setIsUseCasesMenuOpen(false)*/}
+          {/*          }, 150)*/}
+          {/*        }}*/}
+          {/*      >*/}
+          {/*        <div className="grid grid-cols-2 gap-0">*/}
+          {/*          /!* Column 1: USE CASES *!/*/}
+          {/*          <div className="p-6 border-r">*/}
+          {/*            <DropdownMenuLabel className="px-0 mb-4 text-xs font-semibold uppercase tracking-wide">*/}
+          {/*              USE CASES*/}
+          {/*            </DropdownMenuLabel>*/}
+          {/*            <div className="space-y-2">*/}
+          {/*              <DropdownMenuItem asChild>*/}
+          {/*                <Link*/}
+          {/*                  href="/"*/}
+          {/*                  className="px-3 py-2.5 rounded-md flex items-center gap-3 w-full hover:bg-primary/20 hover:text-foreground"*/}
+          {/*                >*/}
+          {/*                  <div className="w-8 h-8 rounded-md bg-orange-500/20 flex items-center justify-center flex-shrink-0">*/}
+          {/*                    <Icons.megaphone className="w-4 h-4 text-orange-600" />*/}
+          {/*                  </div>*/}
+          {/*                  <span className="flex-1 text-sm">Marketing</span>*/}
+          {/*                  <Icons.chevronRight className="w-4 h-4 text-foreground/40" />*/}
+          {/*                </Link>*/}
+          {/*              </DropdownMenuItem>*/}
+          {/*              <DropdownMenuItem asChild>*/}
+          {/*                <Link*/}
+          {/*                  href="/"*/}
+          {/*                  className="px-3 py-2.5 rounded-md flex items-center gap-3 w-full hover:bg-primary/20 hover:text-foreground"*/}
+          {/*                >*/}
+          {/*                  <div className="w-8 h-8 rounded-md bg-blue-500/20 flex items-center justify-center flex-shrink-0">*/}
+          {/*                    <Icons.graduationCap className="w-4 h-4 text-blue-600" />*/}
+          {/*                  </div>*/}
+          {/*                  <span className="flex-1 text-sm">Training</span>*/}
+          {/*                  <Icons.chevronRight className="w-4 h-4 text-foreground/40" />*/}
+          {/*                </Link>*/}
+          {/*              </DropdownMenuItem>*/}
+          {/*              <DropdownMenuItem asChild>*/}
+          {/*                <Link*/}
+          {/*                  href="/"*/}
+          {/*                  className="px-3 py-2.5 rounded-md flex items-center gap-3 w-full hover:bg-primary/20 hover:text-foreground"*/}
+          {/*                >*/}
+          {/*                  <div className="w-8 h-8 rounded-md bg-green-500/20 flex items-center justify-center flex-shrink-0">*/}
+          {/*                    <Icons.dollarSign className="w-4 h-4 text-green-600" />*/}
+          {/*                  </div>*/}
+          {/*                  <span className="flex-1 text-sm">Sales</span>*/}
+          {/*                  <Icons.chevronRight className="w-4 h-4 text-foreground/40" />*/}
+          {/*                </Link>*/}
+          {/*              </DropdownMenuItem>*/}
+          {/*              <DropdownMenuItem asChild>*/}
+          {/*                <Link*/}
+          {/*                  href="/"*/}
+          {/*                  className="px-3 py-2.5 rounded-md flex items-center gap-3 w-full hover:bg-primary/20 hover:text-foreground"*/}
+          {/*                >*/}
+          {/*                  <div className="w-8 h-8 rounded-md bg-pink-500/20 flex items-center justify-center flex-shrink-0">*/}
+          {/*                    <Icons.newspaper className="w-4 h-4 text-pink-600" />*/}
+          {/*                  </div>*/}
+          {/*                  <span className="flex-1 text-sm">*/}
+          {/*                    Media & Publishing*/}
+          {/*                  </span>*/}
+          {/*                  <Icons.chevronRight className="w-4 h-4 text-foreground/40" />*/}
+          {/*                </Link>*/}
+          {/*              </DropdownMenuItem>*/}
+          {/*              <DropdownMenuItem asChild>*/}
+          {/*                <Link*/}
+          {/*                  href="/"*/}
+          {/*                  className="px-3 py-2.5 rounded-md flex items-center gap-3 w-full hover:bg-primary/20 hover:text-foreground"*/}
+          {/*                >*/}
+          {/*                  <div className="w-8 h-8 rounded-md bg-cyan-500/20 flex items-center justify-center flex-shrink-0">*/}
+          {/*                    <Icons.users className="w-4 h-4 text-cyan-600" />*/}
+          {/*                  </div>*/}
+          {/*                  <span className="flex-1 text-sm">*/}
+          {/*                    Internal Communications*/}
+          {/*                  </span>*/}
+          {/*                  <Icons.chevronRight className="w-4 h-4 text-foreground/40" />*/}
+          {/*                </Link>*/}
+          {/*              </DropdownMenuItem>*/}
+          {/*            </div>*/}
+          {/*          </div>*/}
 
-                    {/* Column 2: BY COMPANY SIZE */}
-                    <div className="p-6">
-                      <DropdownMenuLabel className="px-0 mb-4 text-xs font-semibold uppercase tracking-wide">
-                        BY COMPANY SIZE
-                      </DropdownMenuLabel>
-                      <div className="space-y-2">
-                        <DropdownMenuItem asChild>
-                          <Link
-                            href="/"
-                            className="px-3 py-2.5 rounded-md flex items-center gap-3 w-full hover:bg-primary/20 hover:text-foreground"
-                          >
-                            <div className="w-8 h-8 rounded-md bg-green-500/20 flex items-center justify-center flex-shrink-0">
-                              <Icons.building2 className="w-4 h-4 text-green-600" />
-                            </div>
-                            <span className="flex-1 text-sm">Enterprise</span>
-                            <Icons.chevronRight className="w-4 h-4 text-foreground/40" />
-                          </Link>
-                        </DropdownMenuItem>
-                      </div>
-                      <div className="mt-6 pt-6 border-t">
-                        <DropdownMenuItem asChild>
-                          <Link
-                            href="/"
-                            className="px-3 py-2.5 text-sm text-foreground/60 hover:bg-primary/20 hover:text-foreground"
-                          >
-                            Other use cases
-                          </Link>
-                        </DropdownMenuItem>
-                      </div>
-                    </div>
-                  </div>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            </div>
-          </nav>
+          {/*          /!* Column 2: BY COMPANY SIZE *!/*/}
+          {/*          <div className="p-6">*/}
+          {/*            <DropdownMenuLabel className="px-0 mb-4 text-xs font-semibold uppercase tracking-wide">*/}
+          {/*              BY COMPANY SIZE*/}
+          {/*            </DropdownMenuLabel>*/}
+          {/*            <div className="space-y-2">*/}
+          {/*              <DropdownMenuItem asChild>*/}
+          {/*                <Link*/}
+          {/*                  href="/"*/}
+          {/*                  className="px-3 py-2.5 rounded-md flex items-center gap-3 w-full hover:bg-primary/20 hover:text-foreground"*/}
+          {/*                >*/}
+          {/*                  <div className="w-8 h-8 rounded-md bg-green-500/20 flex items-center justify-center flex-shrink-0">*/}
+          {/*                    <Icons.building2 className="w-4 h-4 text-green-600" />*/}
+          {/*                  </div>*/}
+          {/*                  <span className="flex-1 text-sm">Enterprise</span>*/}
+          {/*                  <Icons.chevronRight className="w-4 h-4 text-foreground/40" />*/}
+          {/*                </Link>*/}
+          {/*              </DropdownMenuItem>*/}
+          {/*            </div>*/}
+          {/*            <div className="mt-6 pt-6 border-t">*/}
+          {/*              <DropdownMenuItem asChild>*/}
+          {/*                <Link*/}
+          {/*                  href="/"*/}
+          {/*                  className="px-3 py-2.5 text-sm text-foreground/60 hover:bg-primary/20 hover:text-foreground"*/}
+          {/*                >*/}
+          {/*                  Other use cases*/}
+          {/*                </Link>*/}
+          {/*              </DropdownMenuItem>*/}
+          {/*            </div>*/}
+          {/*          </div>*/}
+          {/*        </div>*/}
+          {/*      </DropdownMenuContent>*/}
+          {/*    </DropdownMenu>*/}
+          {/*  </div>*/}
+          {/*</nav>*/}
 
           {/* Right Side Actions */}
           <div className="flex items-center space-x-2 ml-auto">

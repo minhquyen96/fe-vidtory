@@ -86,6 +86,28 @@
     "benefitsTitle": "Benefits when upgrading:",
     "benefitNoWatermark": "No watermark on images",
     "benefitHighQuality": "Download high-quality images without watermark"
+  },
+  "activationModal": {
+    "title": "Activate Pro",
+    "description": "Enter your activation code to upgrade to Pro account",
+    "codeLabel": "Activation Code",
+    "codePlaceholder": "Enter activation code",
+    "codeRequired": "Please enter activation code",
+    "activateButton": "Activate Pro",
+    "activating": "Activating...",
+    "activateFailed": "Activation failed. Please try again.",
+    "successTitle": "Activation Successful!",
+    "successMessage": "Your account has been upgraded to Pro. You can now enjoy all premium features.",
+    "enjoyPremium": "Enjoy Premium now!",
+    "redirecting": "Redirecting...",
+    "loginRequired": "Please login to activate your code.",
+    "loginToActivate": "Login to Activate",
+    "creditAdded": "Successfully added",
+    "credits": "credits"
+  },
+  "common": {
+    "back": "Back",
+    "login": "Login"
   }
 }
 

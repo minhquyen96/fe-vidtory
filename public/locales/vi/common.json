@@ -86,5 +86,27 @@
     "benefitsTitle": "Quyền lợi khi nâng cấp:",
     "benefitNoWatermark": "Không có watermark trên ảnh",
     "benefitHighQuality": "Tải ảnh chất lượng cao không watermark"
+  },
+  "activationModal": {
+    "title": "Kích Hoạt Pro",
+    "description": "Nhập mã kích hoạt của bạn để nâng cấp lên tài khoản Pro",
+    "codeLabel": "Mã kích hoạt",
+    "codePlaceholder": "Nhập mã kích hoạt",
+    "codeRequired": "Vui lòng nhập mã kích hoạt",
+    "activateButton": "Kích Hoạt Pro",
+    "activating": "Đang kích hoạt...",
+    "activateFailed": "Kích hoạt thất bại. Vui lòng thử lại.",
+    "successTitle": "Kích hoạt thành công!",
+    "successMessage": "Tài khoản của bạn đã được nâng cấp lên Pro. Bạn có thể tận hưởng tất cả các tính năng cao cấp.",
+    "enjoyPremium": "Tận hưởng Premium ngay bây giờ!",
+    "redirecting": "Đang chuyển hướng...",
+    "loginRequired": "Vui lòng đăng nhập để kích hoạt mã.",
+    "loginToActivate": "Đăng nhập để kích hoạt",
+    "creditAdded": "Đã nạp thành công",
+    "credits": "credit"
+  },
+  "common": {
+    "back": "Quay lại",
+    "login": "Đăng nhập"
   }
 }

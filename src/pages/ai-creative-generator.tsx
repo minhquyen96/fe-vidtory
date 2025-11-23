@@ -23,6 +23,7 @@ import {
 import { I18N_NAMESPACES } from '@/constants/i18n'
 import { useAuth } from '@/context/AuthContext'
 import { BuyCreditModal } from '@/components/gemini-banana-pro/BuyCreditModal'
+import { ActivationModal } from '@/components/gemini-banana-pro/ActivationModal'
 import { ConfirmDialog } from '@/components/ui/confirm-dialog'
 import { SidebarNavigation } from '@/components/gemini-banana-pro/SidebarNavigation'
 import { InputDrawer } from '@/components/gemini-banana-pro/InputDrawer'
@@ -51,6 +52,7 @@ export default function GeminiBananaProPage() {
   const [history, setHistory] = useState<HistoryItem[]>([])
   const [loadingHistory, setLoadingHistory] = useState(false)
   const [showBuyCreditModal, setShowBuyCreditModal] = useState(false)
+  const [showActivationModal, setShowActivationModal] = useState(false)
   const [deleteConfirmId, setDeleteConfirmId] = useState<string | null>(null)
   const [mobileTab, setMobileTab] = useState<'editor' | 'preview'>('preview')
 
@@ -610,6 +612,7 @@ export default function GeminiBananaProPage() {
           resultImage={resultImage}
           onBuyCredit={handleBuyCredit}
           onDownload={handleDownload}
+          onActivate={() => setShowActivationModal(true)}
         />
 
         {/* Main Content Area - Responsive Pb for Action Bar + Nav */}
@@ -685,6 +688,17 @@ export default function GeminiBananaProPage() {
         <BuyCreditModal
           isOpen={showBuyCreditModal}
           onClose={() => setShowBuyCreditModal(false)}
+        />
+
+        {/* Activation Modal */}
+        <ActivationModal
+          isOpen={showActivationModal}
+          onClose={() => setShowActivationModal(false)}
+          onSuccess={() => {
+            // Refresh user data after successful activation
+            // The auth context should automatically update
+            window.location.reload()
+          }}
         />
 
         {/* Delete Confirm Dialog */}

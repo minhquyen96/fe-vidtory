@@ -124,7 +124,7 @@ export function InputDrawer({
             </>
           ) : (
             <>
-              <Wand2 size={22} /> {t('labels.generate')} (1 Credit)
+              <Wand2 size={22} /> {t('labels.generate')} (4 Credit)
             </>
           )}
         </button>
