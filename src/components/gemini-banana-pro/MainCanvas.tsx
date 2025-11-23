@@ -177,9 +177,9 @@ export function MainCanvas({
               <div className="absolute bottom-2 right-2 z-30 group/watermark">
                 <div className="relative">
                   <img
-                    src="http://assets.vidtory.ai/images/logo-wtm.png"
+                    src="https://assets.vidtory.ai/images/logo_wtm_2.png"
                     alt="Vidtory Logo"
-                    className="sm+:h-8 h-4 w-auto opacity-80 group-hover/watermark:opacity-100 transition-opacity"
+                    className="sm+:h-6 h-5 w-auto"
                   />
                   {onRemoveWatermark && (
                     <button

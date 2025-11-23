@@ -264,7 +264,7 @@ export default function GeminiBananaProPage() {
           const watermarkImg = new Image()
           watermarkImg.crossOrigin = 'anonymous'
           watermarkImg.src =
-            'http://assets.vidtory.ai/images/logo-wtm.png'
+            'https://assets.vidtory.ai/images/logo_wtm_2.png'
 
           watermarkImg.onload = () => {
             // Calculate watermark size (10% of image width, maintain aspect ratio)
@@ -344,7 +344,7 @@ export default function GeminiBananaProPage() {
 
       const link = document.createElement('a')
       link.href = url
-      link.download = `creative-studio-${Date.now()}.png`
+      link.download = `vidtory-${Date.now()}.png`
       document.body.appendChild(link)
       link.click()
       document.body.removeChild(link)
