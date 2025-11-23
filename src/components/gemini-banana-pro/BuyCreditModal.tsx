@@ -41,8 +41,8 @@ interface BuyCreditModalProps {
   onClose: () => void
 }
 
-// Facebook Messenger URL - opens messenger chat
-const FACEBOOK_MESSENGER_URL = 'https://m.me/lehuyducanh'
+// Facebook URL
+const FACEBOOK_URL = 'https://www.facebook.com/lehuyducanh'
 
 export function BuyCreditModal({ isOpen, onClose }: BuyCreditModalProps) {
   const { t } = useTranslation(I18N_NAMESPACES.COMMON)
@@ -72,10 +72,10 @@ export function BuyCreditModal({ isOpen, onClose }: BuyCreditModalProps) {
       )
 
       if (result.status === 'success' && result.data?.packages) {
-        // Filter only active packages and sort by credit (descending)
+        // Filter only active packages and sort by credit (ascending)
         const activePackages = result.data.packages
           .filter((pkg) => pkg.isActive)
-          .sort((a, b) => b.credit - a.credit)
+          .sort((a, b) => a.credit - b.credit)
         setPackages(activePackages)
       } else {
         setError(result.message || 'Failed to load packages')
@@ -88,12 +88,11 @@ export function BuyCreditModal({ isOpen, onClose }: BuyCreditModalProps) {
     }
   }
 
-  // Find the most popular package (middle one or highest credit)
+  // Find the most popular package (middle one)
   const popularPackageId = useMemo(() => {
     if (packages.length === 0) return null
-    // Get the package with highest credit, or middle one if multiple
-    const sorted = [...packages].sort((a, b) => b.credit - a.credit)
-    return sorted[Math.floor(sorted.length / 2)]?.id || sorted[0]?.id
+    // Get the middle package (packages are already sorted ascending)
+    return packages[Math.floor(packages.length / 2)]?.id || packages[0]?.id
   }, [packages])
 
   // Auto-select popular package on load
@@ -107,145 +106,115 @@ export function BuyCreditModal({ isOpen, onClose }: BuyCreditModalProps) {
     setSelectedPackageId(pkgId)
   }
 
-  const handleContactMessenger = () => {
-    window.open(FACEBOOK_MESSENGER_URL, '_blank')
+  const handleContactFacebook = () => {
+    window.open(FACEBOOK_URL, '_blank')
   }
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-4xl max-h-[85vh] overflow-y-auto">
-        <DialogHeader>
-          <DialogTitle className="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-2">
-            {t('buyCreditModal.outOfCreditTitle')}
-          </DialogTitle>
-          <DialogDescription className="text-base text-slate-600 dark:text-slate-400">
-            {t('buyCreditModal.outOfCreditDescription')}
-          </DialogDescription>
-        </DialogHeader>
+      <DialogContent className="max-w-2xl max-h-[90vh] sm+:max-h-[85vh] flex flex-col p-0">
+        <div className="flex flex-col h-full min-h-0">
+          {loading ? (
+            <div className="flex items-center justify-center py-16">
+              <Loader2 className="animate-spin text-primary" size={40} />
+            </div>
+          ) : error ? (
+            <div className="px-6 py-4">
+              <div className="bg-danger/10 border border-danger/20 text-danger px-4 py-3 rounded-lg">
+                <p className="text-sm">{error}</p>
+              </div>
+            </div>
+          ) : packages.length === 0 ? (
+            <div className="text-center py-16 text-default-500">
+              <Coins className="mx-auto mb-4 text-default-400" size={48} />
+              <p className="text-lg">{t('buyCreditModal.noPackages')}</p>
+            </div>
+          ) : (
+            <>
+              {/* Header */}
+              <div className="px-4 sm+:px-6 pt-4 sm+:pt-6 pb-3 sm+:pb-4 border-b border-divider shrink-0">
+                <h2 className="text-lg sm+:text-xl md:text-2xl font-bold mb-1 sm+:mb-2 text-foreground">
+                  {t('buyCreditModal.outOfCreditTitle')}
+                </h2>
+                <p className="text-xs sm+:text-sm md:text-base text-default-500">
+                  {t('buyCreditModal.outOfCreditDescription')}
+                </p>
+              </div>
 
-        {loading ? (
-          <div className="flex items-center justify-center py-16">
-            <Loader2 className="animate-spin text-primary" size={40} />
-          </div>
-        ) : error ? (
-          <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-600 dark:text-red-200 px-4 py-3 rounded-lg">
-            <p className="text-sm">{error}</p>
-          </div>
-        ) : packages.length === 0 ? (
-          <div className="text-center py-16 text-slate-500">
-            <Coins className="mx-auto mb-4 text-slate-400" size={48} />
-            <p className="text-lg">{t('buyCreditModal.noPackages')}</p>
-          </div>
-        ) : (
-          <div className="space-y-6">
-            {/* Packages List - Simple Compact Design */}
-            <div className="space-y-2">
-              {packages.map((pkg) => {
-                const isPopular = pkg.id === popularPackageId
-                return (
-                  <div
-                    key={pkg.id}
-                    className={`relative group rounded-lg border-2 transition-all duration-200 ${
-                      selectedPackageId === pkg.id
-                        ? 'border-primary bg-primary/5 dark:bg-primary/10 shadow-md'
-                        : isPopular
-                          ? 'border-slate-300 dark:border-slate-600 hover:border-primary/50 bg-white dark:bg-slate-800'
-                          : 'border-slate-200 dark:border-slate-700 hover:border-primary/50 bg-white dark:bg-slate-800'
-                    } cursor-pointer`}
-                    onClick={() => handleSelectPackage(pkg.id)}
-                  >
-                    <div className="p-2 flex items-center justify-between gap-4">
-                      {/* Left: Radio + Credit Info */}
-                      <div className="flex items-center gap-4 flex-1 min-w-0">
-                        {/* Radio Button */}
-                        <div
-                          className={`flex-shrink-0 w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all ${
-                            selectedPackageId === pkg.id
-                              ? 'border-primary bg-primary'
-                              : 'border-slate-300 dark:border-slate-600'
-                          }`}
-                        >
-                          {selectedPackageId === pkg.id && (
-                            <div className="w-2.5 h-2.5 rounded-full bg-white"></div>
-                          )}
-                        </div>
-
-                        {/* Credit Info */}
-                        <div className="flex items-center gap-3 flex-1 min-w-0">
+              {/* Packages List - Scrollable */}
+              <div className="flex-1 overflow-y-auto custom-scrollbar px-4 sm+:px-6 py-3 sm+:py-4 min-h-0">
+                <div className="space-y-1.5 sm+:space-y-2">
+                  {packages.map((pkg) => {
+                    const isPopular = pkg.id === popularPackageId
+                    const isSelected = selectedPackageId === pkg.id
+                    return (
+                      <div
+                        key={pkg.id}
+                        className={`relative rounded-lg border-2 transition-all cursor-pointer ${
+                          isSelected
+                            ? 'border-primary bg-primary/5'
+                            : 'border-default-200 hover:border-primary/50 bg-default-100'
+                        }`}
+                        onClick={() => handleSelectPackage(pkg.id)}
+                      >
+                        <div className="p-2.5 sm+:p-4 flex items-center gap-2 sm+:gap-4">
+                          {/* Radio Button */}
                           <div
-                            className={`flex-shrink-0 p-2 rounded-lg ${
-                              isPopular
-                                ? 'bg-amber-500'
-                                : 'bg-amber-400 dark:bg-amber-500'
+                            className={`flex-shrink-0 w-4 h-4 sm+:w-5 sm+:h-5 rounded-full border-2 flex items-center justify-center transition-all ${
+                              isSelected
+                                ? 'border-primary bg-primary'
+                                : 'border-default-300'
                             }`}
                           >
-                            <Coins className="text-white" size={18} />
+                            {isSelected && (
+                              <div className="w-2 h-2 sm+:w-2.5 sm+:h-2.5 rounded-full bg-white"></div>
+                            )}
                           </div>
-                          <div className="min-w-0">
-                            <div className="flex items-center gap-2">
-                              <span
-                                className={`font-bold text-lg ${
-                                  selectedPackageId === pkg.id
-                                    ? 'text-primary dark:text-primary'
-                                    : 'text-slate-900 dark:text-slate-100'
+
+                          {/* Credit Info */}
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center gap-1.5 sm+:gap-2 mb-0.5 sm+:mb-1">
+                              <div
+                                className={`font-bold text-sm sm+:text-base ${
+                                  isSelected ? 'text-primary' : 'text-foreground'
                                 }`}
                               >
                                 {pkg.credit.toLocaleString()} credit
-                              </span>
+                              </div>
                               {isPopular && (
-                                <span className="px-2 py-0.5 bg-amber-500 text-white text-xs font-bold rounded-full">
+                                <span className="px-1.5 sm+:px-2 py-0.5 bg-amber-500 text-white text-[9px] sm+:text-[10px] font-bold rounded-full">
                                   {t('buyCreditModal.popular')}
                                 </span>
                               )}
                             </div>
                             {pkg.description && (
-                              <p className="text-sm text-slate-500 dark:text-slate-400 truncate">
+                              <p className="text-[10px] sm+:text-xs text-default-500 line-clamp-1">
                                 {pkg.description}
                               </p>
                             )}
                           </div>
                         </div>
                       </div>
-                    </div>
-                  </div>
-                )
-              })}
-            </div>
-
-            {/* Features List - Common for all packages */}
-            <div className="pt-4 border-t border-slate-200 dark:border-slate-700">
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
-                <div className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-300">
-                  <Check size={16} className="text-green-500 flex-shrink-0" />
-                  <span>Sử dụng ngay sau khi mua</span>
-                </div>
-                <div className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-300">
-                  <Check size={16} className="text-green-500 flex-shrink-0" />
-                  <span>Không giới hạn thời gian</span>
-                </div>
-                <div className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-300">
-                  <Check size={16} className="text-green-500 flex-shrink-0" />
-                  <span>Hỗ trợ 24/7</span>
+                    )
+                  })}
                 </div>
               </div>
-            </div>
 
-            {/* Contact Button */}
-            <div className="pt-0">
-              <Button
-                onClick={handleContactMessenger}
-                className="w-full bg-gradient opacity-90 text-white shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] h-14"
-                size="lg"
-                disabled={!selectedPackageId}
-              >
-                <MessageCircle size={20} className="mr-2" />
-                <span className="font-bold text-base">
-                  {t('buyCreditModal.contactMessenger')}
-                </span>
-              </Button>
-            </div>
-          </div>
-        )}
+              {/* Footer with Contact Button - Fixed at bottom */}
+              <div className="px-4 sm+:px-6 py-3 sm+:py-4 border-t border-divider bg-content1 shrink-0">
+                <Button
+                  onClick={handleContactFacebook}
+                  className="w-full bg-gradient-to-r from-primary to-secondary text-white shadow-lg hover:shadow-xl transition-all h-10 sm+:h-12 rounded-large font-bold text-sm sm+:text-base"
+                  size="lg"
+                  disabled={!selectedPackageId}
+                >
+                  <MessageCircle size={16} className="sm+:size-[18] mr-2" />
+                  <span>{t('buyCreditModal.contactMessenger')}</span>
+                </Button>
+              </div>
+            </>
+          )}
+        </div>
       </DialogContent>
     </Dialog>
   )

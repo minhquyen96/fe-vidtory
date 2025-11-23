@@ -24,6 +24,14 @@
       "subtitle": "Hãy đăng nhập để tận dụng tối đa!",
       "computedGrades": "Nhận đánh giá dựa trên trình độ của bạn và độ khó của bài học",
       "trackProgress": "Theo dõi tiến trình học tập của bạn qua hệ thống cấp độ"
+    },
+    "modalRight": {
+      "title": "Tạo Nội Dung Sáng Tạo với AI",
+      "description": "Tạo truyện tranh, thiết kế quảng cáo và đồ họa thông tin chuyên nghiệp với nền tảng AI mạnh mẽ của chúng tôi.",
+      "feature1": "Truyện Tranh AI",
+      "feature2": "Quảng Cáo",
+      "feature3": "Đồ Họa Thông Tin",
+      "feature4": "Nhiều Phong Cách"
     }
   },
   "footer": {

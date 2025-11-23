@@ -17,6 +17,8 @@ interface HistoryItem {
   user_id: string
   mode: 'comic' | 'advertising' | 'infographic'
   inputs: any
+  lang?: 'vi' | 'en'
+  aspectRatio?: string
   image_url: string
   credit_used: number
   created_at: number
@@ -98,18 +100,20 @@ const apiModeToAppMode = (mode: string): AppMode => {
  * Generate creative content using Gemini API
  * @param mode - App mode (COMIC, ADVERTISING, INFOGRAPHIC)
  * @param inputs - Input data for generation
+ * @param lang - Language code ('vi' or 'en')
  * @returns Image URL from GCS
  */
 export const generateCreativeContent = async (
   mode: AppMode,
-  inputs: InputUnion
+  inputs: InputUnion,
+  lang?: 'vi' | 'en'
 ): Promise<{
   imageUrl: string
   remainingCredit: number
   historyId: string
 }> => {
   try {
-    // Prepare reference images
+    // Prepare reference images as base64
     const referenceImages: Array<{ data: string; mimeType: string }> = []
     if (inputs.referenceImages && inputs.referenceImages.length > 0) {
       for (const file of inputs.referenceImages) {
@@ -118,11 +122,17 @@ export const generateCreativeContent = async (
       }
     }
 
+    // Create inputs object with referenceImages included (not File objects)
+    const inputsToSend = {
+      ...inputs,
+      referenceImages: referenceImages, // Replace File[] with base64 array
+    }
+
     // Call backend API endpoint
     const result = await apiService.post<GenerateResponse>('/gemini/generate', {
       mode: modeToApiMode(mode),
-      inputs,
-      referenceImages: referenceImages.length > 0 ? referenceImages : undefined,
+      inputs: inputsToSend, // Send inputs with referenceImages inside
+      lang: lang || 'en', // Pass language to backend
     })
 
     if (result.status === 'error') {

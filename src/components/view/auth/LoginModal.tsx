@@ -477,34 +477,35 @@ export const LoginModal: React.FC = () => {
                   strokeLinejoin="round"
                   className="text-primary"
                 >
-                  <path d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  <path d="M12 2L2 7l10 5 10-5-10-5z" />
+                  <path d="M2 17l10 5 10-5" />
+                  <path d="M2 12l10 5 10-5" />
                 </svg>
               </div>
               <h3 className="text-2xl font-bold text-foreground">
-                Create AI Videos
+                {t('login.modalRight.title')}
               </h3>
               <p className="text-muted-foreground text-sm leading-relaxed">
-                Generate professional videos for stories, education,
-                entertainment, and marketing with our powerful AI platform.
+                {t('login.modalRight.description')}
               </p>
 
               {/* Feature highlights */}
               <div className="grid grid-cols-2 gap-3 mt-6">
                 <div className="flex items-center gap-2 text-xs text-foreground/80">
                   <div className="w-1.5 h-1.5 rounded-full bg-primary"></div>
-                  <span>AI Avatars</span>
+                  <span>{t('login.modalRight.feature1')}</span>
                 </div>
                 <div className="flex items-center gap-2 text-xs text-foreground/80">
                   <div className="w-1.5 h-1.5 rounded-full bg-secondary"></div>
-                  <span>Auto Voice</span>
+                  <span>{t('login.modalRight.feature2')}</span>
                 </div>
                 <div className="flex items-center gap-2 text-xs text-foreground/80">
                   <div className="w-1.5 h-1.5 rounded-full bg-primary"></div>
-                  <span>Smart Editing</span>
+                  <span>{t('login.modalRight.feature3')}</span>
                 </div>
                 <div className="flex items-center gap-2 text-xs text-foreground/80">
                   <div className="w-1.5 h-1.5 rounded-full bg-secondary"></div>
-                  <span>Multi Format</span>
+                  <span>{t('login.modalRight.feature4')}</span>
                 </div>
               </div>
             </div>

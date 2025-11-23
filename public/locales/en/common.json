@@ -24,6 +24,14 @@
       "subtitle": "Login to get the most out of it!",
       "computedGrades": "Get grades judged based on your level and lesson's difficulty",
       "trackProgress": "Track your learning progress through a level system"
+    },
+    "modalRight": {
+      "title": "Create Creative Content with AI",
+      "description": "Generate comics, advertisement designs, and professional infographics with our powerful AI platform.",
+      "feature1": "AI Comics",
+      "feature2": "Advertisements",
+      "feature3": "Infographics",
+      "feature4": "Multiple Styles"
     }
   },
   "footer": {

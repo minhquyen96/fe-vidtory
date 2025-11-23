@@ -1,40 +1,17 @@
 import { useState, useEffect } from 'react'
 import { GetStaticProps } from 'next'
-import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
+import { useRouter } from 'next/router'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { Layout } from '@/components/layout/Layout'
-import {
-  BookOpen,
-  Megaphone,
-  BarChart3,
-  Wand2,
-  Download,
-  Loader2,
-  Trash2,
-  RefreshCw,
-  History,
-  Sun,
-  Moon,
-  PanelLeft,
-  Coins,
-  ShoppingCart,
-  Languages,
-  DownloadCloud,
-  LogOut,
-  User,
-} from 'lucide-react'
-import {
-  ComicForm,
-  AdForm,
-  InfoForm,
-} from '@/components/gemini-banana-pro/InputGroups'
+import { Loader2, Wand2, Edit3, Eye, BookOpen, Megaphone, BarChart3 } from 'lucide-react'
 import {
   AppMode,
   ComicInputs,
   AdInputs,
   InfoInputs,
   InputUnion,
+  Language,
 } from '@/types/gemini-banana-pro'
 import {
   generateCreativeContent,
@@ -47,18 +24,17 @@ import { I18N_NAMESPACES } from '@/constants/i18n'
 import { useAuth } from '@/context/AuthContext'
 import { BuyCreditModal } from '@/components/gemini-banana-pro/BuyCreditModal'
 import { ConfirmDialog } from '@/components/ui/confirm-dialog'
+import { SidebarNavigation } from '@/components/gemini-banana-pro/SidebarNavigation'
+import { InputDrawer } from '@/components/gemini-banana-pro/InputDrawer'
+import { PageHeader } from '@/components/gemini-banana-pro/PageHeader'
+import { MainCanvas } from '@/components/gemini-banana-pro/MainCanvas'
+import { HistoryGallery } from '@/components/gemini-banana-pro/HistoryGallery'
 import JSZip from 'jszip'
-import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@/components/ui/popover'
-import { Button } from '@/components/ui/button'
 
 export default function GeminiBananaProPage() {
   const { t } = useTranslation(I18N_NAMESPACES.GEMINI_BANANA_PRO)
   const router = useRouter()
+  const lang = (router.locale || 'vi') as Language
   const {
     isAuthenticated,
     userData,
@@ -76,6 +52,7 @@ export default function GeminiBananaProPage() {
   const [loadingHistory, setLoadingHistory] = useState(false)
   const [showBuyCreditModal, setShowBuyCreditModal] = useState(false)
   const [deleteConfirmId, setDeleteConfirmId] = useState<string | null>(null)
+  const [mobileTab, setMobileTab] = useState<'editor' | 'preview'>('preview')
 
   // UI State - Initialize theme from DOM or default to dark
   const [theme, setTheme] = useState<'light' | 'dark'>(() => {
@@ -137,6 +114,7 @@ export default function GeminiBananaProPage() {
     referenceImages: [],
     selectedManga: '',
     taskAction: 'story', // Default to 'New Story'
+    aspectRatio: '1:1',
   })
   const [adData, setAdData] = useState<AdInputs>({
     description: '',
@@ -145,6 +123,7 @@ export default function GeminiBananaProPage() {
     headline: '',
     targetAudience: '',
     referenceImages: [],
+    aspectRatio: '1:1',
   })
   const [infoData, setInfoData] = useState<InfoInputs>({
     description: '',
@@ -152,6 +131,7 @@ export default function GeminiBananaProPage() {
     topic: '',
     dataPoints: '',
     referenceImages: [],
+    aspectRatio: '1:1',
   })
 
   const handleGenerate = async () => {
@@ -179,7 +159,7 @@ export default function GeminiBananaProPage() {
           break
       }
 
-      const result = await generateCreativeContent(activePage, currentData)
+      const result = await generateCreativeContent(activePage, currentData, lang)
       setResultImage(result.imageUrl)
 
       // Update user credit with remaining credit from API response
@@ -218,18 +198,43 @@ export default function GeminiBananaProPage() {
     setShowBuyCreditModal(true)
   }
 
-  const handleRemix = (item: HistoryItem, e: React.MouseEvent) => {
-    e.stopPropagation()
+  // Apply full history item data to form
+  const handleSelectHistoryItem = (item: HistoryItem) => {
     const mode = apiModeToAppMode(item.mode)
     setActivePage(mode)
 
     // Convert API mode to AppMode and set form data
-    if (mode === AppMode.COMIC) setComicData(item.inputs as ComicInputs)
-    else if (mode === AppMode.ADVERTISING) setAdData(item.inputs as AdInputs)
-    else if (mode === AppMode.INFOGRAPHIC)
-      setInfoData(item.inputs as InfoInputs)
+    // Note: referenceImages from history cannot be restored as File objects,
+    // so we set them as empty array
+    if (mode === AppMode.COMIC) {
+      const comicInputs = item.inputs as ComicInputs
+      setComicData({
+        ...comicInputs,
+        referenceImages: [], // Cannot restore File objects from history
+        aspectRatio: item.aspectRatio || comicInputs.aspectRatio || '1:1',
+      })
+    } else if (mode === AppMode.ADVERTISING) {
+      const adInputs = item.inputs as AdInputs
+      setAdData({
+        ...adInputs,
+        referenceImages: [], // Cannot restore File objects from history
+        aspectRatio: item.aspectRatio || adInputs.aspectRatio || '1:1',
+      })
+    } else if (mode === AppMode.INFOGRAPHIC) {
+      const infoInputs = item.inputs as InfoInputs
+      setInfoData({
+        ...infoInputs,
+        referenceImages: [], // Cannot restore File objects from history
+        aspectRatio: item.aspectRatio || infoInputs.aspectRatio || '1:1',
+      })
+    }
 
     setResultImage(item.image_url)
+  }
+
+  const handleRemix = (item: HistoryItem, e: React.MouseEvent) => {
+    e.stopPropagation()
+    handleSelectHistoryItem(item)
   }
 
   const handleDownload = async () => {
@@ -336,38 +341,145 @@ export default function GeminiBananaProPage() {
     }
   }
 
-  const getUserDisplayName = () => {
-    return (
-      userData?.displayName ||
-      userData?.name ||
-      user?.displayName ||
-      user?.email?.split('@')[0] ||
-      'User'
-    )
+  const handleUseAsRef = async (imageUrl: string, mode: AppMode) => {
+    try {
+      // Find the history item to get the actual image URL
+      const currentItem = history.find((h) => h.image_url === imageUrl)
+      if (!currentItem) {
+        // If not found in history, try to use the provided URL directly
+        // This handles cases where resultImage might be a blob URL
+        const actualUrl = imageUrl.startsWith('blob:') 
+          ? imageUrl 
+          : imageUrl
+
+        // Fetch image and convert to File
+        const response = await fetch(actualUrl)
+        if (!response.ok) throw new Error('Failed to fetch image')
+        
+        const blob = await response.blob()
+        const file = new File([blob], `ref-${Date.now()}.png`, { type: blob.type || 'image/png' })
+
+        // Set form data based on current mode
+        if (mode === AppMode.COMIC) {
+          setComicData((prev) => ({
+            ...prev,
+            referenceImages: [...prev.referenceImages, file],
+          }))
+        } else if (mode === AppMode.ADVERTISING) {
+          setAdData((prev) => ({
+            ...prev,
+            referenceImages: [...prev.referenceImages, file],
+          }))
+        } else if (mode === AppMode.INFOGRAPHIC) {
+          setInfoData((prev) => ({
+            ...prev,
+            referenceImages: [...prev.referenceImages, file],
+          }))
+        }
+
+        // Switch to editor on mobile
+        if (typeof window !== 'undefined' && window.innerWidth < 768) {
+          setMobileTab('editor')
+        }
+        return
+      }
+
+      // If found in history, use the actual image URL from history
+      const modeFromItem = apiModeToAppMode(currentItem.mode)
+      setActivePage(modeFromItem)
+
+      // Fetch image from the actual URL and convert to File
+      const response = await fetch(currentItem.image_url)
+      if (!response.ok) throw new Error('Failed to fetch image')
+      
+      const blob = await response.blob()
+      const file = new File([blob], `ref-${Date.now()}.png`, { type: blob.type || 'image/png' })
+
+      // Set form data based on mode
+      if (modeFromItem === AppMode.COMIC) {
+        setComicData((prev) => ({
+          ...prev,
+          referenceImages: [...prev.referenceImages, file],
+        }))
+      } else if (modeFromItem === AppMode.ADVERTISING) {
+        setAdData((prev) => ({
+          ...prev,
+          referenceImages: [...prev.referenceImages, file],
+        }))
+      } else if (modeFromItem === AppMode.INFOGRAPHIC) {
+        setInfoData((prev) => ({
+          ...prev,
+          referenceImages: [...prev.referenceImages, file],
+        }))
+      }
+
+      // Switch to editor on mobile
+      if (typeof window !== 'undefined' && window.innerWidth < 768) {
+        setMobileTab('editor')
+      }
+    } catch (error) {
+      console.error('Failed to convert image to reference:', error)
+      setError(error instanceof Error ? error.message : t('ui.error'))
+    }
   }
 
-  const getUserInitial = () => {
-    const name = getUserDisplayName()
-    return name.charAt(0).toUpperCase()
-  }
+  const handlePreviewAction = async (
+    action: 'remix' | 'ref' | 'delete' | 'continue' | 'variant' | 'recreate'
+  ) => {
+    if (!resultImage) return
 
-  const SidebarItem = ({ mode, icon: Icon }: { mode: AppMode; icon: any }) => (
-    <button
-      onClick={() => setActivePage(mode)}
-      className={`relative w-14 flex flex-col gap-1.5 items-center justify-center py-3 rounded-xl transition-all mb-3 ${
-        activePage === mode
-          ? 'bg-primary text-white shadow-lg shadow-primary/30'
-          : 'text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800 dark:hover:text-slate-200'
-      }`}
-      title={t(`modes.${mode}`)}
-    >
-      <Icon size={20} strokeWidth={2.5} />
-      <span className="text-[10px] font-bold">{t(`sidebar.${mode}`)}</span>
-      {activePage === mode && (
-        <div className="absolute -right-3 top-1/2 -translate-y-1/2 w-1 h-8 bg-primary rounded-l-full"></div>
-      )}
-    </button>
-  )
+    // Find current item by matching image URL
+    // Handle both direct URL match and potential blob URL cases
+    const currentItem = history.find((h) => {
+      // Direct match
+      if (h.image_url === resultImage) return true
+      // Handle cases where resultImage might be a blob URL created from history item
+      // We'll use the history item's URL for fetching
+      return false
+    })
+
+    // If not found in history, try to use resultImage directly (might be a blob URL)
+    if (!currentItem) {
+      // For ref and continue actions, we can still use the resultImage URL directly
+      if (action === 'ref' || action === 'continue') {
+        await handleUseAsRef(resultImage, activePage)
+        if (action === 'continue' && activePage === AppMode.COMIC) {
+          setComicData((prev) => ({ ...prev, taskAction: 'continue' }))
+        }
+        if (typeof window !== 'undefined' && window.innerWidth < 768) {
+          setMobileTab('editor')
+        }
+      }
+      return
+    }
+
+    switch (action) {
+      case 'remix':
+      case 'variant':
+      case 'recreate':
+        handleRemix(currentItem, {} as React.MouseEvent)
+        break
+      case 'ref':
+        await handleUseAsRef(currentItem.image_url, activePage)
+        break
+      case 'continue':
+        // 1. Use as ref
+        await handleUseAsRef(currentItem.image_url, activePage)
+        // 2. Switch to continue mode if in comic
+        if (currentItem.mode === 'comic' || activePage === AppMode.COMIC) {
+          setActivePage(AppMode.COMIC)
+          setComicData((prev) => ({ ...prev, taskAction: 'continue' }))
+        }
+        // Switch to editor
+        if (typeof window !== 'undefined' && window.innerWidth < 768) {
+          setMobileTab('editor')
+        }
+        break
+      case 'delete':
+        setDeleteConfirmId(currentItem.id)
+        break
+    }
+  }
 
   // Show loading only while checking auth
   if (authLoading) {
@@ -385,340 +497,80 @@ export default function GeminiBananaProPage() {
       showHeader={false}
       showFooter={false}
     >
-      <div className="flex h-screen w-full bg-slate-50 dark:bg-slate-950 overflow-hidden">
-        {/* 1. FAR LEFT RAIL (Navigation) */}
-        <div className="w-[72px] bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 flex flex-col items-center py-6 shrink-0 z-20">
-          {/* Logo */}
-          <div className="w-10 h-10 bg-gradient-to-br from-primary to-secondary rounded-xl flex items-center justify-center shadow-lg shadow-primary/20 mb-8">
-            <Wand2 className="text-white" size={20} />
-          </div>
+      <div className="flex flex-col h-screen w-full bg-slate-50 dark:bg-slate-950 overflow-hidden">
+        {/* Header - Full width */}
+        <PageHeader
+          activePage={activePage}
+          userCredit={userCredit}
+          resultImage={resultImage}
+          onBuyCredit={handleBuyCredit}
+          onDownload={handleDownload}
+        />
 
-          <SidebarItem mode={AppMode.COMIC} icon={BookOpen} />
-          <SidebarItem mode={AppMode.ADVERTISING} icon={Megaphone} />
-          <SidebarItem mode={AppMode.INFOGRAPHIC} icon={BarChart3} />
+        {/* Main Content Area - Responsive Pb for Action Bar + Nav */}
+        <div className="flex flex-1 min-h-0 overflow-hidden relative pb-[104px] sm+:pb-0">
+          {/* 1. FAR LEFT RAIL (Navigation) */}
+          <SidebarNavigation
+            activePage={activePage}
+            onPageChange={setActivePage}
+            theme={theme}
+            onThemeChange={setTheme}
+            isAuthenticated={isAuthenticated}
+            userData={userData}
+            user={user}
+            onLogin={openLoginModal}
+            onLogout={logout}
+          />
 
-          <div className="mt-auto flex flex-col gap-4">
-            <button
-              onClick={() => {
-                const newLocale = router.locale === 'vi' ? 'en' : 'vi'
-                router.push(router.asPath, router.asPath, { locale: newLocale })
-              }}
-              className="w-10 h-10 flex items-center justify-center rounded-lg text-slate-400 hover:text-primary hover:bg-slate-100 dark:hover:bg-slate-800 transition-all font-bold text-xs"
-              title={
-                router.locale === 'vi'
-                  ? 'Switch to English'
-                  : 'Chuyển sang Tiếng Việt'
-              }
-            >
-              {router.locale === 'vi' ? 'VI' : 'EN'}
-            </button>
-            <button
-              onClick={() =>
-                setTheme((theme) => (theme === 'light' ? 'dark' : 'light'))
-              }
-              className="w-10 h-10 flex items-center justify-center rounded-lg text-slate-400 hover:text-primary hover:bg-slate-100 dark:hover:bg-slate-800 transition-all"
-              title={
-                theme === 'light'
-                  ? 'Switch to Dark Mode'
-                  : 'Chuyển sang Light Mode'
-              }
-            >
-              {theme === 'light' ? <Moon size={18} /> : <Sun size={18} />}
-            </button>
-          </div>
+          {/* 2. SECONDARY DRAWER (Inputs) */}
+          <InputDrawer
+            activePage={activePage}
+            comicData={comicData}
+            adData={adData}
+            infoData={infoData}
+            onComicDataChange={(k, v) => setComicData((p) => ({ ...p, [k]: v }))}
+            onAdDataChange={(k, v) => setAdData((p) => ({ ...p, [k]: v }))}
+            onInfoDataChange={(k, v) => setInfoData((p) => ({ ...p, [k]: v }))}
+            onGenerate={handleGenerate}
+            isLoading={isLoading}
+            showGuide={showGuide}
+            onDismissGuide={() => setShowGuide(false)}
+            userCredit={userCredit}
+            mobileTab={mobileTab}
+          />
 
-          {/* Avatar/Login Button - Bottom */}
-          <div className="mt-4">
-          {isAuthenticated && user ? (
-            <Popover>
-              <PopoverTrigger asChild>
-                <button className="w-10 h-10 flex items-center justify-center rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-all">
-                  <Avatar className="h-10 w-10">
-                    <AvatarImage
-                      src={userData?.photoURL || user.photoURL || undefined}
-                      alt={getUserDisplayName()}
-                    />
-                    <AvatarFallback className="bg-primary text-slate-900 dark:text-white">
-                      {getUserInitial()}
-                    </AvatarFallback>
-                  </Avatar>
-                </button>
-              </PopoverTrigger>
-              <PopoverContent align="start" className="w-56 p-2">
-                <div className="flex flex-col space-y-1">
-                  {/* Avatar and User Info */}
-                  <div className="px-3 py-2 flex items-center gap-3">
-                    <Avatar className="h-10 w-10">
-                      <AvatarImage
-                        src={userData?.photoURL || user.photoURL || undefined}
-                        alt={getUserDisplayName()}
-                      />
-                      <AvatarFallback className="bg-primary text-slate-900 dark:text-white">
-                        {getUserInitial()}
-                      </AvatarFallback>
-                    </Avatar>
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm font-semibold text-slate-900 dark:text-white truncate">
-                        {getUserDisplayName()}
-                      </p>
-                      <p className="text-xs text-slate-500 dark:text-slate-400 truncate">
-                        {user.email}
-                      </p>
-                    </div>
-                  </div>
-                  <div className="border-t border-slate-200 dark:border-slate-700" />
-                  <Button
-                    variant="ghost"
-                    className="justify-start w-full text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 hover:bg-red-50 dark:hover:bg-red-950/20"
-                    onClick={() => logout()}
-                  >
-                    <LogOut className="mr-2 h-4 w-4" />
-                    <span>Logout</span>
-                  </Button>
-                </div>
-              </PopoverContent>
-            </Popover>
-          ) : (
-            <button
-              onClick={() => openLoginModal()}
-              className="w-10 h-10 flex items-center justify-center rounded-lg text-slate-400 hover:text-primary hover:bg-slate-100 dark:hover:bg-slate-800 transition-all"
-              title="Login"
-            >
-              <User size={18} />
-            </button>
-          )}
-          </div>
-        </div>
+          {/* 3. MAIN CANVAS (Preview & Gallery) */}
+          <div className="flex-1 flex flex-col min-w-0 bg-slate-100 dark:bg-black relative">
+            <MainCanvas
+              resultImage={resultImage}
+              isLoading={isLoading}
+              error={error}
+              activePage={activePage}
+              mobileTab={mobileTab}
+              onPreviewAction={handlePreviewAction}
+              onMobileTabChange={setMobileTab}
+            />
 
-        {/* 2. SECONDARY DRAWER (Inputs) */}
-        <div className="w-[360px] bg-white dark:bg-slate-900/50 border-r border-slate-200 dark:border-slate-800 flex flex-col shrink-0 relative z-10 shadow-xl shadow-black/5">
-          <div className="h-16 px-6 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between shrink-0">
-            <span className="font-bold text-slate-800 dark:text-white text-lg truncate">
-              {t(`modes.${activePage}`)}
-            </span>
-            <div className="bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded text-[10px] font-mono text-slate-500">
-              {t('ui.version')}
-            </div>
-          </div>
-
-          <div className="flex-1 overflow-y-auto p-6 custom-scrollbar relative">
-            {activePage === AppMode.COMIC && (
-              <ComicForm
-                data={comicData}
-                onChange={(k, v) => setComicData((p) => ({ ...p, [k]: v }))}
-                mode={activePage}
-                showGuide={showGuide}
-                onDismissGuide={() => setShowGuide(false)}
-              />
-            )}
-            {activePage === AppMode.ADVERTISING && (
-              <AdForm
-                data={adData}
-                onChange={(k, v) => setAdData((p) => ({ ...p, [k]: v }))}
-                mode={activePage}
-              />
-            )}
-            {activePage === AppMode.INFOGRAPHIC && (
-              <InfoForm
-                data={infoData}
-                onChange={(k, v) => setInfoData((p) => ({ ...p, [k]: v }))}
-                mode={activePage}
-              />
-            )}
-          </div>
-
-          <div className="p-6 border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shrink-0">
-            <button
-              onClick={handleGenerate}
-              disabled={isLoading}
-              className={`w-full py-3.5 rounded-xl font-bold text-white shadow-lg transition-all flex items-center justify-center gap-2 text-sm
-                ${
-                  isLoading
-                    ? 'bg-slate-400 dark:bg-slate-700 cursor-not-allowed'
-                    : 'bg-gradient hover:bg-secondary hover:shadow-primary/25 hover:scale-[1.01] active:scale-[0.99]'
+            <HistoryGallery
+              history={history}
+              loadingHistory={loadingHistory}
+              resultImage={resultImage}
+              activePage={activePage}
+              onImageSelect={(imageUrl) => {
+                // Find the history item by image URL
+                const item = history.find((h) => h.image_url === imageUrl)
+                if (item) {
+                  handleSelectHistoryItem(item)
+                } else {
+                  // Fallback: just set the image if item not found
+                  setResultImage(imageUrl)
                 }
-              `}
-            >
-              {isLoading ? (
-                <>
-                  <Loader2 className="animate-spin" size={18} />{' '}
-                  {t('labels.generating')}
-                </>
-              ) : (
-                <>
-                  <Wand2 size={18} /> {t('labels.generate')}
-                </>
-              )}
-            </button>
-          </div>
-        </div>
-
-        {/* 3. MAIN CANVAS (Preview & Gallery) */}
-        <div className="flex-1 flex flex-col min-w-0 bg-slate-100 dark:bg-black relative">
-          {/* Toolbar / Breadcrumbs */}
-          <div className="h-16 px-6 flex items-center justify-between shrink-0 z-10">
-            <div className="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400">
-              <PanelLeft size={16} />
-              <span>{t('ui.project')}</span>
-              <span>/</span>
-              <span className="text-slate-900 dark:text-slate-200 font-medium">
-                {t(`modes.${activePage}`)}
-              </span>
-            </div>
-            <div className="flex items-center gap-3">
-              {/* Credit Display */}
-              <div className="flex items-center gap-2 px-4 py-2 bg-slate-100 dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700">
-                <Coins size={16} className="text-amber-500" />
-                <span className="text-sm font-bold text-slate-900 dark:text-slate-200">
-                  {userCredit}
-                </span>
-                <span className="text-xs text-slate-500 dark:text-slate-400">
-                  {t('ui.credits')}
-                </span>
-              </div>
-
-              {/* Buy Credit Button */}
-              <button
-                onClick={handleBuyCredit}
-                className="flex items-center gap-2 px-4 py-2 bg-amber-500 hover:bg-amber-400 text-white rounded-lg font-bold text-xs uppercase tracking-wide shadow-lg shadow-amber-500/20 transition-all hover:-translate-y-0.5"
-              >
-                <ShoppingCart size={14} />
-                {t('labels.buyCredit')}
-              </button>
-
-              <div className="h-6 w-px bg-slate-300 dark:bg-slate-700 mx-1"></div>
-              <button
-                onClick={handleDownload}
-                disabled={!resultImage}
-                className={`p-2 px-4 rounded-lg border transition-all flex items-center gap-2 text-sm shadow-lg
-                           ${
-                             resultImage
-                               ? 'bg-primary text-white border-primary hover:bg-secondary hover:border-secondary hover:shadow-primary/25'
-                               : 'bg-slate-100 dark:bg-slate-900 text-slate-400 border-transparent cursor-not-allowed'
-                           }
-                        `}
-              >
-                <Download size={18} />
-                <span className="font-bold">{t('labels.download')}</span>
-              </button>
-            </div>
-          </div>
-
-          {/* Canvas Area */}
-          <div className="flex-1 relative overflow-hidden flex flex-col items-center justify-center p-8">
-            {/* Dot Pattern */}
-            <div
-              className="absolute inset-0 opacity-[0.03] dark:opacity-20 pointer-events-none"
-              style={{
-                backgroundImage:
-                  'radial-gradient(currentColor 1px, transparent 1px)',
-                backgroundSize: '24px 24px',
               }}
-            ></div>
-
-            {error && (
-              <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-600 dark:text-red-200 px-6 py-4 rounded-xl backdrop-blur-sm">
-                <p className="font-medium">{error}</p>
-              </div>
-            )}
-
-            {!resultImage && !isLoading && !error && (
-              <div className="text-center">
-                <div className="w-24 h-24 bg-slate-200 dark:bg-slate-800 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Wand2
-                    className="text-slate-400 dark:text-slate-600"
-                    size={32}
-                  />
-                </div>
-                <p className="text-slate-400 dark:text-slate-500 max-w-xs mx-auto text-sm">
-                  {t('ui.emptyState')}
-                </p>
-              </div>
-            )}
-
-            {isLoading && (
-              <div className="flex flex-col items-center gap-4">
-                <div className="w-16 h-16 border-4 border-primary/30 border-t-primary rounded-full animate-spin"></div>
-                <p className="text-xs font-bold text-primary uppercase tracking-widest animate-pulse">
-                  {t('labels.generating')}
-                </p>
-              </div>
-            )}
-
-            {resultImage && !isLoading && (
-              <div className="relative max-w-full max-h-full shadow-2xl rounded-sm overflow-hidden ring-1 ring-slate-900/5 dark:ring-white/10">
-                <img
-                  src={resultImage}
-                  alt="Result"
-                  className="max-w-full max-h-full object-contain"
-                />
-              </div>
-            )}
-          </div>
-
-          {/* Bottom Gallery (Timeline style) */}
-          <div className="h-36 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 flex flex-col shrink-0 z-20">
-            <div className="px-4 py-2 flex items-center justify-between border-b border-slate-100 dark:border-slate-800/50">
-              <div className="flex items-center gap-2 text-[10px] font-bold text-slate-500 uppercase tracking-wider">
-                <History size={12} /> {t('labels.history')}
-              </div>
-              {history.length > 0 && (
-                <button
-                  onClick={handleDownloadAll}
-                  className="flex items-center gap-1.5 px-2 py-1 text-[10px] font-bold text-slate-600 dark:text-slate-400 hover:text-primary rounded hover:bg-slate-100 dark:hover:bg-slate-800 transition-all"
-                  title={t('labels.downloadAll')}
-                >
-                  <DownloadCloud size={12} />
-                  {t('labels.downloadAll')}
-                </button>
-              )}
-            </div>
-            <div className="flex-1 flex items-center gap-3 p-3 overflow-x-auto custom-scrollbar">
-              {loadingHistory ? (
-                <div className="flex items-center justify-center w-full h-full">
-                  <Loader2 className="animate-spin text-slate-400" size={20} />
-                </div>
-              ) : history.length === 0 ? (
-                <div className="flex items-center justify-center w-full h-full text-slate-400 text-xs">
-                  {t('ui.emptyHistory')}
-                </div>
-              ) : (
-                history.map((item) => (
-                  <div
-                    key={item.id}
-                    onClick={() => setResultImage(item.image_url)}
-                    className={`relative h-full aspect-square rounded-lg overflow-hidden cursor-pointer border-2 transition-all flex-shrink-0 group ${
-                      resultImage === item.image_url
-                        ? 'border-primary'
-                        : 'border-transparent hover:border-slate-300 dark:hover:border-slate-600'
-                    }`}
-                  >
-                    <img
-                      src={item.image_url}
-                      className="w-full h-full object-cover"
-                      alt="history"
-                    />
-
-                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-1 backdrop-blur-[1px]">
-                      <button
-                        onClick={(e) => handleRemix(item, e)}
-                        className="p-1.5 bg-primary text-white rounded-full hover:scale-110 transition-transform"
-                        title={t('labels.remix')}
-                      >
-                        <RefreshCw size={12} />
-                      </button>
-                      <button
-                        onClick={(e) => handleDeleteHistory(item.id, e)}
-                        className="p-1.5 bg-red-500 text-white rounded-full hover:scale-110 transition-transform"
-                        title={t('labels.delete')}
-                      >
-                        <Trash2 size={12} />
-                      </button>
-                    </div>
-                  </div>
-                ))
-              )}
-            </div>
+              onRemix={handleRemix}
+              onDelete={handleDeleteHistory}
+              onDownloadAll={handleDownloadAll}
+              onUseAsRef={handleUseAsRef}
+            />
           </div>
         </div>
 
@@ -739,6 +591,94 @@ export default function GeminiBananaProPage() {
           cancelText={t('labels.cancel')}
           variant="destructive"
         />
+
+        {/* 5. MOBILE ACTION BAR (Fixed above nav) */}
+        <div className="sm+:hidden fixed bottom-12 left-0 right-0 h-14 bg-content1/95 backdrop-blur-md border-t border-divider flex items-center px-3 gap-3 z-50 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)]">
+          {/* Generate Button (Larger - Flex 1.5) */}
+          <button
+            onClick={handleGenerate}
+            disabled={isLoading || userCredit <= 0}
+            className={`flex-[1.5] h-10 rounded-large font-bold text-white shadow-lg transition-all flex items-center justify-center gap-2 text-sm active:scale-[0.98]
+              ${
+                isLoading || userCredit <= 0
+                  ? 'bg-default-300 cursor-not-allowed'
+                  : 'bg-gradient-to-r from-primary to-secondary shadow-primary-lg/50'
+              }
+            `}
+          >
+            {isLoading ? (
+              <Loader2 className="animate-spin" size={18} />
+            ) : (
+              <>
+                <Wand2 size={18} /> {t('labels.generate')}
+              </>
+            )}
+          </button>
+
+          {/* View Switcher (Flex 1) */}
+          <div className="flex-1 h-10 bg-default-100 p-1 rounded-large flex items-center border border-default-200">
+            <button
+              onClick={() => setMobileTab('editor')}
+              className={`flex-1 h-full rounded-medium flex items-center justify-center gap-1 transition-all ${
+                mobileTab === 'editor'
+                  ? 'bg-background shadow-sm text-primary font-bold'
+                  : 'text-default-400 font-medium'
+              }`}
+            >
+              <Edit3 size={14} />
+              <span className="text-[10px]">{t('labels.mobileEdit')}</span>
+            </button>
+            <div className="w-px h-4 bg-default-300 mx-1"></div>
+            <button
+              onClick={() => setMobileTab('preview')}
+              className={`flex-1 h-full rounded-medium flex items-center justify-center gap-1 transition-all ${
+                mobileTab === 'preview'
+                  ? 'bg-background shadow-sm text-primary font-bold'
+                  : 'text-default-400 font-medium'
+              }`}
+            >
+              <Eye size={14} />
+              <span className="text-[10px]">{t('labels.mobilePreview')}</span>
+            </button>
+          </div>
+        </div>
+
+        {/* 6. MOBILE BOTTOM NAVIGATION (Compact) */}
+        <div className="sm+:hidden fixed bottom-0 left-0 right-0 h-12 bg-content1 border-t border-divider flex items-center justify-between px-2 z-50 pb-safe-area">
+          <button
+            onClick={() => setActivePage(AppMode.COMIC)}
+            className={`flex-1 flex flex-col items-center justify-center gap-0.5 py-1 rounded-medium transition-all ${
+              activePage === AppMode.COMIC
+                ? 'text-primary'
+                : 'text-default-500'
+            }`}
+          >
+            <BookOpen size={18} strokeWidth={activePage === AppMode.COMIC ? 2.5 : 2} />
+            <span className="text-[9px] font-semibold">{t('sidebar.COMIC')}</span>
+          </button>
+          <button
+            onClick={() => setActivePage(AppMode.ADVERTISING)}
+            className={`flex-1 flex flex-col items-center justify-center gap-0.5 py-1 rounded-medium transition-all ${
+              activePage === AppMode.ADVERTISING
+                ? 'text-primary'
+                : 'text-default-500'
+            }`}
+          >
+            <Megaphone size={18} strokeWidth={activePage === AppMode.ADVERTISING ? 2.5 : 2} />
+            <span className="text-[9px] font-semibold">{t('sidebar.ADVERTISING')}</span>
+          </button>
+          <button
+            onClick={() => setActivePage(AppMode.INFOGRAPHIC)}
+            className={`flex-1 flex flex-col items-center justify-center gap-0.5 py-1 rounded-medium transition-all ${
+              activePage === AppMode.INFOGRAPHIC
+                ? 'text-primary'
+                : 'text-default-500'
+            }`}
+          >
+            <BarChart3 size={18} strokeWidth={activePage === AppMode.INFOGRAPHIC ? 2.5 : 2} />
+            <span className="text-[9px] font-semibold">{t('sidebar.INFOGRAPHIC')}</span>
+          </button>
+        </div>
       </div>
     </Layout>
   )

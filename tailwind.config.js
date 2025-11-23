@@ -86,11 +86,37 @@ module.exports = {
           DEFAULT: 'rgb(var(--card) / <alpha-value>)',
           foreground: 'rgb(var(--card-foreground) / <alpha-value>)',
         },
+        // HeroUI semantic colors
+        content1: 'rgb(var(--content1) / <alpha-value>)',
+        content2: 'rgb(var(--content2) / <alpha-value>)',
+        content3: 'rgb(var(--content3) / <alpha-value>)',
+        content4: 'rgb(var(--content4) / <alpha-value>)',
+        default: {
+          100: 'rgb(var(--default-100) / <alpha-value>)',
+          200: 'rgb(var(--default-200) / <alpha-value>)',
+          300: 'rgb(var(--default-300) / <alpha-value>)',
+          // 400: 'rgb(var(--default-400) / <alpha-value>)',
+          // 500: 'rgb(var(--default-500) / <alpha-value>)',
+          DEFAULT: 'rgb(var(--default-200) / <alpha-value>)',
+        },
+        divider: 'rgb(var(--divider) / <alpha-value>)',
+        danger: {
+          DEFAULT: 'rgb(var(--danger) / <alpha-value>)',
+          foreground: 'rgb(var(--danger-foreground) / <alpha-value>)',
+        },
       },
       borderRadius: {
         lg: 'var(--radius)',
         md: 'calc(var(--radius) - 2px)',
         sm: 'calc(var(--radius) - 4px)',
+        medium: '12px',
+        large: '14px',
+        small: '8px',
+      },
+      boxShadow: {
+        medium: '0px 4px 12px rgba(0, 0, 0, 0.08)',
+        large: '0px 8px 24px rgba(0, 0, 0, 0.12)',
+        'primary-lg': '0px 10px 30px -10px var(--primary-shadow)',
       },
       keyframes: {
         'fade-in': {
