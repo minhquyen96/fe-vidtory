@@ -111,13 +111,15 @@ export default function ActivationPage() {
       <div className="min-h-screen bg-background flex items-center justify-center p-4">
         <div className="w-full max-w-md">
           {/* Back Button */}
-          <Link
-            href="/"
+          <button
+            onClick={() => {
+              router.back()
+            }}
             className="inline-flex items-center gap-2 text-default-500 hover:text-foreground mb-6 transition-colors"
           >
             <ArrowLeft size={20} />
             <span className="text-sm font-medium">{t('common.back')}</span>
-          </Link>
+          </button>
 
           {success ? (
             // Success Screen
