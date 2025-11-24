@@ -169,21 +169,21 @@ export function HistoryGallery({
                   />
                 </button>
 
-                {/* Use as ref button - Center on hover (desktop only) */}
-                {onUseAsRef && (
-                  <div className="hidden sm+:flex absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity items-center justify-center backdrop-blur-[2px]  rounded-lg">
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation()
-                        onUseAsRef(item.image_url, itemMode)
-                      }}
-                      className="p-1.5 bg-content1 text-foreground rounded-full hover:bg-primary hover:text-primary-foreground transition-colors shadow-lg"
-                      title={t('labels.useAsRef')}
-                    >
-                      <ImagePlus size={14} />
-                    </button>
-                  </div>
-                )}
+                {/*/!* Use as ref button - Center on hover (desktop only) *!/*/}
+                {/*{onUseAsRef && (*/}
+                {/*  <div className="hidden sm+:flex absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity items-center justify-center backdrop-blur-[2px]  rounded-lg">*/}
+                {/*    <button*/}
+                {/*      onClick={(e) => {*/}
+                {/*        e.stopPropagation()*/}
+                {/*        onUseAsRef(item.image_url, itemMode)*/}
+                {/*      }}*/}
+                {/*      className="p-1.5 bg-content1 text-foreground rounded-full hover:bg-primary hover:text-primary-foreground transition-colors shadow-lg"*/}
+                {/*      title={t('labels.useAsRef')}*/}
+                {/*    >*/}
+                {/*      <ImagePlus size={14} />*/}
+                {/*    </button>*/}
+                {/*  </div>*/}
+                {/*)}*/}
               </div>
             )
           })
