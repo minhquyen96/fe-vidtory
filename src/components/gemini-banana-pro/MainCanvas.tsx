@@ -67,7 +67,7 @@ export function MainCanvas({
         {error && (
           <div className="bg-danger/10 border border-danger/20 text-danger px-6 py-4 rounded-lg backdrop-blur-md max-w-md text-center z-20">
             <p className="font-medium text-base">
-              {error?.message || t('labels.somethingWentWrong')}
+              {t('labels.somethingWentWrong')}
             </p>
             {error?.status && (
               <p className="text-xs mt-2 text-danger/70 font-mono">
