@@ -7,10 +7,11 @@ import {
   DialogDescription,
 } from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
-import { Loader2, Coins, MessageCircle, Check } from 'lucide-react'
+import { Loader2, Coins, MessageCircle, Check, X } from 'lucide-react'
 import { apiService } from '@/services/api'
 import { useTranslation } from 'next-i18next'
 import { I18N_NAMESPACES } from '@/constants/i18n'
+import { useAuth } from '@/context/AuthContext'
 
 interface CreditPackage {
   id: string
@@ -18,6 +19,7 @@ interface CreditPackage {
   description: string
   credit: number
   price_id: string
+  price?: number
   isActive: boolean
   created_at: number
 }
@@ -44,18 +46,27 @@ interface BuyCreditModalProps {
 // Facebook URL
 const FACEBOOK_URL = 'https://www.facebook.com/Vidtory.AI.MovieMaker'
 
+// Bank info
+const BANK_ACCOUNT = '1600104537'
+const BANK_CODE = 'BIDV'
+
 export function BuyCreditModal({ isOpen, onClose }: BuyCreditModalProps) {
   const { t } = useTranslation(I18N_NAMESPACES.COMMON)
+  const { userData, user } = useAuth()
   const [packages, setPackages] = useState<CreditPackage[]>([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [selectedPackageId, setSelectedPackageId] = useState<string | null>(
     null
   )
+  const [showQRCode, setShowQRCode] = useState(false)
+  const [qrCodeUrl, setQrCodeUrl] = useState<string | null>(null)
 
   useEffect(() => {
     if (isOpen) {
       loadPackages()
+      setShowQRCode(false)
+      setQrCodeUrl(null)
     }
   }, [isOpen])
 
@@ -104,6 +115,33 @@ export function BuyCreditModal({ isOpen, onClose }: BuyCreditModalProps) {
 
   const handleSelectPackage = (pkgId: string) => {
     setSelectedPackageId(pkgId)
+    setShowQRCode(false)
+    setQrCodeUrl(null)
+  }
+
+  const handlePayment = () => {
+    if (!selectedPackageId) return
+
+    const selectedPackage = packages.find((pkg) => pkg.id === selectedPackageId)
+    if (!selectedPackage || !selectedPackage.price) {
+      setError('Package price is not available')
+      return
+    }
+
+    // Get user uid
+    const userUid =
+      (userData as any)?.uid ||
+      (user as any)?.uid ||
+      (userData as any)?.id ||
+      user?.uid ||
+      ''
+
+    // Generate QR code URL
+    const amount = selectedPackage.price
+    const qrUrl = `https://qr.sepay.vn/img?acc=${BANK_ACCOUNT}&bank=${BANK_CODE}&amount=${amount}&des=${encodeURIComponent(userUid)}`
+
+    setQrCodeUrl(qrUrl)
+    setShowQRCode(true)
   }
 
   const handleContactFacebook = () => {
@@ -193,7 +231,9 @@ export function BuyCreditModal({ isOpen, onClose }: BuyCreditModalProps) {
                             <div className="flex items-center gap-1.5 sm+:gap-2 mb-0.5 sm+:mb-1">
                               <div
                                 className={`font-bold text-sm sm+:text-base ${
-                                  isSelected ? 'text-primary' : 'text-foreground'
+                                  isSelected
+                                    ? 'text-primary'
+                                    : 'text-foreground'
                                 }`}
                               >
                                 {pkg.name}
@@ -217,17 +257,68 @@ export function BuyCreditModal({ isOpen, onClose }: BuyCreditModalProps) {
                 </div>
               </div>
 
-              {/* Footer with Contact Button - Fixed at bottom */}
+              {/* QR Code Section */}
+              {showQRCode && qrCodeUrl && (
+                <div className="px-4 sm+:px-6 py-4 border-t border-divider bg-content1 shrink-0">
+                  <div className="flex items-center justify-between mb-3">
+                    <h3 className="text-sm sm+:text-base font-bold text-foreground">
+                      {t('buyCreditModal.scanQRCode') ||
+                        'Quét mã QR để thanh toán'}
+                    </h3>
+                    <button
+                      onClick={() => {
+                        setShowQRCode(false)
+                        setQrCodeUrl(null)
+                      }}
+                      className="p-1 hover:bg-default-100 rounded-full transition-colors"
+                    >
+                      <X size={16} className="text-default-500" />
+                    </button>
+                  </div>
+                  <div className="flex flex-col items-center gap-3">
+                    <div className="bg-white p-4 rounded-lg border-2 border-default-200">
+                      <img
+                        src={qrCodeUrl}
+                        alt="QR Code"
+                        className="w-48 h-48 sm+:w-64 sm+:h-64"
+                      />
+                    </div>
+                    <div className="text-center space-y-1">
+                      <p className="text-xs sm+:text-sm text-default-600 font-medium">
+                        {t('buyCreditModal.qrDescription') ||
+                          'Credit sẽ được cộng trong vài phút, lâu nhất 1 ngày'}
+                      </p>
+                      <p className="text-xs text-default-500">
+                        {t('buyCreditModal.qrFastContact') ||
+                          'Muốn nhanh? Liên hệ Facebook'}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Footer with Payment/Contact Button - Fixed at bottom */}
               <div className="px-4 sm+:px-6 py-3 sm+:py-4 border-t border-divider bg-content1 shrink-0">
-                <Button
-                  onClick={handleContactFacebook}
-                  className="w-full bg-gradient-to-r from-primary to-secondary text-white shadow-lg hover:shadow-xl transition-all h-10 sm+:h-12 rounded-large font-bold text-sm sm+:text-base"
-                  size="lg"
-                  disabled={!selectedPackageId}
-                >
-                  <MessageCircle size={16} className="sm+:size-[18] mr-2" />
-                  <span>{t('buyCreditModal.contactMessenger')}</span>
-                </Button>
+                {!showQRCode ? (
+                  <Button
+                    onClick={handlePayment}
+                    className="w-full bg-gradient-to-r from-primary to-secondary text-white shadow-lg hover:shadow-xl transition-all h-10 sm+:h-12 rounded-large font-bold text-sm sm+:text-base"
+                    size="lg"
+                    disabled={!selectedPackageId}
+                  >
+                    <Coins size={16} className="sm+:size-[18] mr-2" />
+                    <span>{t('buyCreditModal.payNow') || 'Thanh toán'}</span>
+                  </Button>
+                ) : (
+                  <Button
+                    onClick={handleContactFacebook}
+                    className="w-full bg-gradient-to-r from-primary to-secondary text-white shadow-lg hover:shadow-xl transition-all h-10 sm+:h-12 rounded-large font-bold text-sm sm+:text-base"
+                    size="lg"
+                  >
+                    <MessageCircle size={16} className="sm+:size-[18] mr-2" />
+                    <span>{t('buyCreditModal.contactMessenger')}</span>
+                  </Button>
+                )}
               </div>
             </>
           )}

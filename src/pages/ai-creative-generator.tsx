@@ -4,7 +4,15 @@ import { useTranslation } from 'next-i18next'
 import { useRouter } from 'next/router'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { Layout } from '@/components/layout/Layout'
-import { Loader2, Wand2, Edit3, Eye, BookOpen, Megaphone, BarChart3 } from 'lucide-react'
+import {
+  Loader2,
+  Wand2,
+  Edit3,
+  Eye,
+  BookOpen,
+  Megaphone,
+  BarChart3,
+} from 'lucide-react'
 import {
   AppMode,
   ComicInputs,
@@ -48,8 +56,13 @@ export default function GeminiBananaProPage() {
   const [activePage, setActivePage] = useState<AppMode>(AppMode.COMIC)
   const [isLoading, setIsLoading] = useState(false)
   const [resultImage, setResultImage] = useState<string | null>(null)
-  const [error, setError] = useState<{ message: string; status?: number } | null>(null)
-  const [history, setHistory] = useState<HistoryItem[]>([])
+  const [error, setError] = useState<{
+    message: string
+    status?: number
+  } | null>(null)
+  const [history, setHistory] = useState<
+    (HistoryItem & { isLoading?: boolean })[]
+  >([])
   const [loadingHistory, setLoadingHistory] = useState(false)
   const [showBuyCreditModal, setShowBuyCreditModal] = useState(false)
   const [showActivationModal, setShowActivationModal] = useState(false)
@@ -70,12 +83,115 @@ export default function GeminiBananaProPage() {
   // Get user credit
   const userCredit = userData?.premium?.credit ?? 0
 
+  // Helper function to compress and resize images
+  const compressImage = async (
+    file: File,
+    maxWidth: number = 1024,
+    maxHeight: number = 1024,
+    quality: number = 0.8
+  ): Promise<File> => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader()
+      reader.onload = (e) => {
+        const img = new Image()
+        img.onload = () => {
+          // Calculate new dimensions while maintaining aspect ratio
+          let width = img.width
+          let height = img.height
+
+          if (width > maxWidth || height > maxHeight) {
+            const ratio = Math.min(maxWidth / width, maxHeight / height)
+            width = width * ratio
+            height = height * ratio
+          }
+
+          // Create canvas and draw resized image
+          const canvas = document.createElement('canvas')
+          canvas.width = width
+          canvas.height = height
+          const ctx = canvas.getContext('2d')
+
+          if (!ctx) {
+            reject(new Error('Failed to get canvas context'))
+            return
+          }
+
+          // Draw image with better quality
+          ctx.imageSmoothingEnabled = true
+          ctx.imageSmoothingQuality = 'high'
+          ctx.drawImage(img, 0, 0, width, height)
+
+          // Convert to blob with compression
+          canvas.toBlob(
+            (blob) => {
+              if (!blob) {
+                reject(new Error('Failed to compress image'))
+                return
+              }
+
+              // Create new File from blob
+              const compressedFile = new File([blob], file.name, {
+                type: file.type || 'image/jpeg',
+                lastModified: Date.now(),
+              })
+              resolve(compressedFile)
+            },
+            file.type || 'image/jpeg',
+            quality
+          )
+        }
+        img.onerror = () => reject(new Error('Failed to load image'))
+        img.src = e.target?.result as string
+      }
+      reader.onerror = () => reject(new Error('Failed to read file'))
+      reader.readAsDataURL(file)
+    })
+  }
+
   // Theme Effect - Apply theme immediately
   useEffect(() => {
     const root = document.documentElement
     root.classList.remove('light', 'dark')
     root.classList.add(theme)
   }, [theme])
+
+  // Sync activePage with URL query param on mount
+  useEffect(() => {
+    if (router.isReady && router.query.mode) {
+      const mode = router.query.mode as string
+      const upperMode = mode.toUpperCase()
+      if (Object.values(AppMode).includes(upperMode as AppMode)) {
+        const newMode = upperMode as AppMode
+        if (newMode !== activePage) {
+          setActivePage(newMode)
+        }
+      }
+    } else if (router.isReady && !router.query.mode) {
+      // If no mode in URL on first load, add default mode to URL
+      router.replace(
+        {
+          pathname: router.pathname,
+          query: { ...router.query, mode: AppMode.COMIC.toLowerCase() },
+        },
+        undefined,
+        { shallow: true }
+      )
+    }
+  }, [router.isReady, router.query.mode])
+
+  // Update URL when activePage changes
+  const handlePageChange = (mode: AppMode) => {
+    setActivePage(mode)
+    const modeParam = mode.toLowerCase()
+    router.push(
+      {
+        pathname: router.pathname,
+        query: { ...router.query, mode: modeParam },
+      },
+      undefined,
+      { shallow: true }
+    )
+  }
 
   // Load history from API on mount (only if authenticated)
   useEffect(() => {
@@ -176,14 +292,43 @@ export default function GeminiBananaProPage() {
     // Validate required fields
     if (!validateForm()) {
       setError({
-        message: t('validation.requiredFields') || 'Vui lòng điền đầy đủ các trường bắt buộc',
+        message:
+          t('validation.requiredFields') ||
+          'Vui lòng điền đầy đủ các trường bắt buộc',
       })
       return
     }
 
     setIsLoading(true)
     setError(null)
+    setResultImage(null) // Clear previous result
     setShowGuide(false) // Dismiss guide on first action
+
+    // Create a pending item for loading state
+    const pendingItemId = `pending-${Date.now()}`
+    const pendingItem: HistoryItem & { isLoading: boolean } = {
+      id: pendingItemId,
+      user_id:
+        (userData as any)?.uid ||
+        (user as any)?.uid ||
+        (userData as any)?.id ||
+        (user as any)?.id ||
+        '',
+      mode:
+        activePage === AppMode.COMIC
+          ? 'comic'
+          : activePage === AppMode.ADVERTISING
+            ? 'advertising'
+            : 'infographic',
+      inputs: {},
+      image_url: '',
+      credit_used: 0,
+      created_at: Date.now(),
+      isLoading: true,
+    }
+
+    // Add pending item to the beginning of history list
+    setHistory((prev) => [pendingItem, ...prev])
 
     try {
       let currentData: InputUnion
@@ -199,7 +344,38 @@ export default function GeminiBananaProPage() {
           break
       }
 
-      const result = await generateCreativeContent(activePage, currentData, lang)
+      // Compress reference images before sending to API
+      if (
+        currentData.referenceImages &&
+        currentData.referenceImages.length > 0
+      ) {
+        try {
+          const compressedImages = await Promise.all(
+            currentData.referenceImages.map(async (file) => {
+              try {
+                return await compressImage(file, 1024, 1024, 0.8)
+              } catch (error) {
+                console.warn('Failed to compress image, using original:', error)
+                // Fallback to original file if compression fails
+                return file
+              }
+            })
+          )
+          currentData = {
+            ...currentData,
+            referenceImages: compressedImages,
+          }
+        } catch (error) {
+          console.warn('Failed to compress images, using originals:', error)
+          // Continue with original images if compression fails
+        }
+      }
+
+      const result = await generateCreativeContent(
+        activePage,
+        currentData,
+        lang
+      )
       setResultImage(result.imageUrl)
 
       // Update user credit with remaining credit from API response
@@ -214,8 +390,14 @@ export default function GeminiBananaProPage() {
         sort_by: 'created_at',
         sort_order: 'desc',
       })
+
+      // Remove pending item and add real history items
       setHistory(historyResult.histories)
     } catch (e: any) {
+      // Remove pending item on error
+      setHistory((prev) => prev.filter((item) => item.id !== pendingItemId))
+      setResultImage(null) // Clear result image on error
+
       if (e instanceof Error) {
         // Check if error is about insufficient credit
         if (
@@ -226,13 +408,15 @@ export default function GeminiBananaProPage() {
           setShowBuyCreditModal(true)
         }
         // Extract status from response if available
-        const errorStatus = (e as any)?.response?.status
+        const errorStatus = (e as any)?.response?.status || (e as any)?.status
         setError({
           message: e.message,
           status: errorStatus,
         })
       } else {
-        setError({ message: t('ui.error') })
+        setError({
+          message: t('ui.error') || 'Something went wrong. Please try again.',
+        })
       }
     } finally {
       setIsLoading(false)
@@ -246,7 +430,7 @@ export default function GeminiBananaProPage() {
   // Apply full history item data to form
   const handleSelectHistoryItem = (item: HistoryItem) => {
     const mode = apiModeToAppMode(item.mode)
-    setActivePage(mode)
+    handlePageChange(mode)
 
     // Convert API mode to AppMode and set form data
     // Note: referenceImages from history cannot be restored as File objects,
@@ -283,9 +467,7 @@ export default function GeminiBananaProPage() {
   }
 
   // Helper function to add watermark to image
-  const addWatermarkToImage = async (
-    imageUrl: string
-  ): Promise<Blob> => {
+  const addWatermarkToImage = async (imageUrl: string): Promise<Blob> => {
     return new Promise((resolve, reject) => {
       const img = new Image()
       img.crossOrigin = 'anonymous'
@@ -308,8 +490,7 @@ export default function GeminiBananaProPage() {
           // Load watermark logo
           const watermarkImg = new Image()
           watermarkImg.crossOrigin = 'anonymous'
-          watermarkImg.src =
-            'https://assets.vidtory.ai/images/logo_wtm_2.png'
+          watermarkImg.src = 'https://assets.vidtory.ai/images/logo_wtm_2.png'
 
           watermarkImg.onload = () => {
             // Calculate watermark size (10% of image width, maintain aspect ratio)
@@ -424,7 +605,8 @@ export default function GeminiBananaProPage() {
           if (isPremiumActive) {
             // Premium user: download without watermark
             const response = await fetch(item.image_url)
-            if (!response.ok) throw new Error(`Failed to fetch image ${item.id}`)
+            if (!response.ok)
+              throw new Error(`Failed to fetch image ${item.id}`)
             blob = await response.blob()
           } else {
             // Non-premium: add watermark
@@ -506,16 +688,16 @@ export default function GeminiBananaProPage() {
       if (!currentItem) {
         // If not found in history, try to use the provided URL directly
         // This handles cases where resultImage might be a blob URL
-        const actualUrl = imageUrl.startsWith('blob:') 
-          ? imageUrl 
-          : imageUrl
+        const actualUrl = imageUrl.startsWith('blob:') ? imageUrl : imageUrl
 
         // Fetch image and convert to File
         const response = await fetch(actualUrl)
         if (!response.ok) throw new Error('Failed to fetch image')
-        
+
         const blob = await response.blob()
-        const file = new File([blob], `ref-${Date.now()}.png`, { type: blob.type || 'image/png' })
+        const file = new File([blob], `ref-${Date.now()}.png`, {
+          type: blob.type || 'image/png',
+        })
 
         // Set form data based on current mode
         if (mode === AppMode.COMIC) {
@@ -544,14 +726,16 @@ export default function GeminiBananaProPage() {
 
       // If found in history, use the actual image URL from history
       const modeFromItem = apiModeToAppMode(currentItem.mode)
-      setActivePage(modeFromItem)
+      handlePageChange(modeFromItem)
 
       // Fetch image from the actual URL and convert to File
       const response = await fetch(currentItem.image_url)
       if (!response.ok) throw new Error('Failed to fetch image')
-      
+
       const blob = await response.blob()
-      const file = new File([blob], `ref-${Date.now()}.png`, { type: blob.type || 'image/png' })
+      const file = new File([blob], `ref-${Date.now()}.png`, {
+        type: blob.type || 'image/png',
+      })
 
       // Set form data based on mode
       if (modeFromItem === AppMode.COMIC) {
@@ -629,7 +813,7 @@ export default function GeminiBananaProPage() {
         await handleUseAsRef(currentItem.image_url, activePage)
         // 2. Switch to continue mode if in comic
         if (currentItem.mode === 'comic' || activePage === AppMode.COMIC) {
-          setActivePage(AppMode.COMIC)
+          handlePageChange(AppMode.COMIC)
           setComicData((prev) => ({ ...prev, taskAction: 'continue' }))
         }
         // Switch to editor
@@ -675,7 +859,7 @@ export default function GeminiBananaProPage() {
           {/* 1. FAR LEFT RAIL (Navigation) */}
           <SidebarNavigation
             activePage={activePage}
-            onPageChange={setActivePage}
+            onPageChange={handlePageChange}
             theme={theme}
             onThemeChange={setTheme}
             isAuthenticated={isAuthenticated}
@@ -691,7 +875,9 @@ export default function GeminiBananaProPage() {
             comicData={comicData}
             adData={adData}
             infoData={infoData}
-            onComicDataChange={(k, v) => setComicData((p) => ({ ...p, [k]: v }))}
+            onComicDataChange={(k, v) =>
+              setComicData((p) => ({ ...p, [k]: v }))
+            }
             onAdDataChange={(k, v) => setAdData((p) => ({ ...p, [k]: v }))}
             onInfoDataChange={(k, v) => setInfoData((p) => ({ ...p, [k]: v }))}
             onGenerate={handleGenerate}
@@ -723,13 +909,19 @@ export default function GeminiBananaProPage() {
               resultImage={resultImage}
               activePage={activePage}
               onImageSelect={(imageUrl) => {
-                // Find the history item by image URL
-                const item = history.find((h) => h.image_url === imageUrl)
+                // Set image immediately for instant feedback
+                setResultImage(imageUrl)
+                // Clear error when selecting an image
+                setError(null)
+                // Clear loading state when selecting another item
+                setIsLoading(false)
+
+                // Find the history item by image URL and apply its data
+                const item = history.find(
+                  (h) => h.image_url === imageUrl && !h.isLoading
+                )
                 if (item) {
                   handleSelectHistoryItem(item)
-                } else {
-                  // Fallback: just set the image if item not found
-                  setResultImage(imageUrl)
                 }
               }}
               onRemix={handleRemix}
@@ -823,37 +1015,50 @@ export default function GeminiBananaProPage() {
         {/* 6. MOBILE BOTTOM NAVIGATION (Compact) */}
         <div className="sm+:hidden fixed bottom-0 left-0 right-0 h-12 bg-content1 border-t border-divider flex items-center justify-between px-2 z-50 pb-safe-area">
           <button
-            onClick={() => setActivePage(AppMode.COMIC)}
+            onClick={() => handlePageChange(AppMode.COMIC)}
             className={`flex-1 flex flex-col items-center justify-center gap-0.5 py-1 rounded-medium transition-all ${
-              activePage === AppMode.COMIC
-                ? 'text-primary'
-                : 'text-default-500'
+              activePage === AppMode.COMIC ? 'text-primary' : 'text-default-500'
             }`}
           >
-            <BookOpen size={18} strokeWidth={activePage === AppMode.COMIC ? 2.5 : 2} />
-            <span className="text-[9px] font-semibold">{t('sidebar.COMIC')}</span>
+            <BookOpen
+              size={18}
+              strokeWidth={activePage === AppMode.COMIC ? 2.5 : 2}
+            />
+            <span className="text-[9px] font-semibold">
+              {t('sidebar.COMIC')}
+            </span>
           </button>
           <button
-            onClick={() => setActivePage(AppMode.ADVERTISING)}
+            onClick={() => handlePageChange(AppMode.ADVERTISING)}
             className={`flex-1 flex flex-col items-center justify-center gap-0.5 py-1 rounded-medium transition-all ${
               activePage === AppMode.ADVERTISING
                 ? 'text-primary'
                 : 'text-default-500'
             }`}
           >
-            <Megaphone size={18} strokeWidth={activePage === AppMode.ADVERTISING ? 2.5 : 2} />
-            <span className="text-[9px] font-semibold">{t('sidebar.ADVERTISING')}</span>
+            <Megaphone
+              size={18}
+              strokeWidth={activePage === AppMode.ADVERTISING ? 2.5 : 2}
+            />
+            <span className="text-[9px] font-semibold">
+              {t('sidebar.ADVERTISING')}
+            </span>
           </button>
           <button
-            onClick={() => setActivePage(AppMode.INFOGRAPHIC)}
+            onClick={() => handlePageChange(AppMode.INFOGRAPHIC)}
             className={`flex-1 flex flex-col items-center justify-center gap-0.5 py-1 rounded-medium transition-all ${
               activePage === AppMode.INFOGRAPHIC
                 ? 'text-primary'
                 : 'text-default-500'
             }`}
           >
-            <BarChart3 size={18} strokeWidth={activePage === AppMode.INFOGRAPHIC ? 2.5 : 2} />
-            <span className="text-[9px] font-semibold">{t('sidebar.INFOGRAPHIC')}</span>
+            <BarChart3
+              size={18}
+              strokeWidth={activePage === AppMode.INFOGRAPHIC ? 2.5 : 2}
+            />
+            <span className="text-[9px] font-semibold">
+              {t('sidebar.INFOGRAPHIC')}
+            </span>
           </button>
         </div>
       </div>
