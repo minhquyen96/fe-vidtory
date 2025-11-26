@@ -498,7 +498,7 @@ export default function GeminiBananaProPage() {
 
           watermarkImg.onload = () => {
             // Calculate watermark size (10% of image width, maintain aspect ratio)
-            const watermarkWidth = img.width * 0.1
+            const watermarkWidth = img.width * 0.06
             const watermarkHeight =
               (watermarkImg.height / watermarkImg.width) * watermarkWidth
 
