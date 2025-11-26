@@ -194,7 +194,7 @@ export function MainCanvas({
                   <img
                     src="https://assets.vidtory.ai/images/logo_wtm_2.png"
                     alt="Vidtory Logo"
-                    className="sm+:h-6 h-5 w-auto"
+                    className="sm+:h-4 h-3 w-auto"
                   />
                   {onRemoveWatermark && (
                     <button

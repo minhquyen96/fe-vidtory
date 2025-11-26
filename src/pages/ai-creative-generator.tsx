@@ -424,6 +424,10 @@ export default function GeminiBananaProPage() {
   }
 
   const handleBuyCredit = () => {
+    if (!isAuthenticated) {
+      openLoginModal()
+      return
+    }
     setShowBuyCreditModal(true)
   }
 
@@ -499,7 +503,7 @@ export default function GeminiBananaProPage() {
               (watermarkImg.height / watermarkImg.width) * watermarkWidth
 
             // Position: bottom left with padding
-            const padding = 20
+            const padding = 10
             const x = img.width - watermarkWidth - padding
             const y = img.height - watermarkHeight - padding
 
