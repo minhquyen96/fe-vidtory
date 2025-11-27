@@ -12,6 +12,11 @@ export interface VideoGenNodeData {
   aspectRatio: string
   duration: string
   label?: string
+  isLoading?: boolean
+  jobId?: string
+  statusUrl?: string
+  downloadUrl?: string
+  pollIntervalMs?: number
 }
 
 interface VideoGenNodeProps extends NodeProps<VideoGenNodeData> {
@@ -46,63 +51,50 @@ export function VideoGenNode({
         {
           type: 'target',
           position: Position.Left,
-          id: 'promptScript',
+          id: 'input',
           className: 'w-3 h-3 bg-blue-500',
-          style: { top: '20%' },
-          label: 'Prompt/Script (text)',
-        },
-        {
-          type: 'target',
-          position: Position.Left,
-          id: 'storyboard',
-          className: 'w-3 h-3 bg-blue-500',
-          style: { top: '40%' },
-          label: 'Storyboard (structured)',
-        },
-        {
-          type: 'target',
-          position: Position.Left,
-          id: 'referenceImages',
-          className: 'w-3 h-3 bg-blue-500',
-          style: { top: '60%' },
-          label: 'Reference Images (image)',
-        },
-        {
-          type: 'target',
-          position: Position.Left,
-          id: 'styleBrand',
-          className: 'w-3 h-3 bg-blue-500',
-          style: { top: '80%' },
-          label: 'Style/Brand (brand-guide)',
+          style: { top: '50%' },
+          label: 'Input',
         },
         {
           type: 'source',
           position: Position.Right,
-          id: 'generatedVideo',
-          className: 'w-3 h-3 bg-green-500',
-          style: { top: '25%' },
-          label: 'Generated Video (video)',
-        },
-        {
-          type: 'source',
-          position: Position.Right,
-          id: 'thumbnails',
+          id: 'output',
           className: 'w-3 h-3 bg-green-500',
           style: { top: '50%' },
-          label: 'Thumbnails (image)',
-        },
-        {
-          type: 'source',
-          position: Position.Right,
-          id: 'metadata',
-          className: 'w-3 h-3 bg-green-500',
-          style: { top: '75%' },
-          label: 'Metadata (structured)',
+          label: 'Output',
         },
       ]}
+      isLoading={data.isLoading}
     >
       <div className="p-4">
-        <p className="text-sm text-gray-500">Configure in Inspector →</p>
+        {data.isLoading ? (
+          <div className="flex items-center justify-center py-8">
+            <div className="flex flex-col items-center gap-2">
+              <div className="w-8 h-8 border-4 border-[rgb(171,223,0)] border-t-transparent rounded-full animate-spin" />
+              <p className="text-sm text-gray-500">Creating video job...</p>
+            </div>
+          </div>
+        ) : data.jobId ? (
+          <div className="space-y-2">
+            <p className="text-xs font-medium text-gray-700">Video Generation Job:</p>
+            <div className="bg-gray-50 rounded-md p-3 border border-gray-200 space-y-1">
+              <p className="text-xs text-gray-600">Job ID: {data.jobId}</p>
+              {data.downloadUrl && (
+                <a
+                  href={data.downloadUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-xs text-[rgb(171,223,0)] hover:underline"
+                >
+                  Download Video
+                </a>
+              )}
+            </div>
+          </div>
+        ) : (
+          <p className="text-sm text-gray-500">Configure in Inspector →</p>
+        )}
       </div>
     </BaseNode>
   )

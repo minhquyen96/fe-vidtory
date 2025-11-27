@@ -1,7 +1,14 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Position, NodeProps } from 'reactflow'
-import { Wand2 } from 'lucide-react'
+import { Wand2, Maximize2 } from 'lucide-react'
 import { BaseNode } from './BaseNode'
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog'
+import { Button } from '@/components/ui/button'
 
 export interface ImageGenNodeData {
   imageUrl?: string
@@ -12,6 +19,7 @@ export interface ImageGenNodeData {
   aspectRatio: string
   variants?: number
   label?: string
+  isLoading?: boolean
 }
 
 interface ImageGenNodeProps extends NodeProps<ImageGenNodeData> {
@@ -32,6 +40,9 @@ export function ImageGenNode({
   onDelete,
   onMarkDraggable,
 }: ImageGenNodeProps) {
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const MAX_PREVIEW_HEIGHT = 200
+
   return (
     <BaseNode
       id={id}
@@ -46,48 +57,76 @@ export function ImageGenNode({
         {
           type: 'target',
           position: Position.Left,
-          id: 'prompt',
-          className: 'w-3 h-3 bg-blue-500',
-          style: { top: '25%' },
-          label: 'Prompt (text)',
-        },
-        {
-          type: 'target',
-          position: Position.Left,
-          id: 'styleBrand',
+          id: 'input',
           className: 'w-3 h-3 bg-blue-500',
           style: { top: '50%' },
-          label: 'Style/Brand (brand-guide)',
-        },
-        {
-          type: 'target',
-          position: Position.Left,
-          id: 'reference',
-          className: 'w-3 h-3 bg-blue-500',
-          style: { top: '75%' },
-          label: 'Reference (image)',
+          label: 'Input',
         },
         {
           type: 'source',
           position: Position.Right,
-          id: 'generatedImage',
+          id: 'output',
           className: 'w-3 h-3 bg-green-500',
-          style: { top: '30%' },
-          label: 'Generated Image (image)',
-        },
-        {
-          type: 'source',
-          position: Position.Right,
-          id: 'metadata',
-          className: 'w-3 h-3 bg-green-500',
-          style: { top: '70%' },
-          label: 'Metadata (structured)',
+          style: { top: '50%' },
+          label: 'Output',
         },
       ]}
+      isLoading={data.isLoading}
     >
       <div className="p-4">
-        <p className="text-sm text-gray-500">Configure in Inspector →</p>
+        {data.isLoading ? (
+          <div className="flex items-center justify-center py-8">
+            <div className="flex flex-col items-center gap-2">
+              <div className="w-8 h-8 border-4 border-[rgb(171,223,0)] border-t-transparent rounded-full animate-spin" />
+              <p className="text-sm text-gray-500">Generating image...</p>
+            </div>
+          </div>
+        ) : data.imageUrl ? (
+          <div className="space-y-2">
+            <div className="flex items-center justify-between">
+              <p className="text-xs font-medium text-gray-700">Generated Image:</p>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="h-6 px-2 text-xs"
+                onClick={(e) => {
+                  e.stopPropagation()
+                  setIsModalOpen(true)
+                }}
+              >
+                <Maximize2 className="w-3 h-3 mr-1" />
+                View Full
+              </Button>
+            </div>
+            <div className="rounded-md overflow-hidden border border-gray-200" style={{ maxHeight: `${MAX_PREVIEW_HEIGHT}px` }}>
+              <img
+                src={data.imageUrl}
+                alt="Generated"
+                className="w-full h-auto object-contain"
+                style={{ maxHeight: `${MAX_PREVIEW_HEIGHT}px` }}
+              />
+            </div>
+          </div>
+        ) : (
+          <p className="text-sm text-gray-500">Configure in Inspector →</p>
+        )}
       </div>
+
+      {/* Full Image Modal */}
+      <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
+        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>Generated Image</DialogTitle>
+          </DialogHeader>
+          <div className="rounded-md overflow-hidden border border-gray-200 mt-4 flex items-center justify-center bg-gray-50">
+            <img
+              src={data.imageUrl}
+              alt="Generated"
+              className="max-w-full max-h-[70vh] object-contain"
+            />
+          </div>
+        </DialogContent>
+      </Dialog>
     </BaseNode>
   )
 }

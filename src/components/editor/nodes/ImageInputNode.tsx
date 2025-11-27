@@ -57,18 +57,10 @@ export function ImageInputNode({
         {
           type: 'source',
           position: Position.Right,
-          id: 'image',
+          id: 'output',
           className: 'w-3 h-3 bg-green-500',
-          style: { top: '30%' },
-          label: 'Image (image)',
-        },
-        {
-          type: 'source',
-          position: Position.Right,
-          id: 'analysis',
-          className: 'w-3 h-3 bg-green-500',
-          style: { top: '70%' },
-          label: 'Analysis (structured)',
+          style: { top: '50%' },
+          label: 'Output',
         },
       ]}
     >

@@ -21,6 +21,7 @@ interface BaseNodeProps {
     style?: React.CSSProperties
     label?: string
   }[]
+  isLoading?: boolean
 }
 
 export function BaseNode({
@@ -34,10 +35,14 @@ export function BaseNode({
   onMarkDraggable,
   children,
   handles = [],
+  isLoading = false,
 }: BaseNodeProps) {
   const [isHovered, setIsHovered] = useState(false)
   const [hoveredHandleId, setHoveredHandleId] = useState<string | null>(null)
   const hoverTimeoutRef = useRef<NodeJS.Timeout | null>(null)
+
+  // Check if node has input port (target handle)
+  const hasInputPort = handles.some((handle) => handle.type === 'target')
 
   const handleMouseEnter = useCallback(() => {
     if (hoverTimeoutRef.current) {
@@ -97,13 +102,15 @@ export function BaseNode({
         title={title}
         icon={icon}
         showActions={isHovered}
-        onRun={() => onRun?.(id)}
+        onRun={hasInputPort ? () => onRun?.(id) : undefined}
         onDuplicate={() => onDuplicate?.(id)}
         onDelete={() => onDelete?.(id)}
         onMarkDraggable={onMarkDraggable}
         nodeId={id}
         onActionBarEnter={handleActionBarEnter}
         onActionBarLeave={handleActionBarLeave}
+        canRun={hasInputPort}
+        isLoading={isLoading}
       />
 
       {/* Content - Not draggable, cursor default */}

@@ -10,12 +10,14 @@ import {
   ArrowRight,
   Clock,
   Image as ImageIcon,
+  Loader2,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import Image from 'next/image'
 import { I18N_NAMESPACES } from '@/constants/i18n'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { getTemplatesApi, Template } from '@/api/templates'
+import { getWorkflowsApi, Workflow } from '@/api/workflows'
 
 const GETTING_STARTED_STORAGE_KEY = 'dashboard_hide_getting_started'
 
@@ -24,6 +26,8 @@ export default function DashboardPage() {
   const [showGettingStarted, setShowGettingStarted] = useState(true)
   const [templates, setTemplates] = useState<Template[]>([])
   const [templatesLoading, setTemplatesLoading] = useState(true)
+  const [workflows, setWorkflows] = useState<Workflow[]>([])
+  const [workflowsLoading, setWorkflowsLoading] = useState(true)
 
   useEffect(() => {
     // Check localStorage on mount
@@ -56,19 +60,57 @@ export default function DashboardPage() {
     fetchTemplates()
   }, [])
 
+  useEffect(() => {
+    const fetchWorkflows = async () => {
+      try {
+        setWorkflowsLoading(true)
+        const response = await getWorkflowsApi({
+          limit: 3, // Show only 3 recent workflows
+          sort_by: 'updated_at',
+          sort_order: 'desc',
+        })
+        if (response?.data?.workflows) {
+          setWorkflows(response.data.workflows)
+        }
+      } catch (err) {
+        console.error('Error loading workflows:', err)
+      } finally {
+        setWorkflowsLoading(false)
+      }
+    }
+
+    fetchWorkflows()
+  }, [])
+
   const handleDontShowAgain = () => {
     localStorage.setItem(GETTING_STARTED_STORAGE_KEY, 'true')
     setShowGettingStarted(false)
   }
 
-  const handleTemplateClick = (template: Template) => {
-    // Navigate to editor with template workflow
-    router.push({
-      pathname: '/editor',
-      query: {
-        template: template.id,
-      },
-    })
+  const handleTemplateClick = async (template: Template) => {
+    try {
+      // Parse template workflow
+      const workflowData = JSON.parse(template.workflow)
+
+      // Create new workflow from template
+      const { createWorkflowApi } = await import('@/api/workflows')
+      const response = await createWorkflowApi(
+        template.title,
+        workflowData,
+        template.description
+      )
+
+      if (response?.data?.workflow) {
+        // Navigate to editor with workflow id
+        router.push(`/editor/${response.data.workflow.id}`)
+      } else {
+        console.error('Failed to create workflow from template')
+        alert('Failed to create workflow. Please try again.')
+      }
+    } catch (error) {
+      console.error('Error creating workflow from template:', error)
+      alert('Failed to create workflow. Please try again.')
+    }
   }
 
   const handleViewAllTemplates = () => {
@@ -98,7 +140,10 @@ export default function DashboardPage() {
             const jsonString = event.target?.result as string
             const workflowData = JSON.parse(jsonString)
             // Store workflow data in localStorage to be loaded in editor
-            localStorage.setItem('pending_import_workflow', JSON.stringify(workflowData))
+            localStorage.setItem(
+              'pending_import_workflow',
+              JSON.stringify(workflowData)
+            )
             // Navigate to editor
             router.push('/editor?import=true')
           } catch (error) {
@@ -174,7 +219,7 @@ export default function DashboardPage() {
                   <p className="text-sm text-gray-600 mb-4">
                     Create your first AI workflow in minutes.
                   </p>
-                  <Button 
+                  <Button
                     onClick={handleStartBuilding}
                     className="w-full bg-[rgb(171,223,0)] hover:bg-[rgb(171,223,0)]/90 text-gray-900"
                   >
@@ -193,9 +238,9 @@ export default function DashboardPage() {
                   <p className="text-sm text-gray-600 mb-4">
                     Explore pre-built workflow templates.
                   </p>
-                  <Button 
+                  <Button
                     onClick={handleBrowseTemplates}
-                    variant="outline" 
+                    variant="outline"
                     className="w-full"
                   >
                     Browse Templates
@@ -213,9 +258,9 @@ export default function DashboardPage() {
                   <p className="text-sm text-gray-600 mb-4">
                     Import your saved workflow files.
                   </p>
-                  <Button 
+                  <Button
                     onClick={handleImportNow}
-                    variant="outline" 
+                    variant="outline"
                     className="w-full"
                   >
                     Import Now
@@ -231,69 +276,53 @@ export default function DashboardPage() {
               <h2 className="text-xl font-semibold text-gray-900">
                 Recently Edited
               </h2>
-              <button className="text-sm text-[rgb(171,223,0)] hover:text-[rgb(171,223,0)]/80 flex items-center gap-1">
+              <button
+                onClick={() => router.push('/dashboard/workflows')}
+                className="text-sm text-[rgb(171,223,0)] hover:text-[rgb(171,223,0)]/80 flex items-center gap-1"
+              >
                 View All <ArrowRight className="w-4 h-4" />
               </button>
             </div>
-            <div className="grid grid-cols-1 sm+:grid-cols-4 gap-6">
-              {/* Workflow Card 1 */}
-              <div className="bg-white rounded-lg border border-gray-200 overflow-hidden hover:shadow-lg transition-shadow cursor-pointer">
-                <div className="h-32 bg-gray-200 relative">
-                  {/* Placeholder for image */}
-                  <div className="w-full h-full bg-gradient-to-br from-gray-300 to-gray-400" />
-                </div>
-                <div className="p-4">
-                  <h3 className="font-semibold text-gray-900 mb-1">
-                    Holiday Campaign 2025
-                  </h3>
-                  <p className="text-sm text-gray-600 mb-3 line-clamp-2">
-                    Complete workflow for holiday marketing...
-                  </p>
-                  <div className="flex items-center gap-1 text-xs text-gray-500">
-                    <Clock className="w-3 h-3" />
-                    <span>2 hours ago</span>
-                  </div>
-                </div>
+            {workflowsLoading ? (
+              <div className="flex flex-col items-center justify-center bg-white rounded-lg border border-gray-200 p-8">
+                <Loader2 className="h-8 w-8 text-[rgb(171,223,0)] animate-spin mb-3" />
+                <p className="text-gray-500">Loading workflows...</p>
               </div>
-
-              {/* Workflow Card 2 */}
-              <div className="bg-white rounded-lg border border-gray-200 overflow-hidden hover:shadow-lg transition-shadow cursor-pointer">
-                <div className="h-32 bg-gray-200 relative">
-                  <div className="w-full h-full bg-gradient-to-br from-gray-400 to-gray-500" />
-                </div>
-                <div className="p-4">
-                  <h3 className="font-semibold text-gray-900 mb-1">
-                    Product Photography
-                  </h3>
-                  <p className="text-sm text-gray-600 mb-3 line-clamp-2">
-                    AI-enhanced product photography workflow.
-                  </p>
-                  <div className="flex items-center gap-1 text-xs text-gray-500">
-                    <Clock className="w-3 h-3" />
-                    <span>1 day ago</span>
-                  </div>
-                </div>
+            ) : workflows.length === 0 ? (
+              <div className="bg-white rounded-lg border border-gray-200 p-8 text-center">
+                <p className="text-gray-500">
+                  No workflows yet. Create your first workflow!
+                </p>
               </div>
-
-              {/* Workflow Card 3 */}
-              <div className="bg-white rounded-lg border border-gray-200 overflow-hidden hover:shadow-lg transition-shadow cursor-pointer">
-                <div className="h-32 bg-gray-200 relative">
-                  <div className="w-full h-full bg-gradient-to-br from-amber-200 to-amber-300" />
-                </div>
-                <div className="p-4">
-                  <h3 className="font-semibold text-gray-900 mb-1">
-                    Fashion Editorial
-                  </h3>
-                  <p className="text-sm text-gray-600 mb-3 line-clamp-2">
-                    Professional fashion photography workflow.
-                  </p>
-                  <div className="flex items-center gap-1 text-xs text-gray-500">
-                    <Clock className="w-3 h-3" />
-                    <span>3 days ago</span>
+            ) : (
+              <div className="grid grid-cols-1 sm+:grid-cols-4 gap-6">
+                {workflows.map((workflow) => (
+                  <div
+                    key={workflow.id}
+                    onClick={() => router.push(`/editor/${workflow.id}`)}
+                    className="bg-white rounded-lg border border-gray-200 overflow-hidden hover:shadow-lg transition-shadow cursor-pointer"
+                  >
+                    <div className="h-32 bg-gray-200 relative">
+                      <div className="w-full h-full bg-gradient-to-br from-gray-300 to-gray-400 flex items-center justify-center">
+                        <ImageIcon className="w-8 h-8 text-gray-500" />
+                      </div>
+                    </div>
+                    <div className="p-4">
+                      <h3 className="font-semibold text-gray-900 mb-1 line-clamp-1">
+                        {workflow.title}
+                      </h3>
+                      <p className="text-sm text-gray-600 mb-3 line-clamp-2">
+                        {workflow.description || 'No description'}
+                      </p>
+                      <div className="flex items-center gap-1 text-xs text-gray-500">
+                        <Clock className="w-3 h-3" />
+                        <span>{formatDate(workflow.updated_at)}</span>
+                      </div>
+                    </div>
                   </div>
-                </div>
+                ))}
               </div>
-            </div>
+            )}
           </div>
 
           {/* Workflow Templates Section */}
@@ -358,17 +387,17 @@ export default function DashboardPage() {
                           playsInline
                           autoPlay
                           loop
-                         //   onMouseEnter={(e) => {
-                         //     const video = e.currentTarget
-                         //     video.play().catch(() => {
-                         //       // Ignore autoplay errors
-                         //     })
-                         //   }}
-                         //   onMouseLeave={(e) => {
-                         //     const video = e.currentTarget
-                         //     video.pause()
-                         //     video.currentTime = 0
-                         //   }}
+                          //   onMouseEnter={(e) => {
+                          //     const video = e.currentTarget
+                          //     video.play().catch(() => {
+                          //       // Ignore autoplay errors
+                          //     })
+                          //   }}
+                          //   onMouseLeave={(e) => {
+                          //     const video = e.currentTarget
+                          //     video.pause()
+                          //     video.currentTime = 0
+                          //   }}
                         />
                       ) : template.preview_image ? (
                         <img

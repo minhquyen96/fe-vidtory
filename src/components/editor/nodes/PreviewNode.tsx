@@ -43,7 +43,7 @@ export function PreviewNode({
           id: 'input',
           className: 'w-3 h-3 bg-blue-500',
           style: { top: '50%' },
-          label: 'Input (any)',
+          label: 'Input',
         },
       ]}
     >

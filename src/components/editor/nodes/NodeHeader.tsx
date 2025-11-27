@@ -1,5 +1,5 @@
 import React from 'react'
-import { Play, Copy, Trash2 } from 'lucide-react'
+import { Play, Copy, Trash2, Loader2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 
@@ -14,6 +14,8 @@ interface NodeHeaderProps {
   nodeId?: string
   onActionBarEnter?: () => void
   onActionBarLeave?: () => void
+  canRun?: boolean
+  isLoading?: boolean
 }
 
 export function NodeHeader({
@@ -27,6 +29,8 @@ export function NodeHeader({
   nodeId,
   onActionBarEnter,
   onActionBarLeave,
+  canRun = true,
+  isLoading = false,
 }: NodeHeaderProps) {
   return (
     <div className="relative">
@@ -56,9 +60,14 @@ export function NodeHeader({
               e.stopPropagation()
               onRun?.()
             }}
+            disabled={!canRun || isLoading}
           >
-            <Play className="w-3 h-3 mr-1 fill-black" />
-            Run
+            {isLoading ? (
+              <Loader2 className="w-3 h-3 mr-1 animate-spin" />
+            ) : (
+              <Play className="w-3 h-3 mr-1 fill-black" />
+            )}
+            {isLoading ? 'Running...' : 'Run'}
           </Button>
           <Button
             size="sm"
@@ -107,22 +116,29 @@ export function NodeHeader({
           </span>
         </div>
         {/* Run button in header - only shows on hover */}
-        <div className="w-8 flex-shrink-0 flex justify-end">
-          <Button
-            size="sm"
-            variant="ghost"
-            className={cn(
-              'h-6 w-6 p-1.5 transition-opacity duration-200',
-              showActions ? 'opacity-100' : 'opacity-0'
-            )}
-            onClick={(e) => {
-              e.stopPropagation()
-              onRun?.()
-            }}
-          >
-            <Play className="w-3 h-3" style={{ color: 'rgb(171, 223, 0)' }} />
-          </Button>
-        </div>
+        {canRun && (
+          <div className="w-8 flex-shrink-0 flex justify-end">
+            <Button
+              size="sm"
+              variant="ghost"
+              className={cn(
+                'h-6 w-6 p-1.5 transition-opacity duration-200',
+                showActions ? 'opacity-100' : 'opacity-0'
+              )}
+              onClick={(e) => {
+                e.stopPropagation()
+                onRun?.()
+              }}
+              disabled={isLoading}
+            >
+              {isLoading ? (
+                <Loader2 className="w-3 h-3 animate-spin" style={{ color: 'rgb(171, 223, 0)' }} />
+              ) : (
+                <Play className="w-3 h-3" style={{ color: 'rgb(171, 223, 0)' }} />
+              )}
+            </Button>
+          </div>
+        )}
       </div>
     </div>
   )

@@ -57,26 +57,10 @@ export function VideoInputNode({
         {
           type: 'source',
           position: Position.Right,
-          id: 'video',
-          className: 'w-3 h-3 bg-green-500',
-          style: { top: '25%' },
-          label: 'Video (video)',
-        },
-        {
-          type: 'source',
-          position: Position.Right,
-          id: 'analysis',
+          id: 'output',
           className: 'w-3 h-3 bg-green-500',
           style: { top: '50%' },
-          label: 'Analysis (structured)',
-        },
-        {
-          type: 'source',
-          position: Position.Right,
-          id: 'scenes',
-          className: 'w-3 h-3 bg-green-500',
-          style: { top: '75%' },
-          label: 'Scenes (array)',
+          label: 'Output',
         },
       ]}
     >

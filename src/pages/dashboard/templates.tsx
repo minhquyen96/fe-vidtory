@@ -40,14 +40,30 @@ export default function TemplatesPage() {
     fetchTemplates()
   }, [])
 
-  const handleTemplateClick = (template: Template) => {
-    // Navigate to editor with template workflow
-    router.push({
-      pathname: '/editor',
-      query: {
-        template: template.id,
-      },
-    })
+  const handleTemplateClick = async (template: Template) => {
+    try {
+      // Parse template workflow
+      const workflowData = JSON.parse(template.workflow)
+      
+      // Create new workflow from template
+      const { createWorkflowApi } = await import('@/api/workflows')
+      const response = await createWorkflowApi(
+        template.title,
+        workflowData,
+        template.description
+      )
+      
+      if (response?.data?.workflow) {
+        // Navigate to editor with workflow id
+        router.push(`/editor/${response.data.workflow.id}`)
+      } else {
+        console.error('Failed to create workflow from template')
+        alert('Failed to create workflow. Please try again.')
+      }
+    } catch (error) {
+      console.error('Error creating workflow from template:', error)
+      alert('Failed to create workflow. Please try again.')
+    }
   }
 
   const formatDate = (timestamp: number) => {

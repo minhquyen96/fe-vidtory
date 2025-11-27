@@ -61,49 +61,18 @@ export function TextInputNode({
   const isDataInput = data.isDataInput
   const fields = data.fields || []
 
-  // Define handles based on node type
+  // Define handles - only output port
   const getHandles = () => {
-    if (isDataInput) {
-      // Data Input: 1 port
-      return [
-        {
-          type: 'source' as const,
-          position: Position.Right,
-          id: 'data',
-          className: 'w-3 h-3 bg-green-500',
-          style: { top: '50%' },
-          label: 'Data (structured)',
-        },
-      ]
-    } else {
-      // Text / Link Input: 3 ports
-      return [
-        {
-          type: 'source' as const,
-          position: Position.Right,
-          id: 'rawText',
-          className: 'w-3 h-3 bg-green-500',
-          style: { top: '25%' },
-          label: 'Raw Text (text)',
-        },
-        {
-          type: 'source' as const,
-          position: Position.Right,
-          id: 'summary',
-          className: 'w-3 h-3 bg-green-500',
-          style: { top: '50%' },
-          label: 'Summary (text)',
-        },
-        {
-          type: 'source' as const,
-          position: Position.Right,
-          id: 'keywords',
-          className: 'w-3 h-3 bg-green-500',
-          style: { top: '75%' },
-          label: 'Keywords (structured)',
-        },
-      ]
-    }
+    return [
+      {
+        type: 'source' as const,
+        position: Position.Right,
+        id: 'output',
+        className: 'w-3 h-3 bg-green-500',
+        style: { top: '50%' },
+        label: 'Output',
+      },
+    ]
   }
 
   return (
