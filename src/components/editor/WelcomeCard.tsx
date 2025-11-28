@@ -58,7 +58,7 @@ export function WelcomeCard({ onLoadExample }: WelcomeCardProps) {
                 </div>
               </div>
             </div>
-            <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">
+            <h2 className="text-2xl font-bold text-default-900 dark:text-gray-100 mb-2">
               AI Visual Workflow Builder
             </h2>
             <p className="text-gray-600 dark:text-gray-400">

@@ -30,15 +30,6 @@ export default function Home(props: { schema: string }) {
   const { trackPageView } = useEventTrackingHelpers()
   const router = useRouter()
   const { user } = useAuth()
-  //
-  // useEffect(() => {
-  //   if (!!user) {
-  //     // Sử dụng setTimeout để tránh conflict với router navigation khác
-  //     setTimeout(() => {
-  //       router.push(routes.topics)
-  //     }, 100)
-  //   }
-  // }, [user])
 
   useEffect(() => {
     setTimeout(() => {

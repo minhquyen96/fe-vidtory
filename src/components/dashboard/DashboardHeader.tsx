@@ -250,7 +250,7 @@ export function DashboardHeader() {
           </Popover>
         ) : (
           <button
-            onClick={openLoginModal}
+            onClick={() => openLoginModal()}
             className="w-9 h-9 flex items-center justify-center rounded-full text-gray-400 dark:text-gray-500 hover:text-[rgb(171,223,0)] hover:bg-gray-100 dark:hover:bg-gray-800 transition-all"
             title="Login"
           >

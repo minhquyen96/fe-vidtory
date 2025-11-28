@@ -36,56 +36,82 @@
 
 @layer base {
     :root {
-        --background: rgba(255, 255, 255, 1);
-        --foreground: rgba(17, 24, 28, 1);
+        --background: 255 255 255;
+        --foreground: 17 24 28;
 
-        --content1: rgba(255, 255, 255, 1);
-        --content2: rgba(244, 244, 245, 1);
-        --content3: rgba(228, 228, 231, 1);
-        --content4: rgba(212, 212, 216, 1);
+        --content1: 255 255 255;
+        --content2: 244 244 245;
+        --content3: 228 228 231;
+        --content4: 212 212 216;
 
         /* Expanded Default Scale (Zinc-based for text contrast) */
-        --default-50: rgba(250, 250, 250, 1);
-        --default-100: rgba(244, 244, 245, 1);
-        --default-200: rgba(228, 228, 231, 1);
-        --default-300: rgba(212, 212, 216, 1);
-        --default-400: rgba(161, 161, 170, 1);
-        --default-500: rgba(113, 113, 122, 1);
-        --default-600: rgba(82, 82, 91, 1);
-        --default-700: rgba(63, 63, 70, 1);
-        --default-800: rgba(39, 39, 42, 1);
-        --default-900: rgba(24, 24, 27, 1);
+        --default-50: 250 250 250;
+        --default-100: 244 244 245;
+        --default-200: 228 228 231;
+        --default-300: 212 212 216;
+        --default-400: 161 161 170;
+        --default-500: 113 113 122;
+        --default-600: 82 82 91;
+        --default-700: 63 63 70;
+        --default-800: 39 39 42;
+        --default-900: 24 24 27;
 
-        --divider: rgba(229, 231, 235, 1);
-        --primary-shadow: rgba(16, 185, 129, 0.4);
+        --divider: 229 231 235;
+        --primary-shadow: 16 185 129; /* Nếu muốn alpha → dùng trong rgb(var(--primary-shadow) / 0.4) */
+
+        --border: 148 163 184;
+
+        --card: 255 255 255;
+        --card-foreground: 2 6 23;
+
+        --popover: 255 255 255;
+        --popover-foreground: 2 6 23;
+
+        --input: 148 163 184;
+        --ring: 16 185 129;
+
+        --radius: 0.5rem;
     }
+
 
 
 
     .dark {
-        --background: rgba(0, 0, 0, 1);
-        --foreground: rgba(236, 237, 238, 1);
+        --background: 0 0 0;
+        --foreground: 236 237 238;
 
-        --content1: rgba(24, 24, 27, 1);
-        --content2: rgba(39, 39, 42, 1);
-        --content3: rgba(63, 63, 70, 1);
-        --content4: rgba(82, 82, 91, 1);
+        --content1: 24 24 27;
+        --content2: 39 39 42;
+        --content3: 63 63 70;
+        --content4: 82 82 91;
 
         /* Expanded Default Scale Dark */
-        --default-50: rgba(24, 24, 27, 1);
-        --default-100: rgba(39, 39, 42, 1);
-        --default-200: rgba(63, 63, 70, 1);
-        --default-300: rgba(82, 82, 91, 1);
-        --default-400: rgba(113, 113, 122, 1);
-        --default-500: rgba(161, 161, 170, 1);
-        --default-600: rgba(212, 212, 216, 1);
-        --default-700: rgba(228, 228, 231, 1);
-        --default-800: rgba(244, 244, 245, 1);
-        --default-900: rgba(250, 250, 250, 1);
+        --default-50: 24 24 27;
+        --default-100: 39 39 42;
+        --default-200: 63 63 70;
+        --default-300: 82 82 91;
+        --default-400: 113 113 122;
+        --default-500: 161 161 170;
+        --default-600: 212 212 216;
+        --default-700: 228 228 231;
+        --default-800: 244 244 245;
+        --default-900: 250 250 250;
 
-        --divider: rgba(39, 39, 42, 1);
-        --primary-shadow: rgba(16, 185, 129, 0.4);
+        --divider: 39 39 42;
+        --primary-shadow: 16 185 129;
+
+        --border: 100 116 139;
+
+        --card: 15 23 42;
+        --card-foreground: 255 255 255;
+
+        --popover: 15 23 42;
+        --popover-foreground: 255 255 255;
+
+        --input: 100 116 139;
+        --ring: 16 185 129;
     }
+
 
 }
 
@@ -393,4 +419,19 @@
 .mask-gradient {
   mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
   -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: var(--default-200);
+    border-radius: 10px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: var(--default-300);
 }
