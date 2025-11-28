@@ -30,126 +30,63 @@
   box-sizing: border-box;
 }
 
-body {
-  @apply font-inter font-normal not-italic bg-[#f7f7f7];
-}
+/*body {*/
+/*  @apply font-inter font-normal not-italic bg-[#f7f7f7];*/
+/*}*/
 
 @layer base {
-  :root {
-    --background: 255 255 255;
-    --foreground: 17 24 28;
+    :root {
+        --background: rgba(255, 255, 255, 1);
+        --foreground: rgba(17, 24, 28, 1);
 
-    --content1: 255 255 255;
-    --content2: 244 244 245;
-    --content3: 228 228 231;
-    --content4: 212 212 216;
-    
-    --default-100: 244 244 245;
-    --default-200: 228 228 231;
-    --default-300: 212 212 216;
-    --default-400: 199 199 204;
-    --default-500: 181 181 187;
+        --content1: rgba(255, 255, 255, 1);
+        --content2: rgba(244, 244, 245, 1);
+        --content3: rgba(228, 228, 231, 1);
+        --content4: rgba(212, 212, 216, 1);
 
-    --divider: 229 231 235;
+        /* Expanded Default Scale (Zinc-based for text contrast) */
+        --default-50: rgba(250, 250, 250, 1);
+        --default-100: rgba(244, 244, 245, 1);
+        --default-200: rgba(228, 228, 231, 1);
+        --default-300: rgba(212, 212, 216, 1);
+        --default-400: rgba(161, 161, 170, 1);
+        --default-500: rgba(113, 113, 122, 1);
+        --default-600: rgba(82, 82, 91, 1);
+        --default-700: rgba(63, 63, 70, 1);
+        --default-800: rgba(39, 39, 42, 1);
+        --default-900: rgba(24, 24, 27, 1);
 
-    --card: 255 255 255;
-    --card-foreground: 2 6 23;
+        --divider: rgba(229, 231, 235, 1);
+        --primary-shadow: rgba(16, 185, 129, 0.4);
+    }
 
-    --popover: 255 255 255;
-    --popover-foreground: 2 6 23;
 
-    --primary: 16 185 129;
-    --primary-foreground: 255 255 255;
-    --primary-shadow: rgba(16, 185, 129, 0.4);
 
-    --secondary: 6 182 212;
-    --secondary-foreground: 255 255 255;
+    .dark {
+        --background: rgba(0, 0, 0, 1);
+        --foreground: rgba(236, 237, 238, 1);
 
-    --danger: 243 18 96;
-    --danger-foreground: 255 255 255;
+        --content1: rgba(24, 24, 27, 1);
+        --content2: rgba(39, 39, 42, 1);
+        --content3: rgba(63, 63, 70, 1);
+        --content4: rgba(82, 82, 91, 1);
 
-    --muted: 241 245 249;
-    --muted-foreground: 30 41 59;
+        /* Expanded Default Scale Dark */
+        --default-50: rgba(24, 24, 27, 1);
+        --default-100: rgba(39, 39, 42, 1);
+        --default-200: rgba(63, 63, 70, 1);
+        --default-300: rgba(82, 82, 91, 1);
+        --default-400: rgba(113, 113, 122, 1);
+        --default-500: rgba(161, 161, 170, 1);
+        --default-600: rgba(212, 212, 216, 1);
+        --default-700: rgba(228, 228, 231, 1);
+        --default-800: rgba(244, 244, 245, 1);
+        --default-900: rgba(250, 250, 250, 1);
 
-    --accent: 0 226 233;
-    --accent-foreground: 2 6 23;
+        --divider: rgba(39, 39, 42, 1);
+        --primary-shadow: rgba(16, 185, 129, 0.4);
+    }
 
-    --destructive: 220 38 38;
-    --destructive-foreground: 255 255 255;
-
-    --success: 22 163 74;
-    --success-foreground: 255 255 255;
-
-    --border: 148 163 184;
-    --input: 148 163 184;
-    --ring: 16 185 129;
-
-    --radius: 0.5rem;
-
-    --gradient-light: linear-gradient(
-      135deg,
-      rgb(34 197 94),
-      rgb(6 182 212),
-      rgb(34 197 94)
-    );
-  }
-
-  .dark {
-    --background: 0 0 0;
-    --foreground: 236 237 238;
-
-    --content1: 24 24 27;
-    --content2: 39 39 42;
-    --content3: 63 63 70;
-    --content4: 82 82 91;
-    
-    --default-100: 39 39 42;
-    --default-200: 63 63 70;
-    --default-300: 82 82 91;
-    --default-400: 67 67 75;
-    --default-500: 43 43 49;
-
-    --divider: 39 39 42;
-
-    --card: 15 23 42;
-    --card-foreground: 255 255 255;
-
-    --popover: 15 23 42;
-    --popover-foreground: 255 255 255;
-
-    --primary: 16 185 129;
-    --primary-foreground: 255 255 255;
-    --primary-shadow: rgba(16, 185, 129, 0.4);
-
-    --secondary: 6 182 212;
-    --secondary-foreground: 255 255 255;
-
-    --danger: 243 18 96;
-    --danger-foreground: 255 255 255;
-
-    --muted: 30 41 59;
-    --muted-foreground: 226 232 240;
-
-    --accent: 0 226 233;
-    --accent-foreground: 2 6 23;
-
-    --destructive: 239 68 68;
-    --destructive-foreground: 255 255 255;
-
-    --success: 34 197 94;
-    --success-foreground: 255 255 255;
-
-    --border: 100 116 139;
-    --input: 100 116 139;
-    --ring: 16 185 129;
-
-    --gradient-light: linear-gradient(
-      135deg,
-      rgb(34 197 94),
-      rgb(6 182 212),
-      rgb(34 197 94)
-    );
-  }
 }
 
 @layer base {

@@ -97,8 +97,8 @@ export function InputDrawer({
 
   return (
     <div
-      className={`w-full sm+:w-[440px] bg-content1 border-r border-divider flex-col shrink-0 relative z-20 shadow-[4px_0_24px_rgba(0,0,0,0.02)] ${
-        mobileTab === 'editor' ? 'flex' : 'hidden sm+:flex'
+      className={`w-full md:w-[440px] bg-content1 border-r border-divider flex-col shrink-0 relative z-20 shadow-[4px_0_24px_rgba(0,0,0,0.02)] ${
+        mobileTab === 'editor' ? 'flex' : 'hidden md:flex'
       }`}
     >
       <div className="flex-1 overflow-y-auto overflow-x-hidden custom-scrollbar relative">
@@ -109,7 +109,7 @@ export function InputDrawer({
           </span>
           <div className="flex items-center gap-1.5 opacity-90">
             {/* Muted "powered by" */}
-            <span className="hidden sm+:inline text-[10px] text-default-400 font-medium lowercase">
+            <span className="hidden md:inline text-[10px] text-default-400 font-medium lowercase">
               {t('labels.poweredBy') || 'powered by'}
             </span>
             <span className="text-[10px] font-black uppercase tracking-widest bg-gradient-to-r from-primary via-orange-500 to-secondary bg-[length:200%_auto] bg-clip-text text-transparent select-none">
@@ -195,7 +195,7 @@ export function InputDrawer({
       </div>
 
       {/* DESKTOP FOOTER - Hidden on Mobile */}
-      <div className="hidden sm+:flex h-[88px] items-center px-6 py-4 border-t border-divider bg-content1 shrink-0 z-10">
+      <div className="hidden md:flex h-[88px] items-center px-6 py-4 border-t border-divider bg-content1 shrink-0 z-10">
         <button
           onClick={handleGenerate}
           disabled={isLoading}

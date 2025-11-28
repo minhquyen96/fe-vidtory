@@ -48,15 +48,15 @@ const NotFoundPage: NextPage = () => {
       <div className="container mx-auto py-6 px-4">
         <Card className="max-w-2xl mx-auto">
           <CardContent className="flex flex-col items-center text-center p-8 space-y-4">
-            <h1 className="sm+:text-7xl text-4xl font-extrabold text-primary">
+            <h1 className="md:text-7xl text-4xl font-extrabold text-primary">
               404
             </h1>
 
-            <h2 className="sm+:text-3xl text-2xl font-bold">
+            <h2 className="md:text-3xl text-2xl font-bold">
               {t('error.404.title')}
             </h2>
 
-            <p className="text-muted-foreground sm+:text-lg text-md">
+            <p className="text-muted-foreground md:text-lg text-md">
               {t('error.404.description')}
             </p>
 

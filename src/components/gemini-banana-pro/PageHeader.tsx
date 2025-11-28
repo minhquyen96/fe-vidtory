@@ -26,19 +26,19 @@ export function PageHeader({
   const router = useRouter()
 
   return (
-    <header className="h-14 sm+:h-20 w-full bg-content1 border-b border-divider flex items-center justify-between px-4 sm+:px-6 shrink-0 z-30">
+    <header className="h-14 md:h-20 w-full bg-content1 border-b border-divider flex items-center justify-between px-4 md:px-6 shrink-0 z-30">
       {/* Left side - Back button and Logo */}
-      <div className="flex items-center gap-3 sm+:gap-6">
+      <div className="flex items-center gap-3 md:gap-6">
         <button
           onClick={() => router.back()}
-          className="p-2 hover:bg-default-100 rounded-full text-default-500 hover:text-foreground transition-colors hidden sm+:flex"
+          className="p-2 hover:bg-default-100 rounded-full text-default-500 hover:text-foreground transition-colors hidden md:flex"
           title="Quay lại"
         >
           <ArrowLeft size={24} />
         </button>
 
         {/* Vidtory Logo SVG - Responsive Sizing */}
-        <Link href="/" className="h-6 sm+:h-10 w-auto text-foreground">
+        <Link href="/" className="h-6 md:h-10 w-auto text-foreground">
           <svg
             viewBox="0 0 483 154"
             fill="none"
@@ -72,39 +72,39 @@ export function PageHeader({
       </div>
 
       {/* Right side - Credit, Upgrade, Download */}
-      <div className="flex items-center gap-2 sm+:gap-4">
+      <div className="flex items-center gap-2 md:gap-4">
         {/* Credit Display */}
-        <div className="flex items-center gap-2 px-2 sm+:px-4 py-1.5 sm+:py-2 bg-default-100 rounded-full border border-default-200">
-          <Coins size={14} className="text-amber-500 fill-amber-500 sm+:w-5 sm+:h-5" />
-          <span className="font-bold text-xs sm+:text-base">{userCredit}</span>
+        <div className="flex items-center gap-2 px-2 md:px-4 py-1.5 md:py-2 bg-default-100 rounded-full border border-default-200">
+          <Coins size={14} className="text-amber-500 fill-amber-500 md:w-5 md:h-5" />
+          <span className="font-bold text-xs md:text-base">{userCredit}</span>
         </div>
 
         {/* Activation Button */}
         {onActivate && (
           <Link
             href="/activation"
-            className="flex items-center gap-2 px-2 sm+:px-4 py-2 sm+:py-2.5 bg-gradient-to-r from-primary to-secondary text-white rounded-large font-bold text-xs sm+:text-sm transition-all shadow-lg shadow-primary/20 hover:shadow-primary/40 active:scale-95"
+            className="flex items-center gap-2 px-2 md:px-4 py-2 md:py-2.5 bg-gradient-to-r from-primary to-secondary text-white rounded-large font-bold text-xs md:text-sm transition-all shadow-lg shadow-primary/20 hover:shadow-primary/40 active:scale-95"
             title={t('labels.activate')}
           >
-            <Key size={16} className="sm+:w-4 sm+:h-4" />
-            <span className="hidden sm+:inline">{t('labels.activate')}</span>
+            <Key size={16} className="md:w-4 md:h-4" />
+            <span className="hidden md:inline">{t('labels.activate')}</span>
           </Link>
         )}
 
         {/* Upgrade Button */}
         <button
           onClick={onBuyCredit}
-          className="flex items-center gap-2 px-2 sm+:px-6 py-2 sm+:py-2.5 bg-gradient-to-r from-amber-500 to-orange-600 text-white rounded-large font-bold text-xs sm+:text-base transition-all shadow-lg shadow-orange-500/20 hover:shadow-orange-500/40 active:scale-95"
+          className="flex items-center gap-2 px-2 md:px-6 py-2 md:py-2.5 bg-gradient-to-r from-amber-500 to-orange-600 text-white rounded-large font-bold text-xs md:text-base transition-all shadow-lg shadow-orange-500/20 hover:shadow-orange-500/40 active:scale-95"
         >
-          <Zap size={16} className="fill-white md:w-5 sm+:h-5" />
-          <span className="hidden sm+:inline">{t('labels.upgrade')}</span>
+          <Zap size={16} className="fill-white md:w-5 md:h-5" />
+          <span className="hidden md:inline">{t('labels.upgrade')}</span>
         </button>
 
         {/* Download Button */}
         <button
           onClick={onDownload}
           disabled={!resultImage}
-          className={`p-2 sm+:px-6 sm+:py-2.5 rounded-large transition-all flex items-center gap-2 font-semibold active:scale-95
+          className={`p-2 md:px-6 md:py-2.5 rounded-large transition-all flex items-center gap-2 font-semibold active:scale-95
                      ${
                        resultImage
                          ? 'bg-primary text-primary-foreground shadow-lg shadow-primary/20 hover:shadow-primary/40'
@@ -112,8 +112,8 @@ export function PageHeader({
                      }
                   `}
         >
-          <Download size={18} className="sm+:w-5 sm+:h-5" />
-          <span className="hidden sm+:inline text-base">{t('labels.download')}</span>
+          <Download size={18} className="md:w-5 md:h-5" />
+          <span className="hidden md:inline text-base">{t('labels.download')}</span>
         </button>
       </div>
     </header>

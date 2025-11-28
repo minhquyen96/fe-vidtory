@@ -111,7 +111,7 @@ export const AdsBlock: React.FC<AdsBlockProps> = ({
     return (
       <Card
         className={classnames(
-          'p-2 sm+:p-4 w-full max-w-full overflow-hidden relative !border-none !shadow-none !bg-transparent',
+          'p-2 md:p-4 w-full max-w-full overflow-hidden relative !border-none !shadow-none !bg-transparent',
           // Chỉ hiển thị màu gradient khi không phải production
           !isProd &&
             (isLeft
@@ -170,7 +170,7 @@ export const AdsBlock: React.FC<AdsBlockProps> = ({
         <div
           className={classnames(
             'w-full',
-            // showOnMobile ? 'block' : 'hidden sm+:block',
+            // showOnMobile ? 'block' : 'hidden md:block',
             // Responsive margins: chỉ có margin trên lg+ khi có sidebar ads
             't2xl:ml-64 t2xl:mr-64 t2xl:max-w-[calc(100%-512px)]',
             className
@@ -190,12 +190,12 @@ export const AdsBlock: React.FC<AdsBlockProps> = ({
     <div
       className={classnames(
         'w-full',
-        showOnMobile ? 'block' : 'hidden sm+:block',
+        showOnMobile ? 'block' : 'hidden md:block',
         className
       )}
       style={{ minHeight }}
     >
-      <div className="grid grid-cols-1 sm+:grid-cols-2 gap-4 sm+:gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
         {/* Left Ads */}
         {renderAdCard(leftAdSlot, leftContent, true)}
 

@@ -3,36 +3,11 @@ module.exports = {
   darkMode: ['class'],
   content: ['./src/**/*.{js,ts,jsx,tsx,mdx}'],
   theme: {
-    fontFamily: {
-      inter: ['var(--font-inter)'],
-      mono: ['var(--font-roboto-mono)'],
-      link: 'var(--link-font-family)',
-    },
-    screens: {
-      '3xl': { max: '1680px' },
-      '3xl+': { min: '1681px' },
-      '2.5xl': { max: '1600px' },
-      '2xl': { max: '1440px' },
-      '1xl': { max: '1366px' },
-      xl: { max: '1279px' },
-      lg: { max: '1024px' },
-      'lg+': { min: '1025px' },
-      md: { max: '768px' },
-      'md+': { min: '769px' },
-      sm: { max: '850px' },
-      'sm+': { min: '851px' },
-      xs: { max: '425px' },
-      xxs: { max: '360px' },
-      mobile: { max: '500px' },
-      tablet: { min: '600px', max: '1000px' },
-
-      // Tailwind defaults (renamed for migration).
-      tsm: { min: '640px' },
-      tmd: { min: '768px' },
-      tlg: { min: '1024px' },
-      txl: { min: '1280px' },
-      t2xl: { min: '1720px' },
-    },
+    // fontFamily: {
+    //   inter: ['var(--font-inter)'],
+    //   mono: ['var(--font-roboto-mono)'],
+    //   link: 'var(--link-font-family)',
+    // },
     container: {
       center: true,
       screens: {
@@ -52,15 +27,22 @@ module.exports = {
         border: 'rgb(var(--border) / <alpha-value>)',
         input: 'rgb(var(--input) / <alpha-value>)',
         ring: 'rgb(var(--ring) / <alpha-value>)',
-        background: 'rgb(var(--background) / <alpha-value>)',
-        foreground: 'rgb(var(--foreground) / <alpha-value>)',
+        background: 'var(--background)',
+        foreground: 'var(--foreground)',
         primary: {
-          DEFAULT: 'rgb(var(--primary) / <alpha-value>)',
-          foreground: 'rgb(var(--primary-foreground) / <alpha-value>)',
+          DEFAULT: '#10b981', // Emerald-500
+          foreground: '#ffffff',
+          shadow: 'rgba(16, 185, 129, 0.4)',
         },
+
         secondary: {
-          DEFAULT: 'rgb(var(--secondary) / <alpha-value>)',
-          foreground: 'rgb(var(--secondary-foreground) / <alpha-value>)',
+          DEFAULT: '#06b6d4', // Cyan-500
+          foreground: '#ffffff',
+        },
+
+        danger: {
+          DEFAULT: '#f31260',
+          foreground: '#ffffff',
         },
         destructive: {
           DEFAULT: 'rgb(var(--destructive) / <alpha-value>)',
@@ -92,26 +74,20 @@ module.exports = {
         content3: 'rgb(var(--content3) / <alpha-value>)',
         content4: 'rgb(var(--content4) / <alpha-value>)',
         default: {
-          100: 'rgb(var(--default-100) / <alpha-value>)',
-          200: 'rgb(var(--default-200) / <alpha-value>)',
-          300: 'rgb(var(--default-300) / <alpha-value>)',
-          // 400: 'rgb(var(--default-400) / <alpha-value>)',
-          // 500: 'rgb(var(--default-500) / <alpha-value>)',
-          DEFAULT: 'rgb(var(--default-200) / <alpha-value>)',
+          50: 'var(--default-50)',
+          100: 'var(--default-100)',
+          200: 'var(--default-200)',
+          300: 'var(--default-300)',
+          400: 'var(--default-400)',
+          500: 'var(--default-500)',
+          600: 'var(--default-600)',
+          700: 'var(--default-700)',
+          800: 'var(--default-800)',
+          900: 'var(--default-900)',
+          DEFAULT: 'var(--default-200)',
         },
+
         divider: 'rgb(var(--divider) / <alpha-value>)',
-        danger: {
-          DEFAULT: 'rgb(var(--danger) / <alpha-value>)',
-          foreground: 'rgb(var(--danger-foreground) / <alpha-value>)',
-        },
-      },
-      borderRadius: {
-        lg: 'var(--radius)',
-        md: 'calc(var(--radius) - 2px)',
-        sm: 'calc(var(--radius) - 4px)',
-        medium: '12px',
-        large: '14px',
-        small: '8px',
       },
       boxShadow: {
         medium: '0px 4px 12px rgba(0, 0, 0, 0.08)',

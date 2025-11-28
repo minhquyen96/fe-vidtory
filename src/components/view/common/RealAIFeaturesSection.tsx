@@ -50,7 +50,7 @@ export function RealAIFeaturesSection({ className }: RealAIFeaturesSectionProps)
   ]
 
   return (
-    <section className={cn('relative overflow-hidden bg-background py-8 sm+:py-16', className)}>
+    <section className={cn('relative overflow-hidden bg-background py-8 md:py-16', className)}>
       {/* Background decorations */}
       <div className="absolute inset-0 bg-grid-slate-100-50 dark:bg-grid-slate-700-25" />
       
@@ -58,33 +58,33 @@ export function RealAIFeaturesSection({ className }: RealAIFeaturesSectionProps)
       <div className="absolute -left-20 top-20 w-72 h-72 bg-primary/15 rounded-full  light:mix-blend-multiply filter blur-3xl opacity-50 animate-blob z-0" />
       <div className="absolute -right-20 top-1/2 w-72 h-72 bg-secondary/15 rounded-full  light:mix-blend-multiply filter blur-3xl opacity-50 animate-blob animation-delay-2000 z-0" />
 
-      <div className="container mx-auto px-4 sm+:px-6 relative z-10">
+      <div className="container mx-auto px-4 md:px-6 relative z-10">
         <div className="max-w-6xl mx-auto">
           {/* Section Header */}
-          <div className="text-center mb-6 sm+:mb-10">
-            <h2 className="text-2xl sm+:text-4xl font-bold text-foreground mb-2 sm+:mb-3">
+          <div className="text-center mb-6 md:mb-10">
+            <h2 className="text-2xl md:text-4xl font-bold text-foreground mb-2 md:mb-3">
               {t('realAIFeatures.title')}
             </h2>
           </div>
 
           {/* Features Grid - 2 columns on tablet, 3 on desktop like topview.ai */}
-          <div className="grid grid-cols-1 sm+:grid-cols-2 gap-4 sm+:gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
             {features.map((feature) => {
               const Icon = feature.icon
               return (
                 <div
                   key={feature.id}
-                  className="group relative bg-background rounded-xl p-4 sm+:p-5 border border-border/50 hover:border-primary/30 transition-all"
+                  className="group relative bg-background rounded-xl p-4 md:p-5 border border-border/50 hover:border-primary/30 transition-all"
                 >
-                  <div className="flex items-start gap-3 sm+:gap-4">
-                    <div className="flex-shrink-0 w-10 h-10 sm+:w-12 sm+:h-12 rounded-lg bg-primary/10 group-hover:bg-primary/20 flex items-center justify-center transition-colors">
-                      <Icon className="w-5 h-5 sm+:w-6 sm+:h-6 text-primary" />
+                  <div className="flex items-start gap-3 md:gap-4">
+                    <div className="flex-shrink-0 w-10 h-10 md:w-12 md:h-12 rounded-lg bg-primary/10 group-hover:bg-primary/20 flex items-center justify-center transition-colors">
+                      <Icon className="w-5 h-5 md:w-6 md:h-6 text-primary" />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <h3 className="text-sm sm+:text-base font-semibold text-foreground mb-1 sm+:mb-2 leading-tight">
+                      <h3 className="text-sm md:text-base font-semibold text-foreground mb-1 md:mb-2 leading-tight">
                         {feature.title}
                       </h3>
-                      <p className="text-xs sm+:text-sm text-foreground/60 leading-relaxed">
+                      <p className="text-xs md:text-sm text-foreground/60 leading-relaxed">
                         {feature.description}
                       </p>
                     </div>

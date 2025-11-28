@@ -150,7 +150,7 @@ export function BuyCreditModal({ isOpen, onClose }: BuyCreditModalProps) {
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-2xl max-h-[90vh] sm+:max-h-[85vh] flex flex-col p-0">
+      <DialogContent className="max-w-2xl max-h-[90vh] md:max-h-[85vh] flex flex-col p-0">
         <div className="flex flex-col h-full min-h-0">
           {loading ? (
             <div className="flex items-center justify-center py-16">
@@ -170,17 +170,17 @@ export function BuyCreditModal({ isOpen, onClose }: BuyCreditModalProps) {
           ) : (
             <>
               {/* Header */}
-              <div className="px-4 sm+:px-6 pt-4 sm+:pt-6 pb-3 sm+:pb-4 border-b border-divider shrink-0">
-                <h2 className="text-lg sm+:text-xl md:text-2xl font-bold mb-1 sm+:mb-2 text-foreground">
+              <div className="px-4 md:px-6 pt-4 md:pt-6 pb-3 md:pb-4 border-b border-divider shrink-0">
+                <h2 className="text-lg md:text-xl md:text-2xl font-bold mb-1 md:mb-2 text-foreground">
                   {t('buyCreditModal.outOfCreditTitle')}
                 </h2>
-                <p className="text-xs sm+:text-sm md:text-base text-default-500">
+                <p className="text-xs md:text-sm md:text-base text-default-500">
                   {t('buyCreditModal.outOfCreditDescription')}
                 </p>
               </div>
 
               {/* Packages List - Scrollable */}
-              <div className="flex-1 overflow-y-auto custom-scrollbar px-4 sm+:px-6 py-3 sm+:py-4 min-h-0">
+              <div className="flex-1 overflow-y-auto custom-scrollbar px-4 md:px-6 py-3 md:py-4 min-h-0">
                 {/* Benefits Section - Show before packages */}
                 <div className="mb-4 p-3 bg-primary/5 rounded-lg border border-primary/20">
                   <h3 className="text-sm font-bold mb-2 text-foreground">
@@ -198,7 +198,7 @@ export function BuyCreditModal({ isOpen, onClose }: BuyCreditModalProps) {
                   </div>
                 </div>
 
-                <div className="space-y-1.5 sm+:space-y-2">
+                <div className="space-y-1.5 md:space-y-2">
                   {packages.map((pkg) => {
                     const isPopular = pkg.id === popularPackageId
                     const isSelected = selectedPackageId === pkg.id
@@ -212,25 +212,25 @@ export function BuyCreditModal({ isOpen, onClose }: BuyCreditModalProps) {
                         }`}
                         onClick={() => handleSelectPackage(pkg.id)}
                       >
-                        <div className="p-2.5 sm+:p-4 flex items-center gap-2 sm+:gap-4">
+                        <div className="p-2.5 md:p-4 flex items-center gap-2 md:gap-4">
                           {/* Radio Button */}
                           <div
-                            className={`flex-shrink-0 w-4 h-4 sm+:w-5 sm+:h-5 rounded-full border-2 flex items-center justify-center transition-all ${
+                            className={`flex-shrink-0 w-4 h-4 md:w-5 md:h-5 rounded-full border-2 flex items-center justify-center transition-all ${
                               isSelected
                                 ? 'border-primary bg-primary'
                                 : 'border-default-300'
                             }`}
                           >
                             {isSelected && (
-                              <div className="w-2 h-2 sm+:w-2.5 sm+:h-2.5 rounded-full bg-white"></div>
+                              <div className="w-2 h-2 md:w-2.5 md:h-2.5 rounded-full bg-white"></div>
                             )}
                           </div>
 
                           {/* Credit Info */}
                           <div className="flex-1 min-w-0">
-                            <div className="flex items-center gap-1.5 sm+:gap-2 mb-0.5 sm+:mb-1">
+                            <div className="flex items-center gap-1.5 md:gap-2 mb-0.5 md:mb-1">
                               <div
-                                className={`font-bold text-sm sm+:text-base ${
+                                className={`font-bold text-sm md:text-base ${
                                   isSelected
                                     ? 'text-primary'
                                     : 'text-foreground'
@@ -239,13 +239,13 @@ export function BuyCreditModal({ isOpen, onClose }: BuyCreditModalProps) {
                                 {pkg.name}
                               </div>
                               {isPopular && (
-                                <span className="px-1.5 sm+:px-2 py-0.5 bg-amber-500 text-white text-[9px] sm+:text-[10px] font-bold rounded-full">
+                                <span className="px-1.5 md:px-2 py-0.5 bg-amber-500 text-white text-[9px] md:text-[10px] font-bold rounded-full">
                                   {t('buyCreditModal.popular')}
                                 </span>
                               )}
                             </div>
                             {pkg.description && (
-                              <p className="text-[10px] sm+:text-xs text-default-500 line-clamp-1">
+                              <p className="text-[10px] md:text-xs text-default-500 line-clamp-1">
                                 {pkg.description}
                               </p>
                             )}
@@ -259,9 +259,9 @@ export function BuyCreditModal({ isOpen, onClose }: BuyCreditModalProps) {
 
               {/* QR Code Section */}
               {showQRCode && qrCodeUrl && (
-                <div className="px-4 sm+:px-6 py-4 border-t border-divider bg-content1 shrink-0">
+                <div className="px-4 md:px-6 py-4 border-t border-divider bg-content1 shrink-0">
                   <div className="flex items-center justify-between mb-3">
-                    <h3 className="text-sm sm+:text-base font-bold text-foreground">
+                    <h3 className="text-sm md:text-base font-bold text-foreground">
                       {t('buyCreditModal.scanQRCode') ||
                         'Quét mã QR để thanh toán'}
                     </h3>
@@ -280,11 +280,11 @@ export function BuyCreditModal({ isOpen, onClose }: BuyCreditModalProps) {
                       <img
                         src={qrCodeUrl}
                         alt="QR Code"
-                        className="w-48 h-48 sm+:w-64 sm+:h-64"
+                        className="w-48 h-48 md:w-64 md:h-64"
                       />
                     </div>
                     <div className="text-center space-y-1">
-                      <p className="text-xs sm+:text-sm text-default-600 font-medium">
+                      <p className="text-xs md:text-sm text-default-600 font-medium">
                         {t('buyCreditModal.qrDescription') ||
                           'Credit sẽ được cộng trong vài phút, lâu nhất 1 ngày'}
                       </p>
@@ -298,24 +298,24 @@ export function BuyCreditModal({ isOpen, onClose }: BuyCreditModalProps) {
               )}
 
               {/* Footer with Payment/Contact Button - Fixed at bottom */}
-              <div className="px-4 sm+:px-6 py-3 sm+:py-4 border-t border-divider bg-content1 shrink-0">
+              <div className="px-4 md:px-6 py-3 md:py-4 border-t border-divider bg-content1 shrink-0">
                 {!showQRCode ? (
                   <Button
                     onClick={handlePayment}
-                    className="w-full bg-gradient-to-r from-primary to-secondary text-white shadow-lg hover:shadow-xl transition-all h-10 sm+:h-12 rounded-large font-bold text-sm sm+:text-base"
+                    className="w-full bg-gradient-to-r from-primary to-secondary text-white shadow-lg hover:shadow-xl transition-all h-10 md:h-12 rounded-large font-bold text-sm md:text-base"
                     size="lg"
                     disabled={!selectedPackageId}
                   >
-                    <Coins size={16} className="sm+:size-[18] mr-2" />
+                    <Coins size={16} className="md:size-[18] mr-2" />
                     <span>{t('buyCreditModal.payNow') || 'Thanh toán'}</span>
                   </Button>
                 ) : (
                   <Button
                     onClick={handleContactFacebook}
-                    className="w-full bg-gradient-to-r from-primary to-secondary text-white shadow-lg hover:shadow-xl transition-all h-10 sm+:h-12 rounded-large font-bold text-sm sm+:text-base"
+                    className="w-full bg-gradient-to-r from-primary to-secondary text-white shadow-lg hover:shadow-xl transition-all h-10 md:h-12 rounded-large font-bold text-sm md:text-base"
                     size="lg"
                   >
-                    <MessageCircle size={16} className="sm+:size-[18] mr-2" />
+                    <MessageCircle size={16} className="md:size-[18] mr-2" />
                     <span>{t('buyCreditModal.contactMessenger')}</span>
                   </Button>
                 )}

@@ -859,7 +859,7 @@ export default function GeminiBananaProPage() {
         />
 
         {/* Main Content Area - Responsive Pb for Action Bar + Nav */}
-        <div className="flex flex-1 min-h-0 overflow-hidden relative pb-[104px] sm+:pb-0">
+        <div className="flex flex-1 min-h-0 overflow-hidden relative pb-[104px] md:pb-0">
           {/* 1. FAR LEFT RAIL (Navigation) */}
           <SidebarNavigation
             activePage={activePage}
@@ -966,7 +966,7 @@ export default function GeminiBananaProPage() {
         />
 
         {/* 5. MOBILE ACTION BAR (Fixed above nav) */}
-        <div className="sm+:hidden fixed bottom-12 left-0 right-0 h-14 bg-content1/95 backdrop-blur-md border-t border-divider flex items-center px-3 gap-3 z-50 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)]">
+        <div className="md:hidden fixed bottom-12 left-0 right-0 h-14 bg-content1/95 backdrop-blur-md border-t border-divider flex items-center px-3 gap-3 z-50 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)]">
           {/* Generate Button (Larger - Flex 1.5) */}
           <button
             onClick={handleGenerate}
@@ -1017,7 +1017,7 @@ export default function GeminiBananaProPage() {
         </div>
 
         {/* 6. MOBILE BOTTOM NAVIGATION (Compact) */}
-        <div className="sm+:hidden fixed bottom-0 left-0 right-0 h-12 bg-content1 border-t border-divider flex items-center justify-between px-2 z-50 pb-safe-area">
+        <div className="md:hidden fixed bottom-0 left-0 right-0 h-12 bg-content1 border-t border-divider flex items-center justify-between px-2 z-50 pb-safe-area">
           <button
             onClick={() => handlePageChange(AppMode.COMIC)}
             className={`flex-1 flex flex-col items-center justify-center gap-0.5 py-1 rounded-medium transition-all ${

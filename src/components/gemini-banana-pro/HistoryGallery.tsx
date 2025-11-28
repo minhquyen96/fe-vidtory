@@ -81,20 +81,20 @@ export function HistoryGallery({
   }, [loadingItem])
 
   return (
-    <div className="h-[100px] sm+:h-[140px] bg-content1 border-t border-divider flex flex-col shrink-0 z-20">
+    <div className="h-[100px] md:h-[140px] bg-content1 border-t border-divider flex flex-col shrink-0 z-20">
       {/* Header */}
-      <div className="h-8 sm+:h-9 px-4 sm+:px-6 flex items-center justify-between border-b border-divider bg-default-50">
-        <div className="flex items-center gap-2 text-[10px] sm+:text-xs font-bold text-default-500 uppercase tracking-wider">
-          <History size={12} className="sm+:w-[14px] sm+:h-[14px]" />
+      <div className="h-8 md:h-9 px-4 md:px-6 flex items-center justify-between border-b border-divider bg-default-50">
+        <div className="flex items-center gap-2 text-[10px] md:text-xs font-bold text-default-500 uppercase tracking-wider">
+          <History size={12} className="md:w-[14px] md:h-[14px]" />
           {t('labels.history')}
         </div>
         <div className="flex items-center gap-2">
           {filteredHistory.length > 0 && (
             <button
               onClick={onDownloadAll}
-              className="flex items-center gap-1 text-[10px] sm+:text-xs font-medium text-primary hover:text-primary/80 transition-colors"
+              className="flex items-center gap-1 text-[10px] md:text-xs font-medium text-primary hover:text-primary/80 transition-colors"
             >
-              <Download size={12} className="sm+:w-[14px] sm+:h-[14px]" />
+              <Download size={12} className="md:w-[14px] md:h-[14px]" />
               {t('labels.downloadAll')}
             </button>
           )}
@@ -103,14 +103,14 @@ export function HistoryGallery({
       {/* List Area */}
       <div
         ref={scrollContainerRef}
-        className="flex-1 flex items-center gap-2 sm+:gap-3 p-2 sm+:p-3 overflow-x-auto custom-scrollbar"
+        className="flex-1 flex items-center gap-2 md:gap-3 p-2 md:p-3 overflow-x-auto custom-scrollbar"
       >
         {loadingHistory ? (
           <div className="flex items-center justify-center w-full h-full">
             <Loader2 className="animate-spin text-default-400" size={20} />
           </div>
         ) : filteredHistory.length === 0 ? (
-          <div className="w-full text-center text-[10px] sm+:text-xs text-default-400 italic">
+          <div className="w-full text-center text-[10px] md:text-xs text-default-400 italic">
             {t('ui.emptyHistory')}
           </div>
         ) : (
@@ -129,7 +129,7 @@ export function HistoryGallery({
                 <div
                   key={item.id}
                   ref={loadingItemRef}
-                  className="relative h-12 sm+:h-20 aspect-square rounded-large flex-shrink-0 shadow-sm ring-2 ring-primary ring-offset-2 ring-offset-content1 bg-default-100 flex items-center justify-center cursor-pointer hover:bg-default-200 transition-colors"
+                  className="relative h-12 md:h-20 aspect-square rounded-large flex-shrink-0 shadow-sm ring-2 ring-primary ring-offset-2 ring-offset-content1 bg-default-100 flex items-center justify-center cursor-pointer hover:bg-default-200 transition-colors"
                   title={t('labels.generating') || 'Đang tạo...'}
                 >
                   <Loader2 className="animate-spin text-primary" size={20} />
@@ -141,7 +141,7 @@ export function HistoryGallery({
               <div
                 key={item.id}
                 onClick={() => item.image_url && onImageSelect(item.image_url)}
-                className={`relative h-12 sm+:h-20 aspect-square rounded-large cursor-pointer transition-all flex-shrink-0 group shadow-sm hover:shadow-md ${
+                className={`relative h-12 md:h-20 aspect-square rounded-large cursor-pointer transition-all flex-shrink-0 group shadow-sm hover:shadow-md ${
                   resultImage === item.image_url
                     ? 'ring-2 ring-primary ring-offset-2 ring-offset-content1'
                     : 'ring-1 ring-default-200 hover:ring-default-300'
@@ -159,19 +159,19 @@ export function HistoryGallery({
                     e.stopPropagation()
                     onDelete(item.id, e)
                   }}
-                  className="absolute -top-2 -right-2 w-5 h-5 sm+:w-6 sm+:h-6 bg-danger/90 hover:bg-danger text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow-lg z-10"
+                  className="absolute -top-2 -right-2 w-5 h-5 md:w-6 md:h-6 bg-danger/90 hover:bg-danger text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow-lg z-10"
                   title={t('labels.delete')}
                 >
                   <X
                     size={12}
-                    className="sm+:w-[14px] sm+:h-[14px]"
+                    className="md:w-[14px] md:h-[14px]"
                     strokeWidth={2.5}
                   />
                 </button>
 
                 {/*/!* Use as ref button - Center on hover (desktop only) *!/*/}
                 {/*{onUseAsRef && (*/}
-                {/*  <div className="hidden sm+:flex absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity items-center justify-center backdrop-blur-[2px]  rounded-lg">*/}
+                {/*  <div className="hidden md:flex absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity items-center justify-center backdrop-blur-[2px]  rounded-lg">*/}
                 {/*    <button*/}
                 {/*      onClick={(e) => {*/}
                 {/*        e.stopPropagation()*/}

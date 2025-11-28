@@ -18,7 +18,7 @@ export default function TermsOfServicePage() {
       noIndex
     >
       <div className="min-h-screen bg-background">
-        <div className="max-w-4xl mx-auto px-4 sm+:px-6 py-8 sm+:py-12">
+        <div className="max-w-4xl mx-auto px-4 md:px-6 py-8 md:py-12">
           {/* Back Button */}
           <Link
             href="/"
@@ -30,10 +30,10 @@ export default function TermsOfServicePage() {
 
           {/* Header */}
           <div className="mb-8">
-            <h1 className="text-3xl sm+:text-4xl font-bold text-foreground mb-4">
+            <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
               {t('title')}
             </h1>
-            <p className="text-default-600 text-sm sm+:text-base">
+            <p className="text-default-600 text-sm md:text-base">
               {t('lastUpdated')}
             </p>
           </div>

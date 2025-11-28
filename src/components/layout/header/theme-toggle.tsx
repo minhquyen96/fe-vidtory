@@ -34,7 +34,7 @@ export function ThemeToggle() {
       <Typography
         onClick={handleThemeToggle}
         variant="T14R"
-        className="sm+:hidden text-sm font-medium transition-colors text-foreground/80"
+        className="md:hidden text-sm font-medium transition-colors text-foreground/80"
       >
         {theme === 'light'
           ? tCommon('header.dark_mode')

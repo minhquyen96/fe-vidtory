@@ -10,7 +10,7 @@ export function FullPageLoading() {
       <Lottie
         animationData={loadingAnimation}
         loop={true}
-        className="sm+:h-32 h-28 my-1 animate-bounce-slow"
+        className="md:h-32 h-28 my-1 animate-bounce-slow"
       />
     </div>
   )

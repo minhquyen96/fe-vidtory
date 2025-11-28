@@ -49,11 +49,11 @@ export function MainCanvas({
   return (
     <div
       className={`flex-1 flex-col min-w-0 bg-content2 relative ${
-        mobileTab === 'editor' ? 'hidden sm+:flex' : 'flex'
-      } sm+:mb-0`}
+        mobileTab === 'editor' ? 'hidden md:flex' : 'flex'
+      } md:mb-0`}
     >
       {/* Canvas Center */}
-      <div className="flex-1 relative overflow-visible flex flex-col items-center justify-center p-4 sm+:p-10 pt-16 sm+:pt-20">
+      <div className="flex-1 relative overflow-visible flex flex-col items-center justify-center p-4 md:p-10 pt-16 md:pt-20">
         {/* Grid Pattern */}
         <div
           className="absolute inset-0 opacity-[0.05]"
@@ -79,19 +79,19 @@ export function MainCanvas({
 
         {!resultImage && !isLoading && !error && (
           <div className="text-center z-10 px-4">
-            <div className="w-20 h-20 sm+:w-24 sm+:h-24 bg-default-100 rounded-full flex items-center justify-center mx-auto mb-6 sm+:mb-8 shadow-sm">
+            <div className="w-20 h-20 md:w-24 md:h-24 bg-default-100 rounded-full flex items-center justify-center mx-auto mb-6 md:mb-8 shadow-sm">
               <Wand2 className="text-default-400" size={32} />
             </div>
-            <h3 className="text-foreground font-semibold text-xl sm+:text-2xl mb-2 sm+:mb-3">
+            <h3 className="text-foreground font-semibold text-xl md:text-2xl mb-2 md:mb-3">
               {t('labels.readyTitle')}
             </h3>
-            <p className="text-default-500 max-w-xs mx-auto text-sm sm+:text-base">
+            <p className="text-default-500 max-w-xs mx-auto text-sm md:text-base">
               {t('labels.readyDesc')}
             </p>
             {onMobileTabChange && (
               <button
                 onClick={() => onMobileTabChange('editor')}
-                className="mt-6 px-6 py-2 bg-default-200 rounded-full text-sm font-medium sm+:hidden"
+                className="mt-6 px-6 py-2 bg-default-200 rounded-full text-sm font-medium md:hidden"
               >
                 {t('labels.openEditor')}
               </button>
@@ -112,9 +112,9 @@ export function MainCanvas({
         )}
 
         {resultImage && !isLoading && (
-          <div className="relative max-w-full max-h-[calc(100vh-250px)] sm+:max-h-[calc(100vh-300px)] flex flex-col shadow-2xl shadow-black/20 rounded-lg ring-1 ring-default-200 bg-content1 animate-in fade-in zoom-in-95 group/image">
+          <div className="relative max-w-full max-h-[calc(100vh-250px)] md:max-h-[calc(100vh-300px)] flex flex-col shadow-2xl shadow-black/20 rounded-lg ring-1 ring-default-200 bg-content1 animate-in fade-in zoom-in-95 group/image">
             {/* ACTION OVERLAY - COMPACT SIZE & HOVER COLOR FIX */}
-            <div className="absolute -top-11 left-1/2 -translate-x-1/2 bg-content1/90 backdrop-blur-md border border-default-200 text-foreground px-3 sm+:px-4 py-1.5 h-9 rounded-full flex items-center gap-2 sm+:gap-4 shadow-medium opacity-100 z-40 whitespace-nowrap">
+            <div className="absolute -top-11 left-1/2 -translate-x-1/2 bg-content1/90 backdrop-blur-md border border-default-200 text-foreground px-3 md:px-4 py-1.5 h-9 rounded-full flex items-center gap-2 md:gap-4 shadow-medium opacity-100 z-40 whitespace-nowrap">
               {/* Common Action: Reference */}
               <button
                 onClick={() => handlePreviewAction('ref')}
@@ -122,12 +122,12 @@ export function MainCanvas({
                 title={t('labels.useAsRef')}
               >
                 <ImagePlus size={18} />
-                <span className="hidden sm+:inline">
+                <span className="hidden md:inline">
                   {t('labels.useAsRef')}
                 </span>
               </button>
 
-              <div className="w-px h-4 sm+:h-5 bg-default-300"></div>
+              <div className="w-px h-4 md:h-5 bg-default-300"></div>
 
               {/* Comic Specific Actions */}
               {activePage === AppMode.COMIC ? (
@@ -137,7 +137,7 @@ export function MainCanvas({
                   title={t('labels.genNext')}
                 >
                   <StepForward size={18} />
-                  <span className="hidden sm+:inline">
+                  <span className="hidden md:inline">
                     {t('labels.genNext')}
                   </span>
                 </button>
@@ -150,12 +150,12 @@ export function MainCanvas({
                     title={t('labels.makeVariant')}
                   >
                     <CopyPlus size={18} />
-                    <span className="hidden sm+:inline">
+                    <span className="hidden md:inline">
                       {t('labels.makeVariant')}
                     </span>
                   </button>
 
-                  <div className="w-px h-4 sm+:h-5 bg-default-300"></div>
+                  <div className="w-px h-4 md:h-5 bg-default-300"></div>
 
                   <button
                     onClick={() => handlePreviewAction('recreate')}
@@ -163,14 +163,14 @@ export function MainCanvas({
                     title={t('labels.recreate')}
                   >
                     <Repeat size={18} />
-                    <span className="hidden sm+:inline">
+                    <span className="hidden md:inline">
                       {t('labels.recreate')}
                     </span>
                   </button>
                 </>
               )}
 
-              <div className="w-px h-4 sm+:h-5 bg-default-300"></div>
+              <div className="w-px h-4 md:h-5 bg-default-300"></div>
 
               <button
                 onClick={() => handlePreviewAction('delete')}
@@ -184,7 +184,7 @@ export function MainCanvas({
             <img
               src={resultImage}
               alt="Result"
-              className="w-auto h-auto max-w-full max-h-[calc(100vh-350px)] sm+:max-h-[calc(100vh-340px)] object-contain rounded-lg bg-white"
+              className="w-auto h-auto max-w-full max-h-[calc(100vh-350px)] md:max-h-[calc(100vh-340px)] object-contain rounded-lg bg-white"
             />
 
             {/* Watermark Overlay - Only show if not premium */}
@@ -194,7 +194,7 @@ export function MainCanvas({
                   <img
                     src="https://assets.vidtory.ai/images/logo_wtm_2.png"
                     alt="Vidtory Logo"
-                    className="sm+:h-4 h-3 w-auto"
+                    className="md:h-4 h-3 w-auto"
                   />
                   {onRemoveWatermark && (
                     <button

@@ -278,7 +278,7 @@ export const ComicForm: React.FC<Props<ComicInputs>> = ({
   }))
 
   return (
-    <div className="space-y-5 sm+:space-y-8 pb-4 sm+:pb-12 relative">
+    <div className="space-y-5 md:space-y-8 pb-4 md:pb-12 relative">
       <div>
         <Label required tooltip={t(lang, 'tooltips', 'story')}>
           {t(lang, 'labels', 'story')}

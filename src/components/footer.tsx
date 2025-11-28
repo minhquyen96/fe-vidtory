@@ -108,6 +108,14 @@ export function Footer() {
 
   const footerLinks = [
     {
+      titleKey: 'footer.features',
+      links: [
+        { title: t('footer.feature1.title'), href: '/#feature1' },
+        { title: t('footer.feature2.title'), href: '/#feature2' },
+        { title: t('footer.feature3.title'), href: '/#feature3' },
+      ],
+    },
+    {
       titleKey: 'footer.information',
       links: [
         { title: t('footer.privacy'), href: '/privacy-policy' },
@@ -115,14 +123,6 @@ export function Footer() {
         { title: t('footer.terms'), href: '/terms-of-service' },
         // { title: t('footer.contact_us'), href: '/contact-us' },
         // { title: t('footer.feedbacks'), href: '/feedbacks' },
-      ],
-    },
-    {
-      titleKey: 'footer.features',
-      links: [
-        { title: t('footer.feature1.title'), href: '/#feature1' },
-        { title: t('footer.feature2.title'), href: '/#feature2' },
-        { title: t('footer.feature3.title'), href: '/#feature3' },
       ],
     },
   ]
@@ -164,10 +164,10 @@ export function Footer() {
 
   return (
     <footer className="bg-[#111] text-white">
-      <div className="container py-12 sm:py-6">
-        <div className="grid grid-cols-1 sm+:grid-cols-2 gap-8">
+      <div className="container py-6 md:py-12">
+        <div className="grid md:grid-cols-3 grid-cols-1 md:gap-8">
           {/* Logo & Description */}
-          <div className="md:col-span-2">
+          <div className="md:col-span-2 col-span-1">
             <Link
               href="/"
               className="inline-block mb-4"
@@ -183,9 +183,9 @@ export function Footer() {
           </div>
 
           {/* Links */}
-          <div className="flex sm+:justify-between sm:justify-between">
+          <div className="flex md:justify-between justify-between flex-col gap-6 lg:flex-row">
             {footerLinks.map((group) => (
-              <div key={group.titleKey} className="sm:col-span-1">
+              <div key={group.titleKey} className="md:col-span-1">
                 <h3 className="font-medium mb-4">{t(group.titleKey)}</h3>
                 <ul className="grid grid-cols-1 tablet:grid-cols-2 gap-4">
                   {group.links.map((link) => (
@@ -207,9 +207,9 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-12 sm:mt-6 pt-8 sm:pt-4 border-t border-gray-800">
-          <div className="flex flex-col sm+:flex-row justify-between items-center gap-4">
-            <div className="flex items-center gap-4">
+        <div className="md:mt-12 mt-6 pt-8 sm:pt-4 border-t border-gray-800">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+            <div className="flex items-center gap-4 flex-col md:flex-row ">
               <p className="text-sm text-gray-400">
                 © {currentYear} Vidtory. All rights reserved.
               </p>

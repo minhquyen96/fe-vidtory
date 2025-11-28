@@ -83,7 +83,7 @@ export default function WorkflowsPage() {
               <p className="text-gray-500">No workflows yet. Create your first workflow!</p>
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm+:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
               {workflows.map((workflow) => (
                 <div
                   key={workflow.id}

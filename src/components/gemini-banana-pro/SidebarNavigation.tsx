@@ -104,7 +104,7 @@ export function SidebarNavigation({
   const router = useRouter()
 
   return (
-    <div className="hidden sm+:flex w-[80px] bg-content1 border-r border-divider flex-col items-center py-6 shrink-0 z-30">
+    <div className="hidden md:flex w-[80px] bg-content1 border-r border-divider flex-col items-center py-6 shrink-0 z-30">
       <SidebarItem
         mode={AppMode.COMIC}
         icon={BookOpen}

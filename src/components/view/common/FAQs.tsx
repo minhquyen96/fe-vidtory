@@ -86,7 +86,7 @@ export function FAQs({
   }
 
   return (
-    <section className={`sm+:py-16 py-8 bg-background relative overflow-hidden ${className}`}>
+    <section className={`md:py-16 py-8 bg-background relative overflow-hidden ${className}`}>
       {/* Background decorations */}
       <div className="absolute inset-0 bg-grid-slate-100-50 dark:bg-grid-slate-700-25" />
       
@@ -95,7 +95,7 @@ export function FAQs({
       <div className="absolute -right-20 bottom-1/4 w-96 h-96 bg-secondary/15 rounded-full  light:mix-blend-multiply filter blur-3xl opacity-50 animate-blob animation-delay-2000 z-0" />
 
       <div className="container relative z-10">
-        <div className="text-center sm+:mb-10 mb-4">
+        <div className="text-center md:mb-10 mb-4">
           <Typography variant="H32B" className="mb-4 mobile:H24B">
             {t('faqs.title')}
           </Typography>

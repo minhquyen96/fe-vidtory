@@ -32,7 +32,7 @@ export function AIAvatarSection({ className }: AIAvatarSectionProps) {
   ]
 
   return (
-    <section className={cn('relative overflow-hidden bg-background py-8 sm+:py-16', className)}>
+    <section className={cn('relative overflow-hidden bg-background py-8 md:py-16', className)}>
       {/* Background decorations */}
       <div className="absolute inset-0 bg-grid-slate-100-50 dark:bg-grid-slate-700-25" />
       
@@ -40,20 +40,20 @@ export function AIAvatarSection({ className }: AIAvatarSectionProps) {
       <div className="absolute -right-20 top-40 w-96 h-96 bg-secondary/15 rounded-full  light:mix-blend-multiply filter blur-3xl opacity-50 animate-blob z-0" />
       <div className="absolute -left-20 bottom-40 w-96 h-96 bg-primary/15 rounded-full  light:mix-blend-multiply filter blur-3xl opacity-50 animate-blob animation-delay-2000 z-0" />
 
-      <div className="container mx-auto px-4 sm+:px-6 relative z-10">
+      <div className="container mx-auto px-4 md:px-6 relative z-10">
         <div className="max-w-6xl mx-auto">
           {/* Section Header */}
-          <div className="text-center mb-6 sm+:mb-10">
-            <h2 className="text-2xl sm+:text-4xl font-bold text-foreground mb-2 sm+:mb-3">
+          <div className="text-center mb-6 md:mb-10">
+            <h2 className="text-2xl md:text-4xl font-bold text-foreground mb-2 md:mb-3">
               {t('aiAvatar.title')}
             </h2>
-            <p className="text-sm sm+:text-base text-foreground/70">
+            <p className="text-sm md:text-base text-foreground/70">
               {t('aiAvatar.subtitle')}
             </p>
           </div>
 
           {/* Avatar Grid */}
-          <div className="grid grid-cols-1 sm+:grid-cols-3 gap-6 sm+:gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
             {avatars.map((avatar) => (
               <div
                 key={avatar.id}
@@ -71,7 +71,7 @@ export function AIAvatarSection({ className }: AIAvatarSectionProps) {
                       if (parent) {
                         parent.innerHTML = `
                           <div class="w-full h-full bg-muted rounded-lg flex items-center justify-center">
-                            <svg class="w-16 h-16 sm+:w-24 sm+:h-24 text-foreground/20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="w-16 h-16 md:w-24 md:h-24 text-foreground/20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                             </svg>
                           </div>
@@ -80,19 +80,19 @@ export function AIAvatarSection({ className }: AIAvatarSectionProps) {
                     }}
                   />
                 </div>
-                <div className="p-4 sm+:p-6 bg-background">
+                <div className="p-4 md:p-6 bg-background">
                   <div className="flex items-start justify-between gap-4">
                     <div className="flex-1">
-                      <h3 className="text-base sm+:text-lg font-semibold text-foreground mb-1 sm+:mb-2">
+                      <h3 className="text-base md:text-lg font-semibold text-foreground mb-1 md:mb-2">
                         {avatar.title}
                       </h3>
-                      <p className="text-xs sm+:text-sm text-foreground/60">
+                      <p className="text-xs md:text-sm text-foreground/60">
                         {avatar.description}
                       </p>
                     </div>
                     <div className="flex-shrink-0">
-                      <div className="w-8 h-8 sm+:w-10 sm+:h-10 rounded-full bg-primary/10 group-hover:bg-primary/20 flex items-center justify-center transition-colors">
-                        <Icons.chevronRight className="w-4 h-4 sm+:w-5 sm+:h-5 text-primary" />
+                      <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-primary/10 group-hover:bg-primary/20 flex items-center justify-center transition-colors">
+                        <Icons.chevronRight className="w-4 h-4 md:w-5 md:h-5 text-primary" />
                       </div>
                     </div>
                   </div>

@@ -81,7 +81,7 @@ export function Header() {
           {/* {router.pathname === '/ai-creative-generator' && ( */}
             <Link
               href="/ai-creative-generator"
-              className="hidden sm+:flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium text-foreground/80 hover:text-foreground hover:bg-primary/10 transition-colors"
+              className="hidden md:flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium text-foreground/80 hover:text-foreground hover:bg-primary/10 transition-colors"
             >
               <Icons.sparkles className="h-4 w-4" />
               <span>AI Creative Generator</span>
@@ -89,7 +89,7 @@ export function Header() {
           {/* )} */}
 
           {/* Navigation Menu - Desktop */}
-          {/*<nav className="hidden sm+:flex items-center space-x-1 flex-1">*/}
+          {/*<nav className="hidden md:flex items-center space-x-1 flex-1">*/}
           {/*  /!* Products Dropdown *!/*/}
           {/*  <div*/}
           {/*    className="relative"*/}
@@ -382,7 +382,7 @@ export function Header() {
                   <Button
                     variant="ghost"
                     size="icon"
-                    className="hidden sm+:inline-flex rounded-full relative"
+                    className="hidden md:inline-flex rounded-full relative"
                   >
                     <Avatar className="h-8 w-8">
                       <AvatarImage
@@ -443,7 +443,7 @@ export function Header() {
             ) : (
               <Button
                 variant="ghost"
-                className="hidden sm+:inline-flex text-sm font-medium"
+                className="hidden md:inline-flex text-sm font-medium"
                 onClick={() => openLoginModal()}
               >
                 Login
@@ -456,7 +456,7 @@ export function Header() {
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="sm+:hidden"
+                  className="md:hidden"
                   aria-label="Toggle menu"
                 >
                   <Icons.menu className="h-5 w-5" />

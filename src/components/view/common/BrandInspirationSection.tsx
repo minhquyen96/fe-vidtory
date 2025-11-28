@@ -59,7 +59,7 @@ export function BrandInspirationSection({ className }: BrandInspirationSectionPr
   ]
 
   return (
-    <section className={cn('relative overflow-hidden bg-background py-8 sm+:py-16', className)}>
+    <section className={cn('relative overflow-hidden bg-background py-8 md:py-16', className)}>
       {/* Background decorations */}
       <div className="absolute inset-0 bg-grid-slate-100-50 dark:bg-grid-slate-700-25" />
       
@@ -67,16 +67,16 @@ export function BrandInspirationSection({ className }: BrandInspirationSectionPr
       <div className="absolute -left-20 top-1/3 w-96 h-96 bg-primary/15 rounded-full  light:mix-blend-multiply filter blur-3xl opacity-50 animate-blob z-0" />
       <div className="absolute -right-20 bottom-1/3 w-96 h-96 bg-secondary/15 rounded-full  light:mix-blend-multiply filter blur-3xl opacity-50 animate-blob animation-delay-3000 z-0" />
 
-      <div className="container mx-auto px-4 sm+:px-6 relative z-10">
+      <div className="container mx-auto px-4 md:px-6 relative z-10">
         <div className="max-w-7xl mx-auto">
           {/* Section Header */}
-          <div className="text-center mb-6 sm+:mb-10">
-            <h2 className="text-2xl sm+:text-4xl font-bold text-foreground mb-3 sm+:mb-4">
+          <div className="text-center mb-6 md:mb-10">
+            <h2 className="text-2xl md:text-4xl font-bold text-foreground mb-3 md:mb-4">
               {t('brandInspiration.title')}
             </h2>
             <Button
               variant="outline"
-              className="mt-3 sm+:mt-4"
+              className="mt-3 md:mt-4"
               onClick={() => {
                 router.push('/ai-creative-generator')
               }}
@@ -86,7 +86,7 @@ export function BrandInspirationSection({ className }: BrandInspirationSectionPr
           </div>
 
           {/* Examples Grid */}
-          <div className="grid grid-cols-2 sm+:grid-cols-3 sm+:lg:grid-cols-4 gap-3 sm+:gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-3 md:lg:grid-cols-4 gap-3 md:gap-4">
             {examples.map((example) => (
               <div
                 key={example.id}
@@ -113,7 +113,7 @@ export function BrandInspirationSection({ className }: BrandInspirationSectionPr
                         img.style.display = 'none'
                         parent.innerHTML = `
                           <div class="absolute inset-0 bg-gradient-to-br from-primary/10 to-secondary/10 flex items-center justify-center">
-                            <svg class="w-12 h-12 sm+:w-16 sm+:h-16 text-foreground/20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="w-12 h-12 md:w-16 md:h-16 text-foreground/20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
                             </svg>
                           </div>
@@ -131,7 +131,7 @@ export function BrandInspirationSection({ className }: BrandInspirationSectionPr
                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors" />
                 {/* Reference/AI-Recreated badge like topview.ai */}
                 <div className="absolute top-2 left-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                  <div className="px-2 py-1 rounded-md bg-black/70 backdrop-blur-sm text-white text-[10px] sm+:text-xs font-medium">
+                  <div className="px-2 py-1 rounded-md bg-black/70 backdrop-blur-sm text-white text-[10px] md:text-xs font-medium">
                     AI-Recreated
                   </div>
                 </div>

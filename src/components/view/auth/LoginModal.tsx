@@ -186,7 +186,7 @@ export const LoginModal: React.FC = () => {
       {/* Modal */}
       <div className="relative bg-background rounded-lg shadow-xl w-full max-w-4xl mx-4 flex overflow-hidden">
         {/* Left Column: Form */}
-        <div className="w-full sm+:w-1/2 p-8 flex flex-col justify-center">
+        <div className="w-full md:w-1/2 p-8 flex flex-col justify-center">
           {/* Close button */}
           <button
             onClick={handleCloseButtonClick}
@@ -456,7 +456,7 @@ export const LoginModal: React.FC = () => {
           )}
         </div>
         {/* Right Column: Sample Image */}
-        <div className="hidden sm+:flex sm+:w-1/2 relative items-center justify-center p-8 overflow-hidden bg-gradient-to-br from-primary/20 via-secondary/20 to-background">
+        <div className="hidden md:flex md:w-1/2 relative items-center justify-center p-8 overflow-hidden bg-gradient-to-br from-primary/20 via-secondary/20 to-background">
           <div className="relative w-full h-full flex flex-col items-center justify-center space-y-6">
             {/* Decorative gradient circles */}
             <div className="absolute top-10 right-10 w-32 h-32 bg-primary/30 rounded-full blur-3xl"></div>
